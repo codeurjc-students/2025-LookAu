@@ -1,0 +1,129 @@
+/************************
+*************************
+        GLOBAL
+*************************
+*************************/
+
+/***** HTML/HEAD *****/
+html {
+    background-color: #1a1a1a; 
+}
+
+head {
+    background-color: #1a1a1a;
+}
+
+
+/***** HEADER *****/
+header {
+    background-color: #1a1a1a;
+    padding: 30px;
+}
+
+.header-logo {
+    width: 60%;
+}
+
+.hr-yellow {
+    background-color: #999024;
+    margin: 2px;
+    height: 2px;
+}
+
+.nav-pills-font {
+    font-family:Impact, 'Arial Narrow', sans-serif;
+    font-size:x-large;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color:#e7d043;
+    margin-left: 10px;
+    border: 2px solid #938a24;
+    border-radius: 6px;
+    background-color: #404040;
+}
+
+
+.circle-link {
+    border-radius: 50%;
+}
+
+
+/****** BODY *****/
+body {
+    background-color: #1a1a1a;
+}
+
+
+
+
+/****** FOOTER *****/
+footer {
+    background-color: #a39337;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+}
+
+.footer-black {
+    color: #1a1a1a;
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.fa-whatsapp, .fa-phone, .fa-envelope {
+    margin-top: 13px;
+    margin-right: 20px;
+}
+
+.footer-logo{
+    width: 75%;
+}
+
+.line-sep{
+    border-left: 2px solid #1a1a1a;
+}
+
+
+
+
+/************************
+*************************
+        INTERFACES
+*************************
+*************************/
+
+/****** LOGIN *****/
+.input-login-1 {
+    background-color: #2e2e2e;
+    border-radius: 8px 0 0 0;
+}
+
+.input-login-2 {
+    background-color: #2e2e2e;
+    border-radius: 0 0 8px 0 ;
+}
+
+.input-login-3 {
+    background-color: #2e2e2e;
+    border-radius: 0 0 0 0 ;
+}
+
+.login-icon-color { 
+    color: #a39337;
+}
+
+.btn-outline-warning {
+    font-family:Impact, 'Arial Narrow', sans-serif;
+    font-size:large;
+    letter-spacing: 1px;
+}
+
+.a-login{
+    margin-top: 20px;
+    color: #a39337;
+    text-decoration: underline;
+}

@@ -1,0 +1,53 @@
+<footer>
+
+    <div class="row">
+
+        <div class="col-1 d-flex justify-content-center">
+            <img src="images/footer/footer-logo.png">
+        </div>
+
+        <div class="col-lg-6 d-flex justify-content-start line-sep">
+            <a class="footer-black" href="#">Info</a>
+            <a class="footer-black" href="#">Resources</a>
+            <a class="footer-black" href="#">About Us</a>
+        </div>
+
+        <div class="col-lg-5 d-flex justify-content-end">
+            <p class="footer-black">Follow us: </p>
+        
+            <i class="fab fa-whatsapp fa-lg"></i>
+            <i class="fas fa-phone fa-lg"></i>
+            <i class="fas fa-envelope fa-lg"></i>
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Additional Scripts -->
+<script src="/js/custom.js"></script>
+<script src="/js/owl.js"></script>
+<script src="/js/slick.js"></script>
+<script src="/js/isotope.js"></script>
+<script src="/js/accordions.js"></script>
+<script src="/js/ajaxBtn.js"></script>
+
+<script language="text/Javascript">
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) {                   //declaring the array outside of the
+        if (!cleared[t.id]) {                      // function makes it static and global
+            cleared[t.id] = 1;  // you could use true and false, but that's more typing
+            t.value = '';         // with more chance of typos
+            t.style.color = '#fff';
+        }
+    }
+</script>
+
+</body>
+
+</html>
