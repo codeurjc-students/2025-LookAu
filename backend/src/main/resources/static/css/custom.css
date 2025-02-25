@@ -49,6 +49,44 @@ header {
     border-radius: 50%;
 }
 
+.nav-link.active .login-icon-color {
+    color: black;
+}
+
+
+.circle-link {
+    display: inline-flex; 
+    justify-content: center;
+    align-items: center;
+    width: 60px; 
+    height: 60px;
+    border-radius: 50%; 
+    text-decoration: none;
+    position: relative; 
+}
+
+
+
+/* Bell icon */
+.notification-icon {
+    position: absolute; 
+    top: -5px; 
+    right: -5px; 
+    font-size: 0.8rem; 
+    color: black; 
+    background-color: #e7d043; 
+    border-radius: 50%; 
+    padding: 3px; 
+    border: 2px solid black; 
+}
+
+
+.btn-outline-warningg:hover {
+    color:#e7d043;
+    background-color:#1a1a1a;
+    border-color:#e7d043
+}
+
 
 /****** BODY *****/
 body {
@@ -126,4 +164,47 @@ footer {
     margin-top: 20px;
     color: #a39337;
     text-decoration: underline;
+}
+
+
+
+/****** GROUPS *****/
+.btnn {
+    font-weight: 400; 
+    text-align:center; 
+    border: 1px solid #a39337;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem; 
+    line-height: 1.5; 
+    transition: all 0.15s ease-in-out; 
+    margin-bottom: 16px;
+    color: #e7d043;
+    background-color: #101010;
+}
+
+.form-control-funcionapls {
+    background-color: #131313;
+}
+
+.btn-background {
+    background-color: #101010;
+}
+
+.card {
+    border-radius: 8px 0 8px 0;
+    border-color: #1a1a1a;
+    background-color: #2e2e2e;
+}
+
+/*linea horizontal card*/
+.barra-lateral {
+    content: '';
+    position: absolute;
+    left: 20%; 
+    top: 0; 
+    width: 1px; 
+    height: 100%;
+    background-color: #1a1a1a;
+    margin-left: -10px; 
+    margin-right: -10px; 
 }
