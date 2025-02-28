@@ -1,133 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
     
-    {{>head}}
+    {{>components/head}}
 
     <body>
-      {{>header}}
+      {{>components/header}}
 
       <section>
         <div class="container">
 
-          <!------- BUTTON NEW GRUOP - FIND GRUOP ------>
-          <div class="row justify-content-center align-items-center"> 
-            
-            <!-- Button new group -->
-            <div class="col-2 d-flex justify-content-end align-items-center">
-              <input type="submit" class="btnn btn-dark" value="New Group">
-            </div>
-
-            <!-- Formulario -->
-            <div class="col-8">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <a class="btn-background btn btn-outline-secondary"><i class="login-icon-color fas fa-search"></i></a>
-                </div>
-                <input type="text" class="form-control-funcionapls form-control" placeholder="Find" aria-label="" aria-describedby="basic-addon1">
-              </div>
-            </div>
-
-          </div>
+          {{>groups/groups-search-bar}}
+          
         </div>
 
-        <br>
 
+        <br>
 
 
         <!------- GRUOPS ------>
         <div class="container">
           
-          <!-- ONE GROUP -->
-          <div class="row"> 
-            <div class="col-1"></div>
-
-            <!-- Gruop -->
-            <div class="col-10">
-              <div class="card">
-                <div class="row align-items-center">
-                  
-                  <!-- Photo -->
-                  <div class="col-3 barra-lateral">
-                    <img class="image-groups" src="images/others/groups-nophoto.png" alt="Card image cap">
-                  </div>
-
-                  <!-- Information -->
-                  <div class="col-8 justify-content-center">
-                    <div class="row">
-                      
-                      <!-- Group name -->
-                      <div class="col-8 d-flex justify-content-center align-items-center">
-                        <h3 class="name-groups">The Cocktail Gambit</h3>
-                      </div>
-                      
-                      <!-- Group price -->
-                      <div class="col-4">
-                        <div class="card card-price d-flex justify-content-center align-items-center">
-                          <p class="caddprice">- 7.38</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-
-            <!-- Button trash -->
-            <div class="col-1 d-flex align-items-center">
-              <a class="nav-link nav-linkk circle-linkk" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                <i class="header-profile login-icon-color fas fa-trash"></i> 
-              </a>
-            </div>
-          </div>
-          <!-- END ONE GROUP -->
-
+          {{>groups/groups-group-card}}
 
           <br>
 
-
-          <div class="row"> 
-            <div class="col-1"></div>
-            <div class="col-10">
-
-              <div class="card">
-              
-                <div class="row align-items-center">
-                  <!-- Photo -->
-                  <div class="col-3 barra-lateral">
-                    <img class="image-groups" src="images/others/groups-nophoto.png" alt="Card image cap">
-                  </div>
-
-                  <!-- Information -->
-                  <div class="col-8 justify-content-center">
-                    <div class="row">
-                      
-                      <!-- Group name -->
-                      <div class="col-8 d-flex justify-content-center align-items-center">
-                        <h3 class="name-groups">URJC PlayGround</h3>
-                      </div>
-                      
-                      <!-- Group price -->
-                      <div class="col-4">
-                        <div class="card card-price d-flex justify-content-center align-items-center">
-                          <p class="caddprice">+ 17.45</p>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-                  
-            </div>
-              
-            <div class="col-1 d-flex justify-content-center align-items-center">
-              <a class="nav-link nav-linkk circle-linkk" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                <i class="header-profile login-icon-color fas fa-trash"></i> 
-              </a>
-            </div>
-          </div>
+          {{>groups/groups-group-card}}
 
         </div>
 
@@ -148,7 +45,10 @@
 
       </section>
 
-      {{>footer}}
+      <br>
+      <br>
+      
+      {{>components/footer}}
     </body>
 
 </html>

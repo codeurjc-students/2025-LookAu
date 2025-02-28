@@ -99,8 +99,7 @@ body {
 /****** FOOTER *****/
 footer {
     background-color: #a39337;
-
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
     padding: 20px;
@@ -240,8 +239,134 @@ footer {
     background-color: #101010;
 }
 
-
 .circle-linkk {
     border-radius: 50%;
 }
 
+
+
+/****** ONE GROUP *****/
+.custom-container {
+    width: 90%; 
+    max-width: 1200px;
+    margin: 0 auto; 
+    padding: 20px;
+}
+
+.name-group1 {
+    color:#c0c0c0;
+}
+
+.ticket-name-group1 {
+    color: #fff;
+    text-align: center;
+}
+
+.profit-name-group1 {
+    color: #8d8d8d;
+    font-weight: bold;
+}
+
+.card-status {
+    font-weight: bold;
+    color: #b2b2b2;
+}
+
+/**/
+
+.circle-linkkkk {
+    border-radius: 50%;
+    width: 30px; /* Ajusta el ancho */
+    height: 30px; /* Ajusta la altura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-linkkkk {
+    color: #e7d043;
+    margin-left: 10px;
+    border: 2px solid #938a24;
+    border-radius: 6px;
+    background-color: #101010;
+    padding: 5px; /* Ajusta el padding */
+}
+
+.nav-linkkkk {
+    color: #e7d043;
+    margin-left: 10px;
+    border: 2px solid #938a24;
+    border-radius: 6px;
+    background-color: #404040;
+}
+
+.barra-abajo {
+    border-bottom: 4px solid #1a1a1a;
+}
+
+.barra-lateral-peque {
+    border-right: 4px solid #1a1a1a;
+}
+
+.pay-color {
+    color: #e7d043;
+}
+
+/* GROUPS TICKETS */
+.card-ticket {
+    background-color: #101010;
+    color:  #909090;
+    -ms-flex:1 1 auto;
+    flex:1 1 auto;
+    border-radius: 5px;
+}
+
+.subtittle-tickets {
+    color: #d8d8d8;
+    font-weight: bold;
+}
+
+.circle-linkkk {
+    border-radius: 50%;
+    width: 30px; /* Ajusta el ancho */
+    height: 30px; /* Ajusta la altura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.header-profilek {
+    font-size: 14px; /* Ajusta el tamaño del ícono */
+}
+
+.nav-linkkk {
+    color: #e7d043;
+    margin-left: 10px;
+    border: 2px solid #938a24;
+    background-color: #101010;
+    padding: 5px; /* Ajusta el padding */
+}
+
+.barra-lateral-clarita {
+    border-right: 4px solid #2e2e2e;
+}
+
+.barra-abajo-clarita {
+    border-bottom: 4px solid #2e2e2e;
+}
+
+.nnav-link {
+    color: #e7d043;
+    border: 2px solid #938a24;
+    border-radius: 50%;
+    background-color: #404040;
+    margin-right: 7px;
+}
+
+.nnav-linkkk {
+    color: #e7d043;
+    border: 2px solid #938a24;
+    background-color: #101010;
+    padding: 5px;
+}

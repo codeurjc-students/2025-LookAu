@@ -10,7 +10,7 @@ public class MainController {
     @GetMapping("/")
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("groups");
+        modelAndView.setViewName("groups-ticket");
         return modelAndView;
     }
 
