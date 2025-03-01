@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{>components/head}}
+
+<body>
+  {{>components/header}}
+
+  <section>
+
+    <!------- SEARCH BAR ------>
+    <div class="container">
+
+      {{>group-in/group-in-searchbar}}
+
+      <br>
+      <!------- END SEARCH BAR ------>
+
+
+      <!------- TICKETS ------>
+      <div class="container-fluid mx-1">
+        <div class="row mx-1">
+
+          <!-- COL TICKETS -->
+          <div class="col-7">
+
+            <!--{>group-in/ticket-out-card}}
+
+            <br>
+
+            {>group-in/ticket-out-card}}
+
+            <br>
+
+            {>group-in/reimbursement}}
+
+            <br>
+
+            {>group-in/ticket-out-card}}
+
+            <br-->
+
+            {{>group-in/group-profile-edit}}
+
+            <br>
+
+
+
+            <!-- Button more -->
+            <div class="row">
+
+              <div class="col-12 d-flex justify-content-center align-items-center">
+                <input type="submit" class="btnnn btn-dark" value="More">
+              </div>
+
+            </div>
+
+
+          </div>
+          <!-- END COL TICKETS -->
+
+
+          <div class="col-1"></div>
+
+
+          <!-- COL RESUME -->
+          <div class="col-3">
+
+            <div class="row m-2">
+
+              {{>group-in/resume}}
+
+              <!-- Button individual -->
+              <div class="row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                  <input type="submit" class="btnnn btn-dark" value="Individual">
+                </div>
+              </div>
+
+              {{>group-in/individual}}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <!------- END TICKETS ------>
+
+  </section>
+
+  <br>
+  <br>
+
+
+
+  {{>components/footer}}
+
+  <script>
+    document.getElementById('foto').addEventListener('change', function () {
+        const nombreArchivo = this.files[0] ? this.files[0].name : 'Non selected files';
+        document.getElementById('nombre-archivo').textContent = nombreArchivo;
+
+        const vistaPrevia = document.getElementById('vista-previa');
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                vistaPrevia.src = e.target.result;
+                vistaPrevia.style.display = 'block';
+            };
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            vistaPrevia.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+
+</html>

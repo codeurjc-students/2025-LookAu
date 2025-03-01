@@ -1,0 +1,268 @@
+<div class="card">
+
+    <!-- TITTLE -->
+    <div class="row">
+        <div class="col-12 barra-abajo ">
+
+
+            <div class="row d-flex align-items-center">
+
+                <!-- Tittle -->
+                <div class="col-4">
+                    <h3 class="ticket-name-group1 subtittle-tickets">FINANCES</h3>
+                </div>
+
+                <div class="col-5"></div>
+            
+
+                <!-- Buttons -->
+                <div class="col-1 d-flex align-items-end">
+                    <a class="nav-link nav-linkkk circle-linkkk" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                        <i class="header-profilek login-icon-color fas fa-check"></i> 
+                    </a>
+                </div>
+                
+                <div class="col-1 d-flex align-items-end my-3">
+                    <a class="nav-link nav-linkkk circle-linkkk" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                        <i class="header-profilek login-icon-color fas fa-times"></i> 
+                    </a>
+                </div>
+                
+            </div>
+
+            
+        </div>
+        
+    </div>
+
+    <!-- INFORMATION -->
+    <div class="row">
+
+        
+        <!-------- 1º COL -------->
+        <div class="col-4 barra-lateral-peque">
+
+            <!-- Ticket Type -->
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Ticket Type:</p>
+                    </div>
+        
+                    
+                    <div class="row align-items-center mx-4 mt-2">
+                        <select class="input-status" id="inputGroupSelect01">
+                            <option selected>None</option>
+                            <option value="1">El Grodo</option>
+                            <option value="2">Bonoloto</option>
+                            <option value="3">La Quiniela</option>
+                        </select>
+                    </div>
+                    
+
+                </div>
+            </div>
+
+            <br>
+
+            <!-- Date -->
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Date:</p>
+                    </div>
+        
+                    <div class="row align-items-center m-4 mt-2">
+                        <input type="date" class="input-status">
+                    </div>
+
+                </div>
+            </div>
+
+            <br>
+
+            <!--div class="row ml-3 mt-2 mr-2">
+                <div class="col-12">
+                    <p class="subtittle-tickets">You can fill up to 8 bets in the table below. A sum of each bet will be made, but it will not be shown which have been awarded.</p>
+                </div>
+            </div-->  
+            
+            {{>ticket-type/elgordo-edit}}
+            
+        </div>
+        <!-------- END 1º COL -------->
+
+
+
+
+
+
+        <!-------- 2º COL -------->
+        <div class="col-4 barra-lateral-peque">
+            
+            <!-- Paid By -->
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Paid by:</p>
+                    </div>
+        
+                
+                    <div class="row">
+                        <div class="col-6 barra-lateral-clarita">
+                            <div class="row align-items-center mx-4 mt-2">
+                                <select class="input-status" id="inputGroupSelect01">
+                                    <option selected>Paco</option>
+                                    <option value="1">Alberto</option>
+                                    <option value="2">Diego</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-5 d-flex justify-content-center align-items-center">
+                            <input type="text" class="input-status" value="- 1.5">
+                        </div>
+                    </div>
+                        
+                
+
+                </div>
+            </div>
+
+            <br>
+
+            <!-- Status -->
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Status:</p>
+                    </div>
+        
+                    <div class="card-ticket justify-content-center align-items-center mx-4">
+                        <p class="card-status ml-3">+ 127.8</p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <br>
+
+
+            <!-- Benefit by participant -->
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Benefit by participant:</p>
+                    </div>
+        
+                    <div class="card-ticket justify-content-center align-items-center mx-4">
+                        <div class="row barra-abajo-clarita">
+                            <div class="col-6 barra-lateral-clarita">
+                                <p class="card-status ml-3">Paco</p>
+                            </div>
+
+                            <div class="col-6">
+                                <p class="card-status ml-3">+ 15.50</p>
+                            </div>
+                        </div>
+
+                        <div class="row barra-abajo-clarita">
+                            <div class="col-6 barra-lateral-clarita">
+                                <p class="card-status ml-3">Alberto</p>
+                            </div>
+
+                            <div class="col-6">
+                                <p class="card-status ml-3">+ 65.50</p>
+                            </div>
+                        </div>
+
+                        <div class="row barra-abajo-clarita">
+                            <div class="col-6 barra-lateral-clarita">
+                                <p class="card-status ml-3">Diego</p>
+                            </div>
+
+                            <div class="col-6">
+                                <p class="card-status ml-3">+ 45.50</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+
+            <br>
+
+        </div>
+        <!-------- END 1º COL -------->
+
+
+
+
+
+        <!-------- 3º COL -------->
+        <div class="col-4 barra-lateral-peque">
+           
+            <!-- Claimed By -->
+            <div class="row barra-abajo pb-4">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Claimed by:</p>
+                    </div>
+        
+                    <div class="row align-items-center mx-4 mt-2">
+                        <select class="input-status" id="inputGroupSelect01">
+                            <option selected>Paco</option>
+                            <option value="1">Alberto</option>
+                            <option value="2">Diego</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- X owes Y -->
+            <div class="row mt-2">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Paco owes Alberto:</p>
+                    </div>
+        
+                    <div class="card-ticket justify-content-center align-items-center mx-4">
+                        <p class="card-status ml-3">42.93</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-12">
+
+                    <div class="row align-items-center ml-3 mt-2">
+                        <p class="subtittle-tickets">Paco owes Diego:</p>
+                    </div>
+        
+                    <div class="card-ticket justify-content-center align-items-center mx-4">
+                        <p class="card-status ml-3">42.93</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <br>
+            
+            
+        </div>
+        <!-------- END 1º COL -------->
+
+    </div>
+</div>

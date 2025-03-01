@@ -370,3 +370,36 @@ footer {
     background-color: #101010;
     padding: 5px;
 }
+
+.input-status {
+    font-weight: bold;
+    color: #4f4f4f;
+    width: 200%;
+    border: 2px solid #101010;
+    background-color: #101010;
+    max-width: 120%;
+    border-radius: 5px;
+}
+
+/*********** Profile ***********/
+.custom-file-input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    background-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+.custom-file-label {
+    cursor: pointer;
+    background-color: #1a1a1a;
+}
+
+#vista-previa {
+    display: none;
+    max-width: 100%;
+    margin-top: 10px;
+    background-color: #1a1a1a;
+    border: 2px solid #101010;
+    color: #1a1a1a;
+}
