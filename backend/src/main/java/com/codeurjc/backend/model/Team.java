@@ -10,7 +10,7 @@ public class Team {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -19,7 +19,7 @@ public class Team {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] profilePicture;
 
-	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany(mappedBy = "teams", cascade = CascadeType.PERSIST)
     private List<Account> accounts = new ArrayList<>();
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -32,6 +32,15 @@ public class Team {
 
         this.accounts = new ArrayList<>();
         this.tickets = new ArrayList<>();
+    }
+
+    public Team(String name){
+        this.name = name;
+
+        this.accounts = new ArrayList<>();
+    }
+
+    public Team() {
     }
 
 

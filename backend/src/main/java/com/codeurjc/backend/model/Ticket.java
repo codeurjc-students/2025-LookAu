@@ -1,8 +1,6 @@
 package com.codeurjc.backend.model;
 import java.time.LocalDate;
 
-import java.util.*;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -11,8 +9,9 @@ public class Ticket {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     
     private String statusName;
     private Double statusPrice;
@@ -21,18 +20,18 @@ public class Ticket {
     private String claimedBy;
     private LocalDate date;
 
-    @OneToOne
-    @JoinColumn(name = "tickettype_id")
-    private TicketType ticketType;
-    
     @ManyToOne
+    @JoinColumn(name = "tickettype_id", nullable = false)
+    private TicketType ticketType;
+
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id")
     private Account account;
-
 
 
     public Ticket(String statusName, String paidByName, Double paidByPice, String claimedBy, LocalDate date){
@@ -42,6 +41,8 @@ public class Ticket {
         this.date = date;
     }
 
+    public Ticket() {
+    }
 
 
     public String getStatusName() {
@@ -81,13 +82,26 @@ public class Ticket {
         this.statusPrice = statusPrice;
     }
 
+
     public TicketType getTicketType() {
         return ticketType;
     }
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
     }
-    
+    public Team getTeam() {
+        return team;
+    }
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+    public Account getAccount() {
+        return account;
+    }
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
 
     public Long getId() {
         return id;

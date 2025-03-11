@@ -1,25 +1,31 @@
 package com.codeurjc.backend.model;
 
-import java.util.List;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) 
+@DiscriminatorColumn(name = "ticket_type", discriminatorType = DiscriminatorType.STRING) 
 public class TicketType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private EnumTickectType tickectType;
+    private EnumTickectType tickectEnumType;
 
-    public TicketType(EnumTickectType tickectType){
-        this.tickectType = tickectType;
+    public EnumTickectType getTickectType() {
+        return tickectEnumType;
+    }
+
+    public void setTickectType(EnumTickectType tickectEnumType) {
+        this.tickectEnumType = tickectEnumType;
+    }
+
+    public TicketType(EnumTickectType tickectEnumType){
+        this.tickectEnumType = tickectEnumType;
+    }
+
+    public TicketType() {
     }
 
 }

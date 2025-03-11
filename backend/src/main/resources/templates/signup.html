@@ -13,56 +13,112 @@
                 </div>
 
                 <!-- Form -->
-                <div class="row justify-content-center">
-                    <div class="col-6">
-                        <!-- Email -->
-                        <div class="input-group input-group-lg mb-3">
-                            <div class="input-login input-group-prepend">
-                                <span class="input-login-1 input-group-text" id="basic-addon1">
-                                    <i class="login-icon-color fas fa-user"></i>
-                                </span>
+                <form id="loginForm" action="/signup" method="post">
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+
+                            {{#showError}}
+                            <div class="text-danger d-flex justify-content-center align-items-center mb-2">
+                                <div class="row justify-content-center pass-error mx-2">
+                                    <p class="mx-2" style="color:#dc3545;">{{error}}</p>
+                                </div>
                             </div>
-                            <input type="text" class="input-login-1 form-control" placeholder="Email">
-                        </div>
+                            {{/showError}}
+                            <br>
 
-                        <!-- Password -->
-                        <div class="input-group input-group-lg mb-3">
-                            <div class="input-login input-group-prepend">
-                                <span class="input-login-3 input-group-text" id="basic-addon1">
-                                    <i class="login-icon-color fas fa-lock"></i>
-                                </span>
+                            <!-- Frist Name -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-1 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-user"></i>
+                                    </span>
+                                </div>
+                                <input name="firstName" id="firstName" type="text" class="input-login-1 form-control" placeholder="First Name">
                             </div>
-                            <input type="password" class="input-login-3 form-control" placeholder="Password">
-                        </div>
 
-                        <!-- Repeat Password -->
-                        <div class="input-group input-group-lg mb-3">
-                            <div class="input-login input-group-prepend">
-                                <span class="input-login-2 input-group-text" id="basic-addon1">
-                                    <i class="login-icon-color fas fa-lock"></i>
-                                </span>
+                            <!-- Last Name -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-1 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-user"></i>
+                                    </span>
+                                </div>
+                                <input name="lastName" id="lastName" type="text" class="input-login-1 form-control" placeholder="Last Name">
                             </div>
-                            <input type="password" class="input-login-2 form-control" placeholder="Repeat Password">
-                        </div>
 
-                        <!-- Button -->
-                        <div class="row d-flex justify-content-center align-items-center">
-                            <input type="submit" class="btn btn-outline-warning" value="Start!">
-                        </div>
+                            <!-- Nick Name -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-1 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-tag"></i>
+                                    </span>
+                                </div>
+                                <input name="nickName" id="nickName" type="text" class="input-login-1 form-control" placeholder="Nick Name">
+                            </div>
 
-                        <!-- Login -->
-                        <div class="row d-flex justify-content-center align-items-center">
-                            <a class="a-login" >Have you got an account yet?</a>
-                        </div>
+                            <!-- Email -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-1 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-at"></i>
+                                    </span>
+                                </div>
+                                <input name="email" id="email" type="text" class="input-login-1 form-control" placeholder="Email">
+                            </div>
 
+                            <!-- Password -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-3 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-lock"></i>
+                                    </span>
+                                </div>
+                                <input name="password" id="password" type="password" class="input-login-3 form-control" placeholder="Password">
+                            </div>
+
+                            <!-- Repeat Password -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-2 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-lock"></i>
+                                    </span>
+                                </div>
+                                <input name="rpassword" id="rpassword" type="password" class="input-login-2 form-control" placeholder="Repeat Password">
+                            </div>
+
+                            
+                            <!-- Button -->
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <input type="submit" class="btn btn-outline-warning" value="Start!">
+                                <input type="hidden" name="_csrf" value="{{token}}">
+                            </div>
+
+                            <!-- Login -->
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <a class="a-login" href="/login">Have you got an account yet?</a>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
+
         </section>
 
         <br>
-        
+        <br>
+        <br>
 
         {{>components/footer}}
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                if (showModal) {
+                    // Mostrar el modal
+                    var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+                    myModal.show();
+                }
+            });
+        </script>
     </body>
 </html>

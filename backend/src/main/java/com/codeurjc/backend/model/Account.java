@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Account {
 
@@ -27,7 +24,7 @@ public class Account {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] profilePicture;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "account_pending_friends", 
         joinColumns = @JoinColumn(name = "account_id"), 
@@ -35,7 +32,7 @@ public class Account {
     )
     private List<Account> pendingFriends = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "account_my_friends", 
         joinColumns = @JoinColumn(name = "account_id"), 
@@ -43,12 +40,18 @@ public class Account {
     )
     private List<Account> myFriends = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+        name = "account_teams", 
+        joinColumns = @JoinColumn(name = "account_id"), 
+        inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
+    private List<Team> teams = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets = new ArrayList<>();
 
 
-    
     public Account() {
     }
 
@@ -60,6 +63,17 @@ public class Account {
         setPassword(password);
         this.profilePicture = profilePicture;
 
+        this.myFriends = new ArrayList<>();
+        this.pendingFriends = new ArrayList<>();
+    }
+
+    public Account(String nickName, String firstName, String lastName, String email, String password){
+        this.nickName = nickName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        setPassword(password);
+        
         this.myFriends = new ArrayList<>();
         this.pendingFriends = new ArrayList<>();
     }
@@ -122,6 +136,12 @@ public class Account {
     }
     public void setPendingFriends(List<Account> pendingFriends){
         this.pendingFriends = pendingFriends;
+    }
+    public List<Ticket> getTickets() {
+        return this.tickets;
+    }
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
 }

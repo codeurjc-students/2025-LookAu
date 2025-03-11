@@ -12,45 +12,65 @@
                     <img src="images/others/signout-logo.png" alt="Logo">
                 </div>
 
+
                 <!-- Form -->
-                <div class="row justify-content-center">
-                    <div class="col-6">
+                <form id="loginForm" action="/login" method="post">
+                    <div class="row justify-content-center">
+                        <div class="col-6">
 
-                        <!-- Email -->
-                        <div class="input-group input-group-lg mb-3">
-                            <div class="input-login input-group-prepend">
-                                <span class="input-login-1 input-group-text" id="basic-addon1">
-                                    <i class="login-icon-color fas fa-user"></i>
-                                </span>
+                            {{#showError}}
+                            <div class="text-danger d-flex justify-content-center align-items-center mb-2">
+                                <div class="row justify-content-center pass-error mx-2">
+                                    <p class="mx-2" style="color:#dc3545;">{{error}}</p>
+                                </div>
                             </div>
-                            <input type="text" class="input-login-1 form-control" placeholder="Email">
-                        </div>
+                            {{/showError}}
+                            <br>
 
-                        <!-- Password -->
-                        <div class="input-group input-group-lg mb-3">
-                            <div class="input-login input-group-prepend">
-                                <span class="input-login-2 input-group-text" id="basic-addon1">
-                                    <i class="login-icon-color fas fa-lock"></i>
-                                </span>
+                            <!-- Email -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-1 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-user"></i>
+                                    </span>
+                                </div>
+                                <input name="email" id="email" type="text" class="input-login-1 form-control" placeholder="Email">
                             </div>
-                            <input type="password" class="input-login-2 form-control" placeholder="Password">
-                        </div>
 
-                        <!-- Button -->
-                        <div class="row d-flex justify-content-center align-items-center">
-                            <input type="submit" class="btn btn-outline-warning" value="Go!">
-                        </div>
+                            <!-- Password -->
+                            <div class="input-group input-group-lg mb-3">
+                                <div class="input-login input-group-prepend">
+                                    <span class="input-login-2 input-group-text" id="basic-addon1">
+                                        <i class="login-icon-color fas fa-lock"></i>
+                                    </span>
+                                </div>
+                                <input name="password" id="password" type="password" class="input-login-2 form-control" placeholder="Password">
+                            </div>
 
-                        <!-- Forgot password -->
-                        <div class="row d-flex justify-content-center align-items-center">
-                            <a class="a-login" >Forgot password?</a>
-                        </div>
+                            <!-- Button -->
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <input type="submit" class="btn btn-outline-warning" value="Go!">
+                                <input type="hidden" name="_csrf" value="{{token}}">
+                            </div>
 
+                            <!-- Forgot password -->
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <a class="a-login" >Forgot password?</a>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
 
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <br>
         <br>
         {{>components/footer}}

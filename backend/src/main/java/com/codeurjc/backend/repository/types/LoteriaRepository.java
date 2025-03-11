@@ -4,12 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.model.types.Loteria;
 
-public interface LoteriaRepository extends JpaRepository<Account, Long>{
-    Optional<Account> findFirstByFirstName(String name);
+public interface LoteriaRepository extends JpaRepository<Loteria, Long>{
     @SuppressWarnings("null")
-    Optional<Account> findById(Long id);
-    Optional<Account> findByEmail(String email);
-    
+    Optional<Loteria> findById(Long id);    
 }

@@ -4,12 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.model.types.Quintuple;
 
-public interface QuintupleRepository extends JpaRepository<Account, Long>{
-    Optional<Account> findFirstByFirstName(String name);
+public interface QuintupleRepository extends JpaRepository<Quintuple, Long>{
     @SuppressWarnings("null")
-    Optional<Account> findById(Long id);
-    Optional<Account> findByEmail(String email);
-    
+    Optional<Quintuple> findById(Long id);
 }

@@ -16,8 +16,15 @@
             <!-- COL TICKETS -->
             <div class="col-7">   
               
-              {{>ticket-edit/p-ticket-in-edit-card}}
+              <!--{>ticket-edit/p-ticket-in-edit-card}}-->
               <!--{>ticket/p-ticket-in-card}}-->
+              {{#isProfile}}
+                {{>profile/profile}}
+              {{/isProfile}}
+              
+              {{#isProfileEdit}}
+                {{>profile/profile-edit}}
+              {{/isProfileEdit}}
 
               <br>
 

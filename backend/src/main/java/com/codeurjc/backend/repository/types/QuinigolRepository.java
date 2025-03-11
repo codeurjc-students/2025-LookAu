@@ -4,12 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.model.types.Quinigol;
 
-public interface BonolotoRepository extends JpaRepository<Account, Long>{
-    Optional<Account> findFirstByFirstName(String name);
+public interface QuinigolRepository extends JpaRepository<Quinigol, Long>{
     @SuppressWarnings("null")
-    Optional<Account> findById(Long id);
-    Optional<Account> findByEmail(String email);
-    
+    Optional<Quinigol> findById(Long id);    
 }

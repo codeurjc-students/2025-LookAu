@@ -403,3 +403,12 @@ footer {
     border: 2px solid #101010;
     color: #1a1a1a;
 }
+
+
+.pass-error {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #dc3545; 
+    border: 1px solid #dc3545;
+    font-style: italic;
+}

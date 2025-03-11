@@ -154,48 +154,58 @@ public class SecurityConfiguration {
 
 		http.authenticationProvider(authenticationProvider());
 
-		http
-				.authorizeHttpRequests(authorize -> authorize
+		http.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers("/new/**").permitAll()
+				
+				// PUBLIC PAGES
+				.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
+				.requestMatchers("/groups").permitAll()
+				.requestMatchers("/signup").permitAll()
+				.requestMatchers("/login").permitAll()
+				.requestMatchers("/profile").permitAll()
+				.requestMatchers("/stats").permitAll()	
+				.requestMatchers("/editProfile").permitAll()
+				.requestMatchers("/error").permitAll()
+				
+				
+				
+				.requestMatchers("/error").permitAll()
+				.requestMatchers("/subject/**").permitAll()
+				.requestMatchers("/subjectInfo").permitAll()
+				.requestMatchers("/chart/**").permitAll()
+				.requestMatchers("/swagger-ui/**").permitAll()
+				.requestMatchers("/v3/**").permitAll()
 
-						.requestMatchers("/new/**").permitAll()
-						
-						// PUBLIC PAGES
-						.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
-						.requestMatchers("/").permitAll()
-						.requestMatchers("/sign-up").permitAll()
-						.requestMatchers("/error").permitAll()
-						.requestMatchers("/subject/**").permitAll()
-						.requestMatchers("/subjectInfo").permitAll()
-						.requestMatchers("/chart/**").permitAll()
-						.requestMatchers("/swagger-ui/**").permitAll()
-						.requestMatchers("/v3/**").permitAll()
+				// PRIVATE PAGES
+				.requestMatchers("/subjects-registered/**").hasAnyRole("STUDENT", "TEACHER")
+				.requestMatchers("/registered").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
+				.requestMatchers("/subjectUser").permitAll()
+				.requestMatchers("/editProfile").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
+				.requestMatchers("/moreSubjectsAdmin/**").hasAnyRole("ADMIN")
+				.requestMatchers("/moreSubjectsMain/**").hasAnyRole("ADMIN")
+				.requestMatchers("/moreSubjectsRegistered/**").hasAnyRole("TEACHER", "STUDENT")
+				.requestMatchers("/redirection/**").hasAnyRole("TEACHER", "STUDENT")
+				.requestMatchers("/teachers/**").hasAnyRole("TEACHER")
+				.requestMatchers("/students/**").hasAnyRole("STUDENT")
+				.requestMatchers("/admins/**").hasAnyRole("ADMIN")
+				.requestMatchers("/user/photo").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
 
-						// PRIVATE PAGES
-						.requestMatchers("/subjects-registered/**").hasAnyRole("STUDENT", "TEACHER")
-						.requestMatchers("/registered").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
-						.requestMatchers("/subjectUser").permitAll()
-						.requestMatchers("/profile").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
-						.requestMatchers("/editProfile").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
-						.requestMatchers("/moreSubjectsAdmin/**").hasAnyRole("ADMIN")
-						.requestMatchers("/moreSubjectsMain/**").hasAnyRole("ADMIN")
-						.requestMatchers("/moreSubjectsRegistered/**").hasAnyRole("TEACHER", "STUDENT")
-						.requestMatchers("/redirection/**").hasAnyRole("TEACHER", "STUDENT")
-						.requestMatchers("/teachers/**").hasAnyRole("TEACHER")
-						.requestMatchers("/students/**").hasAnyRole("STUDENT")
-						.requestMatchers("/admins/**").hasAnyRole("ADMIN")
-						.requestMatchers("/user/photo").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
-
-				)
-				.formLogin(formLogin -> formLogin
-						.loginPage("/login")
-						.usernameParameter("email")
-						.failureUrl("/login")
-						.defaultSuccessUrl("/registered")
-						.permitAll())
-				.logout(logout -> logout
-						.logoutUrl("/logout")
-						.logoutSuccessUrl("/login")
-						.permitAll());
+			)
+			.formLogin(formLogin -> formLogin
+				.loginPage("/login")
+				.usernameParameter("email")
+				.failureUrl("/login")
+				.usernameParameter("email") 
+				.passwordParameter("password") 
+				.failureUrl("/login?error=true")
+				.defaultSuccessUrl("/groups")
+				.permitAll()
+			)
+			.logout(logout -> logout
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login")
+				.permitAll()
+			);
 
 		http.csrf(csrf -> csrf.ignoringRequestMatchers("/sendSolicitud"));
 

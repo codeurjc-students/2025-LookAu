@@ -1,25 +1,32 @@
-package com.codeurjc.backend.model.TicketsTypes;
-
-import java.util.*;
+package com.codeurjc.backend.model.types;
 
 import com.codeurjc.backend.model.EnumTickectType;
 import com.codeurjc.backend.model.TicketType;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("LOTERIA")
 public class Loteria extends TicketType {
 
-    private Double number;
-    private Double euros;
-    private Double series;
-    private Double fraction;
+    private Integer number;
+    private Integer euros;
+    private Integer series;
+    private Integer fraction;
 
     private EnumTickectType tickectType;
 
-    public Loteria(Double number, Double euros, Double series, Double fraction){
+    public Loteria(Integer number, Integer euros, Integer series, Integer fraction){
         super(EnumTickectType.LOTERIA);
         this.number = number;
         this.euros = euros;
         this.series = series;
         this.fraction = fraction;
+    }
+
+    public Loteria(){
+        super(EnumTickectType.LOTERIA);
     }
 
     public String getTicketTypeName(){
@@ -29,31 +36,31 @@ public class Loteria extends TicketType {
         return tickectType;
     }
 
-    public Double getNumber() {
+    public Integer getNumber() {
         return number;
     }
-    public void setNumber(Double number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public Double getEuros() {
+    public Integer getEuros() {
         return euros;
     }
-    public void setEuros(Double euros) {
+    public void setEuros(Integer euros) {
         this.euros = euros;
     }
 
-    public Double getSeries() {
+    public Integer getSeries() {
         return series;
     }
-    public void setSeries(Double series) {
+    public void setSeries(Integer series) {
         this.series = series;
     }
 
-    public Double getFraction() {
+    public Integer getFraction() {
         return fraction;
     }
-    public void setFraction(Double fraction) {
+    public void setFraction(Integer fraction) {
         this.fraction = fraction;
     }
 }

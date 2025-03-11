@@ -4,12 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.model.Team;
 
-public interface TeamRepository extends JpaRepository<Account, Long>{
-    Optional<Account> findFirstByFirstName(String name);
+public interface TeamRepository extends JpaRepository<Team, Long>{
     @SuppressWarnings("null")
-    Optional<Account> findById(Long id);
-    Optional<Account> findByEmail(String email);
+    Optional<Team> findById(Long id);
     
 }
