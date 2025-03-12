@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.service.AccountService;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model; 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -22,19 +22,27 @@ public class MainController {
     private AccountService accountService;
 
     @ModelAttribute
-    public void addAttributes(ModelAndView model, HttpServletRequest request) {
+    public void addAttributes(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         if (principal != null) {
-            model.addObject("logged", true); 
+            model.addAttribute("logged", true); 
         } else {
-            model.addObject("logged", false); 
+            model.addAttribute("logged", false); 
         }
+    }
+
+
+    @GetMapping("/logout")
+    public ModelAndView showGLogout() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/login");
+        return modelAndView;
     }
 
     @PostMapping("/logout")
     public ModelAndView showLogout() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("redirect:/login");
         return modelAndView;
     }
 
@@ -80,17 +88,27 @@ public class MainController {
         modelAndView.addObject("error", "");
 
         if(!firstName.equals("") && !lastName.equals("") && !email.equals("") && !rpassword.equals("") && !password.equals("") && !nickName.equals("")){
-            if (accountService.emailRepeat(email)) {
+            if (accountService.emailRepeat(email)){
 
-                if (!password.equals(rpassword)) { 
-                    modelAndView.addObject("showError", true);
-                    modelAndView.addObject("error", "Passwords are not the same");
-                    modelAndView.setViewName("signup");
+                if (accountService.nickNameRepeat(nickName)){
+
+                    if (!password.equals(rpassword)) { 
+                        modelAndView.addObject("showError", true);
+                        modelAndView.addObject("error", "Passwords are not the same");
+                        modelAndView.setViewName("signup");
+                    }else{
+                        Account acc = new Account(nickName, firstName, lastName, email, password);
+                        accountService.setAccount(acc);
+                        modelAndView.setViewName("login");
+                    }
+
                 }else{
-                    Account acc = new Account(nickName, firstName, lastName, email, password);
-                    accountService.setAccount(acc);
-                    modelAndView.setViewName("login");
+                    modelAndView.addObject("showError", true);
+                    modelAndView.addObject("error", "There is already an account with this nick name");
+                    modelAndView.setViewName("signup");
                 }
+
+                
                 
 
             } else {

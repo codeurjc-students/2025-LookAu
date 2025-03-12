@@ -77,8 +77,10 @@
             const navLinks = document.querySelectorAll(".nav-link");
     
             navLinks.forEach(link => {
-                if (link.getAttribute("href") === currentPath || 
-                    (link.getAttribute("href") === "/profile" && currentPath === "/editProfile")) {
+                if (link.getAttribute("href") === currentPath ||
+                    (link.getAttribute("href") === "/profile" && currentPath === "/editProfile") ||
+                    (link.getAttribute("href") === "/searchAccount" && currentPath.startsWith("/searchAccounts")) ||
+                    (link.getAttribute("href") === "/otraRuta" && currentPath.startsWith("/otraRuta"))) {
                     link.setAttribute("aria-selected", "true");
                     link.classList.add("active");
                 } else {

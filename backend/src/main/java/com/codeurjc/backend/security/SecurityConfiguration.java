@@ -162,14 +162,21 @@ public class SecurityConfiguration {
 				.requestMatchers("/groups").permitAll()
 				.requestMatchers("/signup").permitAll()
 				.requestMatchers("/login").permitAll()
-				.requestMatchers("/profile").permitAll()
+				.requestMatchers("/logout").permitAll()
+				
 				.requestMatchers("/stats").permitAll()	
-				.requestMatchers("/editProfile").permitAll()
+
+				.requestMatchers("/searchAccounts").permitAll()
+				.requestMatchers("/profile").permitAll()
+				.requestMatchers("/acc/photo").permitAll()
+				.requestMatchers("/acc/photoFriend/**").permitAll()
+
+				.requestMatchers("/editProfile").permitAll()	
 				.requestMatchers("/error").permitAll()
 				
 				
 				
-				.requestMatchers("/error").permitAll()
+				
 				.requestMatchers("/subject/**").permitAll()
 				.requestMatchers("/subjectInfo").permitAll()
 				.requestMatchers("/chart/**").permitAll()

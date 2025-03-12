@@ -1,9 +1,54 @@
 <!-- Formulario -->
-<div class="col-8">
-    <div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <a class="btn-background btn btn-outline-secondary"><i class="login-icon-color fas fa-search"></i></a>
+<form id="loginForm" action="/searchAccounts" method="get">
+    
+    <div clas="row">
+        <div class="col-12">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <a class="btn-background btn btn-outline-secondary"><i class="login-icon-color fas fa-search"></i></a>
+                </div>
+                <input name="stringToFind" id="stringToFind" type="text" class="form-control-funcionapls form-control" placeholder="Find by name" aria-label="" aria-describedby="basic-addon1">
+            </div>
+        </div>
     </div>
-    <input type="text" class="form-control-funcionapls form-control" placeholder="Find by name" aria-label="" aria-describedby="basic-addon1">
+
+
+    {{#searching}}
+    <div clas="row">
+        <div class="col-12">
+            {{#isEmptySearchAccounts}}
+            <div class="row justify-content-center align-items-center mx-2">
+                <p class="mx-2" style="color:#dc3545;">No results</p>
+            </div>
+            {{/isEmptySearchAccounts}}
+
+            {{^isEmptySearchAccounts}}
+                <ul>
+                    {{#searchAccounts}}
+                    <li>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                    <div class="row">
+                                        <div class="col-8 d-flex align-items-center my-2">
+                                            <p class="card-status ml-3">{{nickName}}</p>
+                                        </div>
+
+                                        <div class="col-1 d-flex align-items-center">
+                                            <a class="ml-4" id="pills-profile-tab" data-toggle="pill" href="/sendPendingFriend/{{nickName}}" role="tab" aria-controls="pills-profile" aria-selected="false">
+                                                <i class="header-profilek login-icon-color fas fa-check"></i> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{/searchAccounts}}
+                </ul>
+            {{/isEmptySearchAccounts}}
+        </div>
     </div>
-</div>
+    {{/searching}}
+
+</form>

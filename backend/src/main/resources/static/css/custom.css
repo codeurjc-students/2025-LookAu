@@ -412,3 +412,10 @@ footer {
     border: 1px solid #dc3545;
     font-style: italic;
 }
+
+.circular-img {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+}

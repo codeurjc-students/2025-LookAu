@@ -54,7 +54,7 @@
                                     <div class="row">
                                         <div class="col-10">
                                             <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                                <p class="card-status ml-3">Amanda</p>
+                                                <p class="card-status ml-3">{{firstName}}</p>
                                             </div>
                                         </div>
                                         <div class="col-2"></div>
@@ -73,7 +73,7 @@
                                     <div class="row">
                                         <div class="col-10">
                                             <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                                <p class="card-status ml-3">Castro López</p>
+                                                <p class="card-status ml-3">{{lastName}}</p>
                                             </div>
                                         </div>
                                         <div class="col-2"></div>
@@ -92,7 +92,7 @@
                                     <div class="row">
                                         <div class="col-10">
                                             <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                                <p class="card-status ml-3">Paco</p>
+                                                <p class="card-status ml-3">{{nickName}}</p>
                                             </div>
                                         </div>
                                         <div class="col-2"></div>
@@ -114,16 +114,25 @@
             <div class="row">
                 <div class="col-12">
 
-                    <div class="row align-items-center mt-2 ml-4">
+                    <div class="row d-flex justify-content-center align-items-center mt-2">
                         <p class="subtittle-tickets">Photo:</p>
                     </div>
         
-                    <div class="justify-content-center align-items-center mx-4">
-                        <img class="image-groups" src="images/others/groups-nophoto.png" alt="Card image cap">
+                    <div class="d-flex justify-content-center align-items-center mx-4">
+                        <img class="image-groups" src="/acc/photo" alt="Card image cap" style="width: 150px; height: 150px;">
                     </div>
 
                 </div>
             </div>
+            <br>
+            <br>
+
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <a href="/logout" class="btnnn btn-dark" value="Logout">Logout</a>
+                </div>
+            </div>
+            <br>
         </div>
     </div>
 
@@ -167,37 +176,42 @@
                 
                 <div class="col-12">
 
-                    <!-- Ticket Type -->
+                    <!-- Add Friends -->
                     <div class="row">
                         <div class="col-12">
 
-                            <div class="row justify-content-center align-items-center mt-2">
+                            <div class="row d-flex align-items-center mt-2 ml-4">
                                 <p class="subtittle-tickets">Add a friend</p>
                             </div>
                 
                             <div class="row justify-content-center align-items-center mt-3">
-                                {{>groups/group-searchbar}}
+                                <div class="col-10">
+                                    {{>groups/group-searchbar}}
+                                </div>
                             </div>
 
                         </div>
                     </div>
 
                     <br>
+                    <br>
 
-                    <!-- Date -->
+                    <!-- Pending friends -->
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12 ">
 
-                            <div class="row justify-content-center align-items-center mt-2">
+                            
+                            <div class="row ml-4 align-items-center mt-2">
                                 <p class="subtittle-tickets">Pending</p>
                             </div>
-                
+
+                            {{#pendingFriends}}
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
                                         <div class="row">
                                             <div class="col-8 d-flex align-items-center my-2">
-                                                <p class="card-status ml-3">Paco</p>
+                                                <p class="card-status ml-3">{{nickName}}</p>
                                             </div>
 
                                             <div class="col-1 d-flex align-items-center">
@@ -215,55 +229,51 @@
                                     </div>
                                 </div>
                             </div>
+                            {{/pendingFriends}}
+
+                            {{^pendingFriends}}
+                            <div class="row ">
+                                <div class="col-12 ml-5 align-items-center">
+                                    <p>No pending request!</p>
+                                </div>
+                            </div>
+                            {{/pendingFriends}}
 
                         </div>
                     </div>
 
                     <br>
+                    <br>
 
+                    <!-- My friends -->
                     <div class="row">
                         <div class="col-12">
  
-                            <div class="row justify-content-center align-items-center ml-3 mt-2">
+                            <div class="row ml-4 align-items-center mt-2">
                                 <p class="subtittle-tickets">My friends</p>
                             </div>
                 
+                            {{#myFriends}}
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
                                         
                                         <div class="row">
                                             <div class="col-4 barra-lateral-profile" style="border-right: 4px solid #2e2e2e;">
-                                                <p class="card-status ml-3">Alberto</p>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <img class="circular-img my-4" src="/acc/photoFriend/{{nickName}}" alt="Card image cap" style="width: 50px; height: 50px; border-radius: 50%; ">
+                                                </div>
                                             </div>
 
-                                            <div class="col-8">
-                                                <p class="card-status ml-3">Alberto Limón Carmona</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                        
-                                        <div class="row">
-                                            <div class="col-4 barra-lateral-profile" style="border-right: 4px solid #2e2e2e;">
-                                                <p class="card-status ml-3">Diego</p>
-                                            </div>
-
-                                            <div class="col-8">
-                                                <p class="card-status ml-3">Diego Fernandez del Álamo</p>
+                                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                                <p class="card-status">{{nickName}}</p>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
+                            {{/myFriends}}
 
                         </div>
                     </div>
