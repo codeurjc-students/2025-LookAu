@@ -157,27 +157,37 @@ public class SecurityConfiguration {
 		http.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/new/**").permitAll()
 				
-				// PUBLIC PAGES
+				//LOGIN - SIGNUP
 				.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
-				.requestMatchers("/groups").permitAll()
 				.requestMatchers("/signup").permitAll()
 				.requestMatchers("/login").permitAll()
 				.requestMatchers("/logout").permitAll()
 				
-				.requestMatchers("/stats").permitAll()	
-
+				//PROFILE
 				.requestMatchers("/searchAccounts").permitAll()
 				.requestMatchers("/profile").permitAll()
 				.requestMatchers("/acc/photo").permitAll()
 				.requestMatchers("/acc/photoFriend/**").permitAll()
+				.requestMatchers("/sendPendingFriend/**").permitAll()
 
+				//EDIT PROFILE
 				.requestMatchers("/editProfile").permitAll()	
-				.requestMatchers("/error").permitAll()
+
+				//GROUPS
+				.requestMatchers("/groups").permitAll()
+
+				//STATS
+				.requestMatchers("/stats").permitAll()	
+				
+				//OTHERS	
+				.requestMatchers("/error").permitAll()	
+				.requestMatchers("/moreMyFriends").permitAll()
+				.requestMatchers("/morePendingFriends").permitAll()
 				
 				
 				
 				
-				.requestMatchers("/subject/**").permitAll()
+				
 				.requestMatchers("/subjectInfo").permitAll()
 				.requestMatchers("/chart/**").permitAll()
 				.requestMatchers("/swagger-ui/**").permitAll()

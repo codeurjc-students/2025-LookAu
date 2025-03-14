@@ -170,7 +170,7 @@ public class DataInitializer {
         /**** ACCOUNTS ****/
         /******************/
 
-        byte[] photo = this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\signout-logo.png");
+        byte[] photo = this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_noprofile.jpg");
 
         Account account1 = new Account("LaTinyLoco", "Amanda", "Castro López", "amanda.cl@gmail.com", "password1", this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork3_profile.png"));
         Account account2 = new Account("Pepiflor23", "Alberto", "Limón Carmona", "alberto.lc@gmail.com", "password2", this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork2_profile.png"));

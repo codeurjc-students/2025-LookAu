@@ -34,11 +34,20 @@ public class Account {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
+        name = "account_request_friends", 
+        joinColumns = @JoinColumn(name = "account_id"), 
+        inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<Account> requestFriends = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
         name = "account_my_friends", 
         joinColumns = @JoinColumn(name = "account_id"), 
         inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private List<Account> myFriends = new ArrayList<>();
+
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -142,6 +151,12 @@ public class Account {
     }
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+    public List<Account> getRequestFriends() {
+        return requestFriends;
+    }
+    public void setRequestFriends(List<Account> requestFriends) {
+        this.requestFriends = requestFriends;
     }
 
 }

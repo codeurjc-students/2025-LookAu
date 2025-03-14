@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.repository.AccountRepository;
 import com.codeurjc.backend.service.AccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,8 +33,14 @@ import java.nio.file.Path;
 @Controller
 public class ProfileController {
 
+    private final AccountRepository accountRepository;
+
     @Autowired
     private AccountService accountService;
+
+    ProfileController(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
@@ -48,9 +56,16 @@ public class ProfileController {
             if (accOpp.isPresent()){
                 Account acc = accOpp.get();
                 model.addAttribute("pendingFriends", acc.getPendingFriends());
-                model.addAttribute("myFriends", acc.getMyFriends());
+                
                 model.addAttribute("hasNotification", acc.getPendingFriends().size()>0); 
-            }
+                
+
+                model.addAttribute("moreMyFriends", accountService.getAllMyFriendsPage(acc.getNickName(), PageRequest.of(0, 2)));
+                model.addAttribute("isEmptyMyFriends", accountService.getAllMyFriendsPage(acc.getNickName(), PageRequest.of(0, 2)).getSize()>0);
+            
+                model.addAttribute("morePendingFriends", accountService.getAllPendingFriendsPage(acc.getNickName(), PageRequest.of(0, 2)));    
+                model.addAttribute("isEmptyPendingFriends", accountService.getAllPendingFriendsPage(acc.getNickName(), PageRequest.of(0, 2)).getTotalElements()>0.0);
+            }   
 
         } else {
             model.addAttribute("logged", false); 
@@ -79,6 +94,8 @@ public class ProfileController {
                 modelAndView.addObject("firstName", acc.getFirstName()); 
                 modelAndView.addObject("lastName", acc.getLastName()); 
                 modelAndView.addObject("nickName", acc.getNickName()); 
+                
+                
 
                 
             }else{
@@ -157,7 +174,7 @@ public class ProfileController {
             if (accOpp.isPresent()){
                 Account acc = accOpp.get();
                 accountService.sendFriendRequest(acc, nickName);
-                modelAndView.setViewName("redirect:/login");
+                modelAndView.setViewName("redirect:/profile");
             }else{
                 modelAndView.setViewName("error");
             }

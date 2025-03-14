@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-2"></div>
-    
+
     <div class="col-5">
         <div class="card">
 
@@ -18,19 +18,19 @@
                         </div>
 
                         <div class="col-2"></div>
-               
+
                         <!-- Buttons -->
                         <div class="col-1 d-flex align-items-end my-3 ml-5 mr-0">
                             <a class="nav-link nav-linkkk circle-linkkk" href="/editProfile">
-                                <i class="header-profilek login-icon-color fas fa-pen"></i> 
+                                <i class="header-profilek login-icon-color fas fa-pen"></i>
                             </a>
                         </div>
-                        
+
                     </div>
 
-                    
+
                 </div>
-                
+
             </div>
 
 
@@ -46,58 +46,61 @@
 
                             <div class="row">
                                 <div class="col-12">
-        
+
                                     <div class="row align-items-center ml-3 mt-2">
                                         <p class="subtittle-tickets">First Name:</p>
                                     </div>
-                        
+
                                     <div class="row">
                                         <div class="col-10">
-                                            <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                            <div
+                                                class="card-ticket justify-content-center align-items-center mx-4 my-2">
                                                 <p class="card-status ml-3">{{firstName}}</p>
                                             </div>
                                         </div>
                                         <div class="col-2"></div>
                                     </div>
-        
+
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12">
-        
+
                                     <div class="row align-items-center ml-3 mt-2">
                                         <p class="subtittle-tickets">Last Name:</p>
                                     </div>
-                        
+
                                     <div class="row">
                                         <div class="col-10">
-                                            <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                            <div
+                                                class="card-ticket justify-content-center align-items-center mx-4 my-2">
                                                 <p class="card-status ml-3">{{lastName}}</p>
                                             </div>
                                         </div>
                                         <div class="col-2"></div>
                                     </div>
-        
+
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12">
-        
+
                                     <div class="row align-items-center ml-3 mt-2">
                                         <p class="subtittle-tickets">Nick Name:</p>
                                     </div>
-                        
+
                                     <div class="row">
                                         <div class="col-10">
-                                            <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                            <div
+                                                class="card-ticket justify-content-center align-items-center mx-4 my-2">
                                                 <p class="card-status ml-3">{{nickName}}</p>
                                             </div>
                                         </div>
                                         <div class="col-2"></div>
                                     </div>
-        
+
                                 </div>
                             </div>
 
@@ -105,7 +108,7 @@
                     </div>
 
                     <br>
-                    
+
                 </div>
 
             </div>
@@ -117,9 +120,10 @@
                     <div class="row d-flex justify-content-center align-items-center mt-2">
                         <p class="subtittle-tickets">Photo:</p>
                     </div>
-        
+
                     <div class="d-flex justify-content-center align-items-center mx-4">
-                        <img class="image-groups" src="/acc/photo" alt="Card image cap" style="width: 150px; height: 150px;">
+                        <img class="image-groups" src="/acc/photo" alt="Card image cap"
+                            style="width: 150px; height: 150px;">
                     </div>
 
                 </div>
@@ -155,25 +159,25 @@
                         </div>
 
                         <div class="col-1"></div>
-                    
+
 
                         <!-- Buttons -->
-                        <div class="col-1 d-flex align-items-end my-3 ml-5 mr-0"> 
+                        <div class="col-1 d-flex align-items-end my-3 ml-5 mr-0">
                             <a class="nav-link nav-linkkk circle-linkkk" href="/editProfile">
-                                <i class="header-profilek login-icon-color fas fa-pen"></i> 
+                                <i class="header-profilek login-icon-color fas fa-pen"></i>
                             </a>
                         </div>
                     </div>
 
-                    
+
                 </div>
-                
+
             </div>
 
             <!-- INFORMATION -->
             <div class="row">
 
-                
+
                 <div class="col-12">
 
                     <!-- Add Friends -->
@@ -183,7 +187,7 @@
                             <div class="row d-flex align-items-center mt-2 ml-4">
                                 <p class="subtittle-tickets">Add a friend</p>
                             </div>
-                
+
                             <div class="row justify-content-center align-items-center mt-3">
                                 <div class="col-10">
                                     {{>groups/group-searchbar}}
@@ -196,48 +200,69 @@
                     <br>
                     <br>
 
-                    <!-- Pending friends -->
+                    <!-- My friends -->
                     <div class="row">
-                        <div class="col-12 ">
+                        <div class="col-12">
 
-                            
                             <div class="row ml-4 align-items-center mt-2">
-                                <p class="subtittle-tickets">Pending</p>
+                                <p class="subtittle-tickets">My friends</p>
                             </div>
 
-                            {{#pendingFriends}}
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                        <div class="row">
-                                            <div class="col-8 d-flex align-items-center my-2">
-                                                <p class="card-status ml-3">{{nickName}}</p>
+                            <div id="moreMyFriends">
+
+                                {{#isEmptyMyFriends}}
+                                {{#moreMyFriends}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+
+                                            <div class="row">
+                                                <div class="col-4 barra-lateral-profile"
+                                                    style="border-right: 4px solid #2e2e2e;">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <img class="circular-img my-4"
+                                                            src="/acc/photoFriend/{{nickName}}" alt="Card image cap"
+                                                            style="width: 50px; height: 50px; border-radius: 50%; ">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-8 d-flex justify-content-center align-items-center">
+                                                    <p class="card-status">{{nickName}}</p>
+                                                </div>
                                             </div>
 
-                                            <div class="col-1 d-flex align-items-center">
-                                                <a class="ml-4" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                                    <i class="header-profilek login-icon-color fas fa-times"></i> 
-                                                </a>
-                                            </div>
-
-                                            <div class="col-1 d-flex align-items-center">
-                                                <a class="ml-4" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                                    <i class="header-profilek login-icon-color fas fa-check"></i> 
-                                                </a>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                {{/moreMyFriends}}
                             </div>
-                            {{/pendingFriends}}
 
-                            {{^pendingFriends}}
+
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <div id="spinner" class="lds-dual-ring hidden">
+                                        <img src="/images/spinner.gif" alt="Loading..."
+                                            style="width: 100px; height: 70px;" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{^isLastPage}}
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <a id="btnMoreMyFriends" class="btnnn btn-dark">More</a>
+                                </div>
+                            </div>
+                            {{/isLastPage}}
+                            {{/isEmptyMyFriends}}
+
+                            {{^isEmptyMyFriends}}
                             <div class="row ">
                                 <div class="col-12 ml-5 align-items-center">
                                     <p>No pending request!</p>
                                 </div>
                             </div>
-                            {{/pendingFriends}}
+                            {{/isEmptyMyFriends}}
 
                         </div>
                     </div>
@@ -245,24 +270,100 @@
                     <br>
                     <br>
 
-                    <!-- My friends -->
                     <div class="row">
                         <div class="col-12">
- 
+
                             <div class="row ml-4 align-items-center mt-2">
-                                <p class="subtittle-tickets">My friends</p>
+                                <p class="subtittle-tickets">Pending friends</p>
                             </div>
-                
-                            {{#myFriends}}
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                        
-                                        <div class="row">
-                                            <div class="col-4 barra-lateral-profile" style="border-right: 4px solid #2e2e2e;">
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <img class="circular-img my-4" src="/acc/photoFriend/{{nickName}}" alt="Card image cap" style="width: 50px; height: 50px; border-radius: 50%; ">
+
+                            <div id="morePendingFriends">
+
+                                {{#isEmptyPendingFriends}}
+                                {{#morePendingFriends}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                            <div class="row">
+                                                <div class="col-8 d-flex align-items-center my-2">
+                                                    <p class="card-status ml-3">{{nickName}}</p>
                                                 </div>
+    
+                                                <div class="col-1 d-flex align-items-center">
+                                                    <a class="ml-4" id="pills-profile-tab" data-toggle="pill"
+                                                        href="#pills-profile" role="tab" aria-controls="pills-profile"
+                                                        aria-selected="false">
+                                                        <i class="header-profilek login-icon-color fas fa-times"></i>
+                                                    </a>
+                                                </div>
+    
+                                                <div class="col-1 d-flex align-items-center">
+                                                    <a class="ml-4" id="pills-profile-tab" data-toggle="pill"
+                                                        href="#pills-profile" role="tab" aria-controls="pills-profile"
+                                                        aria-selected="false">
+                                                        <i class="header-profilek login-icon-color fas fa-check"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/morePendingFriends}}
+                            </div>
+
+
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <div id="spinner" class="lds-dual-ring hidden">
+                                        <img src="/images/spinner.gif" alt="Loading..."
+                                            style="width: 100px; height: 70px;" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{^isLastPage}}
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <a id="btnMorePendingFriends" class="btnnn btn-dark">More</a>
+                                </div>
+                            </div>
+                            {{/isLastPage}}
+                            {{/isEmptyPendingFriends}}
+
+                            {{^isEmptyPendingFriends}}
+                            <div class="row ">
+                                <div class="col-12 ml-5 align-items-center">
+                                    <p>No pending request!</p>
+                                </div>
+                            </div>
+                            {{/isEmptyPendingFriends}}
+
+                        </div>
+                    </div>
+
+                    <br>
+                    <br>
+
+
+                    <!-- My Request -->
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="row ml-4 align-items-center mt-2">
+                                <p class="subtittle-tickets">My Request</p>
+                            </div>
+
+                            {{#myRequestFriends}}
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-10 ">
+                                    <div class="card-ticket mx-4 my-2">
+
+                                        <div class="row ">
+                                            <div class="col-1 d-flex justify-content-center align-items-center barra-lateral-profile ml-3"
+                                                style="border-right: 4px solid #2e2e2e;">
+
+                                                <i class="header-profilek login-icon-color fas fa-clock"></i>
+
                                             </div>
 
                                             <div class="col-8 d-flex justify-content-center align-items-center">
@@ -273,16 +374,18 @@
                                     </div>
                                 </div>
                             </div>
-                            {{/myFriends}}
-
+                            {{/myRequestFriends}}
+                            
                         </div>
                     </div>
 
                     <br>
-                    
-                </div>
+                    <br>
 
+                </div>
             </div>
         </div>
     </div>
+</div>
+
 </div>

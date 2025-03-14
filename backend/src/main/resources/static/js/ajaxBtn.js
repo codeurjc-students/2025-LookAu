@@ -2,41 +2,50 @@ $(window).on("load", function () {
 
   valueIndex(1);
 
-  //subjects admin
-  $("#btnMoreAdminSubjects").on("click", () =>
-    functionMoreSubejctAdmin(
-      "#moreAdminSubjects",
+  //MY FRIENDS
+  $("#btnMoreMyFriends").on("click", () =>
+    functionMoreMyFriends(
+      "#moreMyFriends",
       "#spinner",
-      "#btnMoreAdminSubjects"
+      "#btnMoreMyFriends"
     )
   );
 
-
-  //subjects main
-  $("#btnMoreMainSubjects").on("click", () =>
-    functionMoreSubejctAdmin(
-      "#moreMainSubjects",
+  //MY FRIENDS
+  $("#btnMorePendingFriends").on("click", () =>
+    functionMorePendingFriends(
+      "#morePendingFriends",
       "#spinner",
-      "#btnMoreMainSubjects"
+      "#btnMorePendingFriends"
     )
   );
 
-
-  //exam teacher
-  $("#btnMoreTeacherExams").on("click", () =>
-    functionMoreExamsTeacher(
-      "#moreTeacherExams",
-      "#spinner",
-      "#btnMoreTeacherExams"
-    )
-  );
 
 });
 
 
+//MY FRIENDS
+function functionMorePendingFriends(where, spinner, button) {
+  var value = indexPendingFriends;
+  this.indexPendingFriends += 1;
 
-var indexAdminSubjects;
-var indexMainSubjects;
+  var url = "/morePendingFriends?page=" + value;
+  ajaxCall(url, spinner, where, button);
+}
+
+//MY FRIENDS
+function functionMoreMyFriends(where, spinner, button) {
+  var value = indexMyFriends;
+  this.indexMyFriends += 1;
+
+  var url = "/moreMyFriends?page=" + value;
+  ajaxCall(url, spinner, where, button);
+}
+
+
+
+var indexPendingFriends;
+var indexMyFriends;
 var indexSubejctAdmin;
 
 
@@ -60,24 +69,15 @@ function ajaxCall(url, spinner, where, button) {
   });
 }
 
-//Subjects admin
-function functionMoreSubejctAdmin(where, spinner, button) {
-  var value = indexAdminSubjects;
-  this.indexAdminSubjects += 1;
-
-  var url = "/moreSubjectsAdmin?page=" + value;
-  ajaxCall(url, spinner, where, button);
+function valueIndex(num) {
+  this.indexPendingFriends = num;
+  this.indexMyFriends = num;
+  this.indexSubejctAdmin = num;
 }
 
 
-//Subjects admin
-function functionMoreSubejctAdmin(where, spinner, button) {
-  var value = indexMainSubjects;
-  this.indexAdminSubjects += 1;
 
-  var url = "/moreSubjectsMain?page=" + value;
-  ajaxCall(url, spinner, where, button);
-}
+
 
 
 //Subjects admin
@@ -93,8 +93,4 @@ function functionMoreExamsTeacher(where, spinner, button) {
 }
 
 
-function valueIndex(num) {
-  this.indexAdminSubjects = num;
-  this.indexMainSubjects = num;
-  this.indexSubejctAdmin = num;
-}
+
