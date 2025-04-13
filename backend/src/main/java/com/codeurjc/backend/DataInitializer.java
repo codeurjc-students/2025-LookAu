@@ -324,6 +324,14 @@ public class DataInitializer {
         //ACCOUNTS - PENDING FRIENDS(Accounts)
         account7.setPendingFriends(new ArrayList<>(Arrays.asList(account2, account3, account4, account5, account6)));
 
+        //ACCOUNTS - REQUEST FRIENDS(Accounts)
+        account2.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
+        account3.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
+        account4.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
+        account5.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
+        account6.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
+        
+
         //ACCOUNTS - TICKETS
         account7.setTickets(new ArrayList<>(Arrays.asList(ticket1, ticket2, ticket3, ticket4, ticket5, ticket6)));
         account1.setTickets(new ArrayList<>(Arrays.asList(ticket7, ticket8, ticket9, ticket10)));

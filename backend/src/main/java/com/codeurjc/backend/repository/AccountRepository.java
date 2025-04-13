@@ -27,6 +27,9 @@ public interface AccountRepository extends JpaRepository<Account, Long>{
     @Query("SELECT a FROM Account acc JOIN acc.pendingFriends a WHERE acc.nickName = :nickName")
     Page<Account> findAllPendingFriends(@Param("nickName") String nickName, Pageable pageable);
 
+    @Query("SELECT a FROM Account acc JOIN acc.requestFriends a WHERE acc.nickName = :nickName")
+    Page<Account> findAllRequestFriends(@Param("nickName") String nickName, Pageable pageable);
+
     
     
 }

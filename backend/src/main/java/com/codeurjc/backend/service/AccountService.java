@@ -1,31 +1,28 @@
 package com.codeurjc.backend.service;
-
+import com.codeurjc.backend.security.CSRFHandlerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.repository.AccountRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-import javax.security.auth.Subject;
-
 @Service
 public class AccountService {
 
+    private final CSRFHandlerConfiguration CSRFHandlerConfiguration;
+
     @Autowired
-    private AccountRepository accountRepository; 
+    private AccountRepository accountRepository;
+
+    AccountService(CSRFHandlerConfiguration CSRFHandlerConfiguration) {
+        this.CSRFHandlerConfiguration = CSRFHandlerConfiguration;
+    } 
 
     public Optional<Account> getByEmail(String email){
         return accountRepository.findByEmail(email);
@@ -35,34 +32,55 @@ public class AccountService {
         return accountRepository.findByNickName(email).get(0);
     }
 
+    public void setAccount(Account acc){
+        accountRepository.save(acc);
+    }
+
+
+
+    /************************/
+    /******* REGISTER *******/
+    /************************/
+
     public boolean emailRepeat(String email){
         List<Account> accs = accountRepository.findAll();
         
         for(Account acc: accs){
             if(acc.getEmail().equals(email)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean nickNameRepeat(String nickName){
-        List<Account> accs = accountRepository.findAll();
-        
-        for(Account acc: accs){
-            if(acc.getNickName().equals(nickName)){
-                return false;
-            }
-        }
-        return true;
+        return isAccountInList(accountRepository.findAll(), nickName);
     }
 
     
 
-    public void setAccount(Account acc){
-        accountRepository.save(acc);
+    /*********************************/
+    /******* FRIENDS (Profile) *******/
+    /*********************************/
+
+
+    ///// CONSULT /////
+     
+    //seach if the account are in pending currentUser friends and if the currentUser are in the request account list
+    public Boolean isInPendingAndRequestFriends(Account acc, String nickNameRequest){
+
+        List<Account> lAccRquest = accountRepository.findByNickName(nickNameRequest);
+
+        if(!lAccRquest.isEmpty()){
+            return isAccountInList(acc.getPendingFriends(), nickNameRequest) && isAccountInList(lAccRquest.get(0).getRequestFriends(), acc.getNickName());
+        }else{
+            return false;
+        } 
     }
 
+
+
+    ///// ACCTIONS /////
 
     //accounts that arent friends to send friend request 
     public List<Account> getSearchingAccounts(String nickName, String myNickName){
@@ -92,14 +110,72 @@ public class AccountService {
         accountRepository.saveAll(lAccToSend);
     }
 
+    //set friends to login account and other account, remove from request and pending friends
+    public void aceptPendingFriend(Account myAcc, String nickNameToSend){
 
-    public Page<Account> getAllMyFriendsPage(String nickName, Pageable pageable) {
-        return accountRepository.findAllMyFriends(nickName, pageable);
+        List<Account> lAccToSend = accountRepository.findByNickName(nickNameToSend);
+
+        lAccToSend.get(0).getRequestFriends().remove(myAcc);        //remove from other acc the request
+        lAccToSend.get(0).getMyFriends().add(myAcc);                //add to other account the login account as friend
+
+        myAcc.getPendingFriends().remove(lAccToSend.get(0));        //remove from login acc the pending friend
+        myAcc.getMyFriends().add(lAccToSend.get(0));                                  //add to login account the other account as friend
+
+        lAccToSend.add(myAcc);
+
+        accountRepository.saveAll(lAccToSend);
     }
 
-    public Page<Account> getAllPendingFriendsPage(String nickName, Pageable pageable) {
-        return accountRepository.findAllPendingFriends(nickName, pageable);
+    //deny pending friend, remove from peding friend to login account and request friend to other account
+    public void denyPendingFriend(Account myAcc, String nickNameToSend){
+
+        List<Account> lAccToSend = accountRepository.findByNickName(nickNameToSend);
+
+        lAccToSend.get(0).getRequestFriends().remove(myAcc);        //remove from other acc the request
+
+        myAcc.getPendingFriends().remove(lAccToSend.get(0));        //remove from login acc the pending friend
+
+        lAccToSend.add(myAcc);
+
+        accountRepository.saveAll(lAccToSend);
     }
+
+
 
     
+    /********************/
+    /******* AJAX *******/
+    /********************/
+
+    public Page<String> getAllMyFriendsPage(String nickName, Pageable pageable) {
+        return accountRepository.findAllMyFriends(nickName, pageable).map(this::convertToString);
+    }
+
+    public Page<String> getAllPendingFriendsPage(String nickName, Pageable pageable) {
+        return accountRepository.findAllPendingFriends(nickName, pageable).map(this::convertToString);
+    }
+
+    public Page<String> getAllRequestFriendsPage(String nickName, Pageable pageable) {
+        return accountRepository.findAllRequestFriends(nickName, pageable).map(this::convertToString);
+    }
+
+
+
+
+    /********************/
+    /******* HELP *******/
+    /********************/
+
+    private String convertToString(Account account) {
+        return account.getNickName();
+    }
+
+    private Boolean isAccountInList(List<Account> lAcc, String nickName){
+        for(Account acc: lAcc){
+            if(acc.getNickName().equals(nickName)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -77,44 +77,39 @@ public class JwtTokenProvider {
 	}
 
 	public Token generateToken(UserDetails user) {
-
-		Claims claims = Jwts.claims().setSubject(user.getUsername());
-
-		claims.put("auth", user.getAuthorities().stream().map(s -> new SimpleGrantedAuthority("ROLE_"+s))
-				.filter(Objects::nonNull).collect(Collectors.toList()));
-
 		Date now = new Date();
-		Long duration = now.getTime() + JWT_EXPIRATION_IN_MS;
 		Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_IN_MS);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(now);
-		calendar.add(Calendar.HOUR_OF_DAY, 8);
-
-		String token = Jwts.builder().setClaims(claims).setSubject((user.getUsername())).setIssuedAt(new Date())
-				.setExpiration(expiryDate).signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
-
-		return new Token(Token.TokenType.ACCESS, token, duration,
-				LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault()));
-
+		
+		String token = Jwts.builder()
+			.setSubject(user.getUsername())  // Solo información esencial
+			.setIssuedAt(now)
+			.setExpiration(expiryDate)
+			.signWith(SignatureAlgorithm.HS256, jwtSecret)
+			.compact();
+	
+		return new Token(
+			Token.TokenType.ACCESS,
+			token,
+			expiryDate.getTime(),
+			LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault())
+		);
 	}
 
 	public Token generateRefreshToken(UserDetails user) {
-
-		Claims claims = Jwts.claims().setSubject(user.getUsername());
-
-		claims.put("auth", user.getAuthorities().stream().map(s -> new SimpleGrantedAuthority("ROLE_"+s))
-				.filter(Objects::nonNull).collect(Collectors.toList()));
 		Date now = new Date();
-		Long duration = now.getTime() + REFRESH_TOKEN_EXPIRATION_MSEC;
 		Date expiryDate = new Date(now.getTime() + REFRESH_TOKEN_EXPIRATION_MSEC);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(now);
-		calendar.add(Calendar.HOUR_OF_DAY, 8);
-		String token = Jwts.builder().setClaims(claims).setSubject((user.getUsername())).setIssuedAt(new Date())
-				.setExpiration(expiryDate).signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
-
-		return new Token(Token.TokenType.REFRESH, token, duration,
-				LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault()));
-
+		
+		String token = Jwts.builder()
+			.setSubject(user.getUsername())
+			.setExpiration(expiryDate)  // Elimina claims innecesarios
+			.signWith(SignatureAlgorithm.HS256, jwtSecret)
+			.compact();
+	
+		return new Token(
+			Token.TokenType.REFRESH,
+			token,
+			expiryDate.getTime(),
+			LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault())
+		);
 	}
 }

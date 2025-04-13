@@ -134,6 +134,7 @@ public class Account {
         this.id = id;
     }
 
+    //ListFriends
     public List<Account> getMyFriends(){
         return this.myFriends;
     }
@@ -157,6 +158,35 @@ public class Account {
     }
     public void setRequestFriends(List<Account> requestFriends) {
         this.requestFriends = requestFriends;
+    }
+
+    //nickNameList
+    public List<String> getNickNamePendingFriends(){
+        List<String> lNickNames = new ArrayList<String>();
+
+        for(Account acc: this.pendingFriends){
+            lNickNames.add(acc.nickName);
+        }
+
+        return lNickNames;
+    }
+    public List<String> getNickNameMyFriends(){
+        List<String> lNickNames = new ArrayList<String>();
+
+        for(Account acc: this.myFriends){
+            lNickNames.add(acc.nickName);
+        }
+
+        return lNickNames;
+    }
+    public List<String> getNickNameRequestFriends(){
+        List<String> lNickNames = new ArrayList<String>();
+
+        for(Account acc: this.requestFriends){
+            lNickNames.add(acc.nickName);
+        }
+
+        return lNickNames;
     }
 
 }

@@ -1,132 +1,154 @@
 <div class="row">
     <div class="col-2"></div>
-    
+
+
     <div class="col-5">
         <div class="card">
 
-            <!-- TITTLE -->
-            <div class="row">
-                <div class="col-12 barra-abajo ">
+            <form id="editProfileFrom" action="/editProfile" method="post">
+
+                <!-- TITTLE -->
+                <div class="row">
+                    <div class="col-12 barra-abajo ">
 
 
-                    <div class="row d-flex align-items-center">
+                        <div class="row d-flex align-items-center">
 
-                        <!-- Tittle -->
-                        <div class="col-1"></div>
-                        <div class="col-7">
-                            <h3 class="ticket-name-group1 subtittle-tickets">PERSONAL</h3>
+                            <!-- Tittle -->
+                            <div class="col-1"></div>
+                            <div class="col-7">
+                                <h3 class="ticket-name-group1 subtittle-tickets">PERSONAL</h3>
+                            </div>
+
+
+                            <!-- Buttons -->
+                            <div class="col-3 d-flex align-items-end my-3">
+                                <button type="submit" class="nav-linkkk circle-linkkk">
+                                    <i class="header-profilek login-icon-color fas fa-save"></i>
+                                </button>
+                                <a class="nav-linkkk circle-linkkk" href="/profile">
+                                    <i class="header-profilek login-icon-color fas fa-times"></i>
+                                </a>
+                            </div>
+
                         </div>
 
 
-                        <!-- Buttons -->
-                        <div class="col-3 d-flex align-items-end my-3">
-                            <a class="nav-linkkk circle-linkkk" href="#pills-profile">
-                                <i class="header-profilek login-icon-color fas fa-save"></i> 
-                            </a>
-                            <a class="nav-linkkk circle-linkkk" href="/profile">
-                                <i class="header-profilek login-icon-color fas fa-times"></i> 
-                            </a>
-                        </div>
-                
                     </div>
 
-                    
-                </div>
-                
-            </div>
-
-
-            <!-- INFORMATION -->
-            <div class="row">
-
-                <div class="col-12 ">
-
-        
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="row">
-                                <div class="col-12">
-
-                                    <div class="row align-items-center ml-3 mt-2">
-                                        <p class="subtittle-tickets">First Name:</p>
-                                    </div>
-                        
-                                    <div class="row align-items-center mx-4 my-1">
-                                        <input type="text" class="input-status" value="Amanda">
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-
-                            <div class="row">
-                                <div class="col-12">
-
-                                    <div class="row align-items-center ml-3 mt-2">
-                                        <p class="subtittle-tickets">Last Name:</p>
-                                    </div>
-                        
-                                    <div class="row align-items-center mx-4 my-1">
-                                        <input type="text" class="input-status" value="Castro López">
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-12">
-
-                                    <div class="row align-items-center ml-3 mt-2">
-                                        <p class="subtittle-tickets">Nick Name:</p>
-                                    </div>
-                        
-                                    <div class="row align-items-center mx-4 my-1">
-                                        <input type="text" class="input-status" value="Paco">
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <br>
-                    
                 </div>
 
-            </div>
 
-            <div class="row">
-                <div class="col-12">
+                <!-- INFORMATION -->
+                <div class="row">
 
-                    <div class="row align-items-center ml-3 mt-2">
-                        <p class="subtittle-tickets">Photo:</p>
-                    </div>
-        
-                    <div class="d-flex justify-content-center align-items-center mx-4">
-                        <form>
-                            <div class="mb-3 mt-1">
+                    <div class="col-12 ">
+
+
+                        <div class="row">
+                            <div class="col-12">
                                 
-                                <div class="input-group">
-                                    <input type="file" class="form-control custom-file-input" id="foto" name="foto" accept="image/*">
-                                    <label for="foto" class="btn btn-outline-secondary custom-file-label">
-                                        <i class="fas fa-upload"></i> Select File
-                                    </label>
-                                    <span class="input-group-text" id="nombre-archivo">Non selected files</span>
+                                {{#myAcc}}
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center ml-3 mt-2">
+                                            <p class="subtittle-tickets">First Name:</p>
+                                        </div>
+
+                                        <div class="row align-items-center mx-4 my-1">
+                                            <input id="firstName" name="firstName" type="text" class="input-status" value="{{firstName}}">
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <img id="vista-previa" src="#" alt="Vista previa de la foto" class="img-fluid">
+
+
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center ml-3 mt-2">
+                                            <p class="subtittle-tickets">Last Name:</p>
+                                        </div>
+
+                                        <div class="row align-items-center mx-4 my-1">
+                                            <input id="lastName" name="lastName" type="text" class="input-status" value="{{lastName}}">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center ml-3 mt-2">
+                                            <p class="subtittle-tickets">Nick Name:</p>
+                                        </div>
+
+                                        <div class="row align-items-center mx-4 my-1">
+                                            <input id="lastName" name="nickName" type="text" class="input-status" value="{{nickName}}">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {{/myAcc}}
+
                             </div>
-                            
-                        </form>
+                        </div>
+
+                        <br>
+
                     </div>
 
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="row align-items-center ml-3 mt-2">
+                            <p class="subtittle-tickets">Photo:</p>
+                        </div>
+
+                        <div class="d-flex justify-content-center align-items-center mx-4">
+                            <form>
+                                <div class="mb-3 mt-1">
+
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            <div class="input-group">
+                                                <input type="file" id="profilePicture" class="form-control custom-file-input" id="profilePicture" name="profilePicture" accept="image/*">
+                                                <label for="foto" class="btn btn-outline-secondary custom-file-label">
+                                                    <i class="fas fa-upload"></i> Select File
+                                                </label>
+                                                <span class="input-group-text" id="nombre-archivo">Non selected files</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center align-items-center">
+                                            <img id="vista-previa" src="#" alt="Vista previa de la foto" class="img-fluid" style="width: 150px; height: 150px; border-radius: 50%; border: 1px solid #000;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <br>
+
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
+
+
 
 
 
@@ -149,80 +171,117 @@
 
                         <!-- Buttons -->
                         <div class="col-3 d-flex align-items-end my-3">
-                            <a class="nav-linkkk circle-linkkk" href="#pills-profile">
-                                <i class="header-profilek login-icon-color fas fa-save"></i> 
-                            </a>
                             <a class="nav-linkkk circle-linkkk" href="/profile">
-                                <i class="header-profilek login-icon-color fas fa-times"></i> 
+                                <i class="header-profilek login-icon-color fas fa-times"></i>
                             </a>
                         </div>
-                
+
                     </div>
 
-                    
+
                 </div>
-                
+
             </div>
 
-            <!-- INFORMATION -->
-            <div class="row">
 
-                
+            <!-- My Friends -->
+            <div class="row">
                 <div class="col-12">
 
+                    <div class="row ml-4 align-items-center mt-2">
+                        <p class="subtittle-tickets">My Friends</p>
+                    </div>
+
+                    {{#isEmptyDeleteFriends}}
+                    <div id="moreDeleteFriends">
+
+                        
+                        {{#moreDeleteFriends}}
+                        <div class="row justify-content-center align-items-center mx-4 my-2">
+                            <div class="col-12">
+                                <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                    <div class="row">
+                                        <div class="col-8 d-flex align-items-center my-2">
+                                            <p class="card-status ml-3">{{nickName}}</p>
+                                        </div>
+
+                                
+                                       
+                                        <div class="col-1 d-flex align-items-center ml-4">
+                                            <a class="mr-4" href="/deleteFriend/{{nickName}}">
+                                                <i class="header-profilek login-icon-color fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/moreDeleteFriends}}
+                    </div>
                     
 
-                    <div class="row">
-                        <div class="col-12">
- 
-                            <div class="row justify-content-center align-items-center ml-3 mt-2">
-                                <p class="subtittle-tickets">My friends</p>
+
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <div id="spinner2" class="lds-dual-ring hidden">
+                                <img src="/images/spinner.gif" alt="Loading..."
+                                    style="width: 100px; height: 70px;" />
                             </div>
-                
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                        <div class="row">
-                                            <div class="col-9 d-flex align-items-center my-2">
-                                                <p class="card-status ml-3">Alberto</p>
-                                            </div>
-
-                                            <div class="col-2 d-flex align-items-center">
-                                                <a class="ml-4" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                                    <i class="header-profilek login-icon-color fas fa-trash"></i> 
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                        <div class="row">
-                                            <div class="col-9 d-flex align-items-center my-2">
-                                                <p class="card-status ml-3">Diego</p>
-                                            </div>
-
-                                            <div class="col-2 d-flex align-items-center">
-                                                <a class="ml-4" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                                    <i class="header-profilek login-icon-color fas fa-trash"></i> 
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
-                    <br>
-                    
-                </div>
+                    {{^isLastPageDelete}}
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <a id="btnMoreDeleteFriends" class="btnnnn btn-dark">More</a>
+                        </div>
+                    </div>
+                    {{/isLastPageDelete}}
+                    {{/isEmptyDeleteFriends}}
 
+                    {{^isEmptyDeleteFriends}}
+                    <div class="row">
+                        <div class="col-12 ml-5 align-items-center">
+                            <p>No friends yet!</p>
+                        </div>
+                    </div>
+                    {{/isEmptyDeleteFriends}}
+
+                </div>
             </div>
+
+            <br>
+            <br>
         </div>
+
     </div>
+
+
+    <script>
+
+        document.getElementById('foto').addEventListener('change', function (e) {
+            const file = e.target.files[0]; // Obtén el archivo seleccionado
+            const preview = document.getElementById('vista-previa');
+            const fileNameSpan = document.getElementById('nombre-archivo');
+
+            if (file) {
+                // Muestra el nombre del archivo
+                fileNameSpan.textContent = file.name;
+
+                // Muestra la vista previa de la imagen
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Si no se selecciona un archivo, oculta la vista previa
+                preview.style.display = 'none';
+                fileNameSpan.textContent = 'No file selected';
+            }
+        });
+
+    </script>
+
 </div>

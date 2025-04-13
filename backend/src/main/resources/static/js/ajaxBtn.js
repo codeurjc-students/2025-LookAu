@@ -6,25 +6,60 @@ $(window).on("load", function () {
   $("#btnMoreMyFriends").on("click", () =>
     functionMoreMyFriends(
       "#moreMyFriends",
-      "#spinner",
+      "#spinner1",
       "#btnMoreMyFriends"
     )
   );
 
-  //MY FRIENDS
+  //PENDING FRIENDS
   $("#btnMorePendingFriends").on("click", () =>
     functionMorePendingFriends(
       "#morePendingFriends",
-      "#spinner",
+      "#spinner2",
       "#btnMorePendingFriends"
     )
   );
 
+  //REQUEST FRIENDS
+  $("#btnMoreRequestFriends").on("click", () =>
+    functionMoreRequestFriends(
+      "#moreRequestFriends",
+      "#spinner3",
+      "#btnMoreRequestFriends"
+    )
+  );
+
+  //DELETE FRIENDS
+  $("#btnMoreDeleteFriends").on("click", () =>
+    functionMoreDeleteFriends(
+      "#moreDeleteFriends",
+      "#spinner3",
+      "#btnMoreDeleteFriends"
+    )
+  );
 
 });
 
 
-//MY FRIENDS
+//DELETE FRIENDS
+function functionMoreDeleteFriends(where, spinner, button) {
+  var value = indexDeleteFriends;
+  this.indexDeleteFriends += 1;
+
+  var url = "/moreDeleteFriends?page=" + value;
+  ajaxCall(url, spinner, where, button);
+}
+
+//REQUEST FRIENDS
+function functionMoreRequestFriends(where, spinner, button) {
+  var value = indexRequestFriends;
+  this.indexRequestFriends += 1;
+
+  var url = "/moreRequestFriends?page=" + value;
+  ajaxCall(url, spinner, where, button);
+}
+
+//PENDING FRIENDS
 function functionMorePendingFriends(where, spinner, button) {
   var value = indexPendingFriends;
   this.indexPendingFriends += 1;
@@ -33,7 +68,7 @@ function functionMorePendingFriends(where, spinner, button) {
   ajaxCall(url, spinner, where, button);
 }
 
-//MY FRIENDS
+//DELETE FRIENDS
 function functionMoreMyFriends(where, spinner, button) {
   var value = indexMyFriends;
   this.indexMyFriends += 1;
@@ -47,6 +82,7 @@ function functionMoreMyFriends(where, spinner, button) {
 var indexPendingFriends;
 var indexMyFriends;
 var indexSubejctAdmin;
+var indexDeleteFriends;
 
 
 function ajaxCall(url, spinner, where, button) {
@@ -59,6 +95,14 @@ function ajaxCall(url, spinner, where, button) {
     },
     success: function (result) {
       $(where).append(result);
+
+      const isLastPage = $(where).find("[data-is-last-page]").last().attr("data-is-last-page") === "true";
+      if (isLastPage) {
+        $(button).addClass("hidden"); // Oculta el botón "More" si es la última página
+      } else {
+        $(button).removeClass("hidden"); // Muestra el botón "More" si hay más páginas
+      }
+
     },
     error: function (e) {
       $(button).addClass("hidden");
@@ -72,7 +116,8 @@ function ajaxCall(url, spinner, where, button) {
 function valueIndex(num) {
   this.indexPendingFriends = num;
   this.indexMyFriends = num;
-  this.indexSubejctAdmin = num;
+  this.indexRequestFriends = num;
+  this.indexDeleteFriends = num;
 }
 
 

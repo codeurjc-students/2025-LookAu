@@ -62,6 +62,25 @@ public class SecurityConfiguration {
 		
 		http
 			.authorizeHttpRequests(authorize -> authorize
+
+
+				.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+				.requestMatchers(HttpMethod.GET,"/api/accounts/me").permitAll()
+				.requestMatchers(HttpMethod.POST,"/api/accounts").permitAll()
+				
+				.requestMatchers(HttpMethod.POST,"/api/accounts/image/current").permitAll()
+				.requestMatchers(HttpMethod.POST,"/api/accounts/image").permitAll()
+				.requestMatchers(HttpMethod.POST,"/api/accounts/myFriends/**").permitAll()	
+				.requestMatchers(HttpMethod.PUT,"/api/accounts/pendingFriends/**").permitAll()
+				.requestMatchers(HttpMethod.DELETE,"/api/accounts/pendingFriends/**").permitAll()
+				.requestMatchers(HttpMethod.GET,"/api/accounts/**").permitAll()
+				
+
+
+
+
+
+
                     // PRIVATE ENDPOINTS
 						//Chart
                     .requestMatchers(HttpMethod.GET,"/api/charts/exams").hasAnyRole("STUDENT")
@@ -110,7 +129,7 @@ public class SecurityConfiguration {
 					.requestMatchers(HttpMethod.POST,"/api/forum/**").hasAnyRole( "TEACHER", "STUDENT")	//create forum
 					
 						//User
-					.requestMatchers(HttpMethod.GET,"/api/users/me").hasAnyRole( "TEACHER", "STUDENT", "ADMIN")	//user profile
+					//.requestMatchers(HttpMethod.GET,"/api/users/me").hasAnyRole( "TEACHER", "STUDENT", "ADMIN")	//user profile
 					.requestMatchers(HttpMethod.GET,"/api/users/image").hasAnyRole( "TEACHER", "STUDENT", "ADMIN")
 					.requestMatchers(HttpMethod.PUT, "/api/users/").hasAnyRole( "TEACHER", "STUDENT", "ADMIN")	//sign up
 					.requestMatchers(HttpMethod.POST, "/api/users/enroll/**").permitAll()
@@ -158,7 +177,7 @@ public class SecurityConfiguration {
 				.requestMatchers("/new/**").permitAll()
 				
 				//LOGIN - SIGNUP
-				.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
+				.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**", "/favicon.ico").permitAll()
 				.requestMatchers("/signup").permitAll()
 				.requestMatchers("/login").permitAll()
 				.requestMatchers("/logout").permitAll()
@@ -167,8 +186,10 @@ public class SecurityConfiguration {
 				.requestMatchers("/searchAccounts").permitAll()
 				.requestMatchers("/profile").permitAll()
 				.requestMatchers("/acc/photo").permitAll()
-				.requestMatchers("/acc/photoFriend/**").permitAll()
+				.requestMatchers("/acc/photoFriend/**").permitAll()	
 				.requestMatchers("/sendPendingFriend/**").permitAll()
+				.requestMatchers("/aceptPendingFriend/**").permitAll()
+				.requestMatchers("/denyPendingFriend/**").permitAll()		
 
 				//EDIT PROFILE
 				.requestMatchers("/editProfile").permitAll()	
@@ -176,13 +197,19 @@ public class SecurityConfiguration {
 				//GROUPS
 				.requestMatchers("/groups").permitAll()
 
+				//PERSONAL
+				.requestMatchers("/personal").permitAll()
+				
 				//STATS
 				.requestMatchers("/stats").permitAll()	
 				
 				//OTHERS	
 				.requestMatchers("/error").permitAll()	
-				.requestMatchers("/moreMyFriends").permitAll()
+				.requestMatchers("/moreMyFriends").permitAll()		
 				.requestMatchers("/morePendingFriends").permitAll()
+				.requestMatchers("/moreRequestFriends").permitAll()		
+				.requestMatchers("/moreDeleteFriends").permitAll()
+
 				
 				
 				

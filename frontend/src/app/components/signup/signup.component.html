@@ -1,0 +1,94 @@
+<div class="container">
+    <!-- Logo -->
+    <div class="row d-flex justify-content-center align-items-center">
+        <img [src]="logoPath" alt="Logo">
+    </div>
+
+    <!-- Form -->
+    <form id="loginForm" action="/signup" method="post">
+        <div class="row justify-content-center">
+            <div class="col-6">
+
+                <!-- Frist Name -->
+                <div class="input-group input-group-lg mb-3">
+                    <div class="input-login input-group-prepend">
+                        <span class="input-login-1 input-group-text" id="basic-addon1">
+                            <i class="login-icon-color fas fa-user"></i>
+                        </span>
+                    </div>
+                    <input [(ngModel)]="firstName" name="firstName" type="text" class="input-login-1 form-control" placeholder="First Name">
+                </div>
+                
+
+                <!-- Last Name -->
+                <div class="input-group input-group-lg mb-3">
+                    <div class="input-login input-group-prepend">
+                        <span class="input-login-1 input-group-text" id="basic-addon1">
+                            <i class="login-icon-color fas fa-user"></i>
+                        </span>
+                    </div>
+                    <input [(ngModel)]="lastName" name="lastName" type="text" class="input-login-1 form-control" placeholder="Last Name">
+                </div>
+
+
+                <!-- Nick Name -->
+                <div class="input-group input-group-lg mb-3">
+                    <div class="input-login input-group-prepend">
+                        <span class="input-login-1 input-group-text" id="basic-addon1">
+                            <i class="login-icon-color fas fa-tag"></i>
+                        </span>
+                    </div>
+                    <input [(ngModel)]="nickName" name="nickName" type="text" class="input-login-1 form-control" placeholder="Nick Name">
+                </div>
+
+
+                <!-- Email -->
+                <div class="input-group input-group-lg mb-3">
+                    <div class="input-login input-group-prepend">
+                        <span class="input-login-1 input-group-text" id="basic-addon1">
+                            <i class="login-icon-color fas fa-at"></i>
+                        </span>
+                    </div>
+                    <input [(ngModel)]="mail" name="mail" type="text" class="input-login-1 form-control" placeholder="Mail">
+                </div>
+
+
+                <!-- Password -->
+                <div class="input-group input-group-lg mb-3">
+                    <div class="input-login input-group-prepend">
+                        <span class="input-login-3 input-group-text" id="basic-addon1">
+                            <i class="login-icon-color fas fa-lock"></i>
+                        </span>
+                    </div>
+                    <input [(ngModel)]="password" name="password" type="text" class="input-login-1 form-control" placeholder="Password">
+                </div>
+
+
+                <!-- Repeat Password -->
+                <div class="input-group input-group-lg mb-3">
+                    <div class="input-login input-group-prepend">
+                        <span class="input-login-2 input-group-text" id="basic-addon1">
+                            <i class="login-icon-color fas fa-lock"></i>
+                        </span>
+                    </div>
+                    <input [(ngModel)]="repeatPassword" name="repeatPassword" type="text" class="input-login-1 form-control" placeholder="Repeat password">
+                </div>
+
+
+                <!-- Button -->
+                <div class="row d-flex justify-content-center align-items-center">
+                    <input type="submit" class="btn btn-outline-warning" value="Start!" (click)="createUser()">
+                </div>
+
+                <!-- Go to login -->
+                <div class="row d-flex justify-content-center align-items-center">
+                    <a class="a-login" [routerLink]="['/login']">Have you got an account yet?</a>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<br>
+<br>

@@ -1,0 +1,476 @@
+<br>
+
+<div class="row">
+    <div class="col-1"></div>
+
+    <div class="col-3">
+        <div class="card">
+
+            <!-- TITTLE -->
+            <div class="row">
+                <div class="col-12 barra-abajo">
+
+
+                    <div class="row d-flex justify-content-center align-items-center">
+
+                        <!-- Tittle -->
+                        <div class="col-1"></div>
+                        <div class="col-5 mt-3">
+                            <h3 class="ticket-name-group1 subtittle-tickets">PERSONAL</h3>
+                        </div>
+
+                        <div class="col-2"></div>
+
+                        <!-- Buttons -->
+                        <div class="col-1 d-flex align-items-end">
+                            <a class="nav-link nav-linkkk circle-linkkk" href="/editProfile">
+                                <i class="header-profilek login-icon-color fas fa-pen"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+            <!-- INFORMATION -->
+            <div class="row">
+
+                <div class="col-1"></div>
+
+                <div class="col-11">
+
+                    <!-- Ticket Type -->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center">
+                                        <p class="subtittle-tickets">First Name:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <p class="card-status ml-3">{{this.authService.getUser().firstName}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center mt-2">
+                                        <p class="subtittle-tickets">Last Name:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <p class="card-status ml-3">{{this.authService.getUserLastName()}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center">
+                                        <p class="subtittle-tickets">Nick Name:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <p class="card-status ml-3">{{this.authService.getUserNickName()}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <br>
+
+                </div>
+
+            </div>
+            <br>
+
+
+            <!-- Photo -->
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="row d-flex justify-content-center align-items-center mt-2">
+                        <p class="subtittle-tickets">Photo:</p>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center mx-4">
+                        <img class="image-groups" src="/api/accounts/image/current" alt="Card image cap"
+                            style="width: 150px; height: 150px; border-radius: 50%; border: 1px solid #000;">
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <br>
+
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <button (click)="this.authService.logout()" class="btnnn btn-dark" value="Logout">Logout</button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+
+
+    <div class="col-4">
+        <div class="card">
+
+            <!-- TITTLE -->
+            <div class="row">
+                <div class="col-12 barra-abajo ">
+
+
+                    <div class="row d-flex align-items-center">
+
+                        <!-- Tittle -->
+                        <div class="col-1"></div>
+                        <div class="col-5">
+                            <h3 class="ticket-name-group1 subtittle-tickets mt-3">FRIENDS</h3>
+                        </div>
+
+                        <div class="col-4"></div>
+
+
+                        <!-- Buttons -->
+                        <div class="col-1 d-flex align-items-end">
+                            <a class="nav-link nav-linkkk circle-linkkk" href="/editProfile">
+                                <i class="header-profilek login-icon-color fas fa-pen"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <!----- FRIENDS ----->
+            <div class="row">
+
+                <div class="col-1"></div>
+
+                <div class="col-10">
+
+                    <br>
+                    <br>
+
+                    <!-- Add Friends -->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+
+                            <div class="row d-flex align-items-center">
+                                <p class="subtittle-tickets">Add a friend</p>
+                            </div>
+
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-10">
+
+                                    <!-- Formulario -->
+                                    <form id="loginForm" (ngSubmit)="searchFriend(searchTerm)" method="get">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <button class="btn-background btn btn-outline-secondary"
+                                                            type="submit">
+                                                            <i class="login-icon-color fas fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input name="stringToFind" id="stringToFind" type="text"
+                                                        class="form-control-funcionapls form-control"
+                                                        placeholder="Find by name" name="searchTerm"
+                                                        [(ngModel)]="searchTerm">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" *ngIf="searching">
+                                            <div class="col-12">
+                                                <div class="row justify-content-center align-items-center mx-2"
+                                                    *ngIf="isEmptySearchAccounts">
+                                                    <p class="mx-2" style="color:#dc3545;">No results</p>
+                                                </div>
+
+                                                <ul *ngIf="!isEmptySearchAccounts">
+                                                    <li *ngFor="let account of searchAccounts">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div
+                                                                    class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-8 d-flex align-items-center my-2">
+                                                                            <p class="card-status ml-3">
+                                                                                {{account.nickName}}</p>
+                                                                        </div>
+                                                                        <div class="col-1 d-flex align-items-center">
+                                                                            <a class="ml-4"
+                                                                                [href]="'/sendPendingFriend/' + account.nickName">
+                                                                                <i
+                                                                                    class="header-profilek login-icon-color fas fa-check"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <!-- My friends -->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+
+                            <div class="row align-items-center">
+                                <p class="subtittle-tickets">My friends</p>
+                            </div>
+
+                            <div id="moreMyFriends" *ngIf="!this.isMyFriendsEmpty()">
+
+                                <div class="row" *ngFor="let myFriend of myFriends">
+                                    <div class="col-12">
+                                        <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+
+                                            <div class="row">
+                                                <div class="col-4 barra-lateral-profile"
+                                                    style="border-right: 4px solid #2e2e2e;">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <img class="circular-img my-4"
+                                                            [src]="'/api/accounts/image?nickName=' + myFriend"
+                                                            alt="Card image cap"
+                                                            style="width: 50px; height: 50px; border-radius: 50%;">
+
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    class="col-8 d-flex justify-content-center align-items-center mt-3">
+                                                    <p class="card-status">{{myFriend}}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row d-flex justify-content-center align-items-center"
+                                *ngIf="!this.isLastMyFriendsRequest">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <a class="btnnnn btn-dark" (click)="getMoreMyFriends()">More</a>
+                                </div>
+                            </div>
+
+                            <div class="row " *ngIf="this.isMyFriendsEmpty()">
+                                <div class="col-12 align-items-center">
+                                    <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No friends yet!</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <!-- Pending friends -->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+
+                            <div class="row align-items-center">
+                                <p class="subtittle-tickets">Pending friends</p>
+                            </div>
+
+                            <div id="moreMyFriends" *ngIf="!this.isPendingFriendsEmpty()">
+
+                                <div class="row" *ngFor="let pendingFriend of pendingFriends">
+                                    <div class="col-12">
+                                        <div class="card-ticket">
+                                            <div class="row align-items-center">
+                                        
+                                                <div class="col-8 d-flex align-items-center">
+                                                    <p class="card-status ml-3 mb-0 my-1">{{pendingFriend}}</p>
+                                                </div>
+                                        
+                                                <div class="col-1"></div>
+                                        
+                                                <div class="col-1 d-flex align-items-center justify-content-center">
+                                                    <a (click)="this.denyFriend(pendingFriend)">
+                                                        <i class="header-profilek login-icon-color fas fa-times"></i>
+                                                    </a>
+                                                </div>
+                                        
+                                                <div class="col-1 d-flex align-items-center justify-content-center">
+                                                    <a (click)="this.acceptFriend(pendingFriend)">
+                                                        <i class="header-profilek login-icon-color fas fa-check"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <br>
+                                    <br>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row d-flex justify-content-center align-items-center"
+                                *ngIf="!this.isLastPendingFriendsRequest">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <a class="btnnnn btn-dark" (click)="getMorePendingFriends()">More</a>
+                                </div>
+                            </div>
+
+                            <div class="row " *ngIf="this.isPendingFriendsEmpty()">
+                                <div class="col-12 align-items-center">
+                                    <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No pending friends yet!</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+
+
+
+                    <!-- Request friends -->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+
+                            <div class="row align-items-center">
+                                <p class="subtittle-tickets">Request friends</p>
+                            </div>
+
+                            <div id="moreMyFriends" *ngIf="!this.isRequestFriendsEmpty()">
+
+                                <div class="row" *ngFor="let requestFriend of requestFriends">
+                                    <div class="col-12">
+                                        <div class="card-ticket mx-4 my-2">
+
+                                            <div class="row">
+                                                <div class="col-1 d-flex justify-content-center align-items-center barra-lateral-profile ml-3"
+                                                    style="border-right: 4px solid #2e2e2e;">
+
+                                                    <i
+                                                        class="header-profilek login-icon-color amarillolimon fas fa-clock"></i>
+
+                                                </div>
+
+                                                <div
+                                                    class="col-8 d-flex justify-content-center align-items-center mt-3">
+                                                    <p class="card-status">{{requestFriend}}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row d-flex justify-content-center align-items-center"
+                                *ngIf="!this.isLastRequestFriendsRequest">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <a class="btnnnn btn-dark" (click)="getMoreRequestFriends()">More</a>
+                                </div>
+                            </div>
+
+                            <div class="row " *ngIf="this.isRequestFriendsEmpty()">
+                                <div class="col-12 align-items-center">
+                                    <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No request friends yet!</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+
+                </div>
+
+                <div class="col-1"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-1 p-0"></div>
+
+
+
+    <div class="col-3">
+        <app-individual></app-individual>
+    </div>
+
+</div>
+
+<br>
+<br>
