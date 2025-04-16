@@ -1,17 +1,17 @@
 export interface Account{
   id: number;
-  firstName: String;
-  lastName: String;
-  nickName: String;
-  email: String;
-  password: String;
+  firstName: string;
+  lastName: string;
+  nickName: string;
+  email: string;
+  password: string;
   profilePicture: number[];
   
-  pendingFriends: String[];
-  requestFriends: String[];
-  myFriends: String[];
+  pendingFriends: string[];
+  requestFriends: string[];
+  myFriends: string[];
 
-  // teams: Team[];
-  // tickets: Ticket[];
+  teams: string[];
+  // tickets: Number[];
 
 }

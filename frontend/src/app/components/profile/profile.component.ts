@@ -109,7 +109,6 @@ export class ProfileComponent {
         this.indexPendingFriends++; //next ajax buttom
         this.loadingPendingFriends = false; //hide the spinner
         this.isLastPendingFriendsRequest = response.last;
-        console.log(response.last)
       }
     );
   }
@@ -156,10 +155,23 @@ export class ProfileComponent {
     this.searching = true;
     this.accountService.searchFriend(searchTerm).subscribe(
       (response) => {
-        console.log("Hola");
         this.searchAccounts = response;
         this.isEmptySearchAccounts = response.length === 0;
         this.searching = true;
+      },
+      (error) => {
+        this.router.navigate(['/error']);
+      }
+    );
+  }
+
+  sendRequestFriend(nickName: string){
+    this.accountService.sendRequestFriend(nickName).subscribe(
+      (response) => {
+        this.getMyFriends();  
+        this.getPendingFriends(); 
+        this.getRequestFriends();
+        this.searchFriend("");
       },
       (error) => {
         this.router.navigate(['/error']);

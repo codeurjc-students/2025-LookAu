@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PopUpDialogComponent } from './popup_dialog.component';
+import { PopUpDialogComponent } from '../popUp/popup_dialog.component';
 
 @Component({
   selector: 'app-footer',

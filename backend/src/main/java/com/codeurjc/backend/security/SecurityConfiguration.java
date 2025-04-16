@@ -64,16 +64,22 @@ public class SecurityConfiguration {
 			.authorizeHttpRequests(authorize -> authorize
 
 
+				//LOGIN AND REGISTER
 				.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
 				.requestMatchers(HttpMethod.GET,"/api/accounts/me").permitAll()
 				.requestMatchers(HttpMethod.POST,"/api/accounts").permitAll()
+				.requestMatchers(HttpMethod.PUT,"/api/accounts").permitAll()
 				
+				//PROFILE AND EDIT PROFILR
 				.requestMatchers(HttpMethod.POST,"/api/accounts/image/current").permitAll()
 				.requestMatchers(HttpMethod.POST,"/api/accounts/image").permitAll()
+				.requestMatchers(HttpMethod.PUT,"/api/accounts/image").permitAll()
 				.requestMatchers(HttpMethod.POST,"/api/accounts/myFriends/**").permitAll()	
+				.requestMatchers(HttpMethod.DELETE,"/api/accounts/myFriends/**").permitAll()	
 				.requestMatchers(HttpMethod.PUT,"/api/accounts/pendingFriends/**").permitAll()
 				.requestMatchers(HttpMethod.DELETE,"/api/accounts/pendingFriends/**").permitAll()
 				.requestMatchers(HttpMethod.GET,"/api/accounts/**").permitAll()
+				.requestMatchers(HttpMethod.PUT,"/api/accounts/**").permitAll()
 				
 
 

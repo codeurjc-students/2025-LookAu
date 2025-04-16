@@ -1,1 +1,199 @@
-<h1>groups</h1>
+<br>
+
+<div class="row">
+    <div class="col-1"></div>
+
+    <div class="col-7">
+
+        <!------------------------->
+        <!------- SEARCH BAR ------>
+        <!------------------------->
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-1"></div>
+
+                <!-- Button new group -->
+                <div class="col-2 d-flex justify-content-end">
+                    <a [href]="" class="btnnn btn-dark mb-0" value="Logout">New Group</a>
+                </div>
+
+
+                <!-- Formulario -->
+                <div class="col-7">
+
+                    <form id="loginForm" (ngSubmit)="searchGroup(searchTerm)" method="get">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button class="btn-background btn btn-outline-secondary" type="submit">
+                                            <i class="login-icon-color fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                    <input name="stringToFind" id="stringToFind" type="text"
+                                        class="form-control-funcionapls form-control" placeholder="Find by name"
+                                        name="searchTerm" [(ngModel)]="searchTerm">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="searching">
+                            <div class="col-12 mt-2">
+
+                                <div class="row justify-content-center align-items-center mx-2"
+                                    *ngIf="isEmptySearchGroups">
+                                    <p class="" style="color:#dc3545;">No results</p>
+                                </div>
+
+                                <div *ngIf="!isEmptySearchGroups">
+
+                                    <div class="row" *ngFor="let account of searchGroups">
+                                        <div class="col-12">
+                                            <div
+                                                class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                                <div class="row">
+
+                                                    <div class="col-8 d-flex align-items-center">
+                                                        <p class="card-status ml-3 mb-0 my-2">{{account}}</p>
+                                                    </div>
+
+                                                    <div class="col-1 d-flex align-items-center">
+                                                        <a [href]="">
+                                                            <i
+                                                                class="header-profilek login-icon-color fas fa-arrow-right"></i>
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+
+
+
+        <br>
+        <br>
+
+
+        <!--------------------->
+        <!------- GRUOPS ------>
+        <!--------------------->
+
+        <div class="container">
+
+            <!-- My friends -->
+            <div class="row">
+                <div class="col-12">
+
+                    <div id="moreMyFriends" *ngIf="!this.isMyFriendsEmpty()">
+
+                        <div class="row" *ngFor="let group of groups">
+                            <div class="col-12">
+
+
+                                <div class="row">
+                                    <div class="col-1"></div>
+
+                                    <!-- Gruop -->
+                                    <div class="col-10">
+                                        <div class="card">
+                                            <div class="row align-items-center">
+
+                                                <!-- Photo -->
+                                                <div class="col-2 mx-4 justify-content-center barra-lateral">
+                                                    <img class="circular-img my-3" src="http://localhost:4200/api/accounts/image?nickName=Alvarochi" alt="Card image cap" style="width: 100px; height: 100px; border-radius: 50%;">
+                                                </div>
+
+                                                <!-- Information -->
+                                                <div class="col-8 justify-content-center">
+                                                    <div class="row">
+
+                                                        <!-- Group name -->
+                                                        <div
+                                                            class="col-8 d-flex justify-content-center align-items-center">
+                                                            <h3 class="name-groups">{{group}}</h3>
+                                                        </div>
+
+                                                        <!-- Group price -->
+                                                        <div class="col-4">
+                                                            <div
+                                                                class="card card-price d-flex justify-content-center align-items-center">
+                                                                <p class="caddprice mb-0 my-2">- 7.38</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-2"></div>
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                    </div>
+
+                                    <!-- Button trash -->
+                                    <div class="col-1 d-flex align-items-center">
+                                        <a class="nav-link nav-linkk circle-linkk" id="pills-profile-tab"
+                                            data-toggle="pill" href="#pills-profile" role="tab"
+                                            aria-controls="pills-profile" aria-selected="false">
+                                            <i class="header-profile login-icon-color fas fa-trash"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center" *ngIf="!this.isLastGroupsRequest">
+                            <div class="col-12 d-flex justify-content-center align-items-center">
+                                <a class="btnnnn btn-dark" (click)="getMoreMyFriends()">More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="row" *ngIf="this.isMyFriendsEmpty()">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No groups yet!</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+    </div>
+
+    <div class="col-1 p-0"></div>
+
+
+
+    <!------------------------->
+    <!------- INDIVIDUAL ------>
+    <!------------------------->
+    <div class="col-3">
+        <app-individual></app-individual>
+    </div>
+
+</div>
+
+<br>
+<br>

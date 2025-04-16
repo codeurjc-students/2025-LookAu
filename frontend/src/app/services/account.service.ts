@@ -10,7 +10,7 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  getUserId(gmail: String): Observable<number>{
+  getUserId(gmail: string): Observable<number>{
     return this.http.get<number>(BASE_URL+'userId?gmail='+gmail)
   }
 
@@ -52,11 +52,29 @@ export class AccountService {
     return this.http.delete(BASE_URL+'pendingFriends/'+nickName) as Observable<any>;
   }
 
+  deleteFriend(nickName: string): Observable<any>{
+    return this.http.delete(BASE_URL+'myFriends/'+nickName) as Observable<any>;
+  }
+
   searchFriend(searchTerm: string): Observable<any>{
-    console.log("Adios");
     console.log(this.http.get(BASE_URL+searchTerm) as Observable<any>);
     return this.http.get(BASE_URL+searchTerm) as Observable<any>;
   }
+
+  sendRequestFriend(nickName: string): Observable<any>{
+    return this.http.put(BASE_URL+nickName, null) as Observable<any>;
+  }
+
+  setProfileImage(image: File){
+    const formData = new FormData();
+    formData.append('file', image);
+    return this.http.put(BASE_URL+'image', formData, { withCredentials: true })
+  }
+
+  editProfile(firstName: string, lastName: string, password: string){
+    return this.http.put(BASE_URL, {firstName, lastName, password})
+  }
+
 
   // getUserSubjects(index: number): Observable<any> {
   //   let params = new HttpParams();

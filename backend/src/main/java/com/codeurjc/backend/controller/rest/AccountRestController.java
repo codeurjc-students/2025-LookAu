@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.service.annotation.DeleteExchange;
 
 import com.codeurjc.backend.model.Account;
@@ -186,12 +187,98 @@ public class AccountRestController {
 	}
 
 	
+	@Operation(summary = "Set the image profile of the user")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Found the image profile", content = {
+					@Content(mediaType = "image/jpg") }),
+			@ApiResponse(responseCode = "404", description = "image profile not found", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PutMapping("/image")
+	public ResponseEntity<Object> updateFile(HttpServletRequest request, @RequestBody MultipartFile file) throws IOException {
+
+		byte[] foto;
+		Optional<Account> currentUser = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (currentUser.isPresent()) {
+			foto = file.getBytes();
+			Account acc = currentUser.get();
+
+			acc.setProfilePicture(foto);
+			accountService.setAccount(acc);
+			
+			URI location = fromCurrentRequest().build().toUri();
+			
+			return ResponseEntity.created(location).build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the account profile")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PutMapping("/")
+	public ResponseEntity<?> editProfile(HttpServletRequest request, @RequestBody AccountDTO post)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+			Account acc = accountOpp.get();
+
+			if (acc != null) {
+				acc.setFirstName(post.getFirstName());
+				acc.setLastName(post.getLastName());
+				acc.setPassword(post.getPassword());
+
+				accountService.setAccount(acc);
+
+				return new ResponseEntity<>(null, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	
 
 
 
 	/*********************************/
 	/******** ACTIONS FRIENDS ********/
 	/*********************************/
+
+	@Operation(summary = "Send friend request")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Searching friends", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PutMapping("/{nickName}")
+	public ResponseEntity<?> sendFriendRequest(HttpServletRequest request, @PathVariable String nickName) throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Account account = accountOpp.get();
+
+			accountService.sendFriendRequest(account, nickName);
+
+			return ResponseEntity.ok(null);
+			
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 
 	@Operation(summary = "Search a friend")
@@ -215,6 +302,34 @@ public class AccountRestController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+
+	@Operation(summary = "Delete a friend")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Accepted friend", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@DeleteMapping("/myFriends/{nickName}")
+	public ResponseEntity<?> deleteMyFriend(HttpServletRequest request, @PathVariable String nickName) throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Account account = accountOpp.get();
+
+			if(accountService.isInMyFriends(account, nickName)){
+				accountService.deleteMyFriend(account, nickName);
+				return ResponseEntity.ok(null);
+			}else{
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error");
+			}
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 
 
 	@Operation(summary = "Acept a pending friend")
@@ -371,39 +486,7 @@ public class AccountRestController {
 
 }
 
-	// @Operation(summary = "Update the profile of the user")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "200", description = "Profile updated", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class)) }),
-	// 		@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @PutMapping("/")
-	// public ResponseEntity<User> editProfile(HttpServletRequest request, @RequestBody UserDTO post)
-	// 		throws IOException, SQLException {
 
-	// 	Optional<User> currentUser = userService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (currentUser.isPresent()) {
-	// 		User user = this.getPrincipalUser(currentUser.get(), request);
-
-	// 		if (user != null) {
-	// 			user.setFirstName(post.getFirstName());
-	// 			user.setLastName(post.getLastName());
-	// 			user.setEmail(post.getEmail());
-	// 			user.setPassword(post.getPassword());
-
-	// 			userService.setUser(user);
-
-	// 			return new ResponseEntity<>(user, HttpStatus.OK);
-	// 		} else {
-	// 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 		}
-
-	// 	} else {
-	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 	}
-
-	// }
 
 // 	@Operation(summary = "Get the image profile of the user")
 // 	@ApiResponses(value = {

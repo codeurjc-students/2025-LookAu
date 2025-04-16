@@ -15,7 +15,7 @@
 
                         <!-- Tittle -->
                         <div class="col-1"></div>
-                        <div class="col-5 mt-3">
+                        <div class="col-6 mt-3">
                             <h3 class="ticket-name-group1 subtittle-tickets">PERSONAL</h3>
                         </div>
 
@@ -27,6 +27,7 @@
                                 <i class="header-profilek login-icon-color fas fa-pen"></i>
                             </a>
                         </div>
+                        <div class="col-2"></div>
 
                     </div>
 
@@ -52,6 +53,28 @@
 
                             <br>
                             <br>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center">
+                                        <p class="subtittle-tickets">Nick Name:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <p class="card-status ml-3">{{this.authService.getUserNickName()}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+
                             <div class="row">
                                 <div class="col-12">
 
@@ -90,26 +113,7 @@
 
                                 </div>
                             </div>
-
-                            <br>
-                            <div class="row">
-                                <div class="col-12">
-
-                                    <div class="row align-items-center">
-                                        <p class="subtittle-tickets">Nick Name:</p>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <div class="card-ticket justify-content-center align-items-center">
-                                                <p class="card-status ml-3">{{this.authService.getUserNickName()}}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-2"></div>
-                                    </div>
-
-                                </div>
-                            </div>
+                            
 
                         </div>
                         <div class="col-1"></div>
@@ -226,37 +230,35 @@
                                         </div>
 
                                         <div class="row" *ngIf="searching">
-                                            <div class="col-12">
-                                                <div class="row justify-content-center align-items-center mx-2"
-                                                    *ngIf="isEmptySearchAccounts">
-                                                    <p class="mx-2" style="color:#dc3545;">No results</p>
+                                            <div class="col-12 mt-2">
+                                                
+                                                <div class="row justify-content-center align-items-center mx-2" *ngIf="isEmptySearchAccounts">
+                                                    <p class="" style="color:#dc3545;">No results</p>
                                                 </div>
 
-                                                <ul *ngIf="!isEmptySearchAccounts">
-                                                    <li *ngFor="let account of searchAccounts">
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div
-                                                                    class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                                                    <div class="row">
-                                                                        <div
-                                                                            class="col-8 d-flex align-items-center my-2">
-                                                                            <p class="card-status ml-3">
-                                                                                {{account.nickName}}</p>
-                                                                        </div>
-                                                                        <div class="col-1 d-flex align-items-center">
-                                                                            <a class="ml-4"
-                                                                                [href]="'/sendPendingFriend/' + account.nickName">
-                                                                                <i
-                                                                                    class="header-profilek login-icon-color fas fa-check"></i>
-                                                                            </a>
-                                                                        </div>
+                                                <div *ngIf="!isEmptySearchAccounts">
+                                                  
+                                                    <div class="row" *ngFor="let account of searchAccounts">
+                                                        <div class="col-12">
+                                                            <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                                                <div class="row">
+                                                                    
+                                                                    <div class="col-8 d-flex align-items-center">
+                                                                        <p class="card-status ml-3 mb-0 my-2">{{account}}</p>
                                                                     </div>
+
+                                                                    <div class="col-1 d-flex align-items-center">
+                                                                        <a (click)="this.sendRequestFriend(account)">
+                                                                            <i class="header-profilek login-icon-color fas fa-check"></i>
+                                                                        </a>
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </li>
-                                                </ul>
+                                                    </div>
+                                                   
+                                                </div>
                                             </div>
                                         </div>
                                     </form>

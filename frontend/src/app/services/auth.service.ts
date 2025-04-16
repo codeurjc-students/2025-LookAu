@@ -89,32 +89,32 @@ export class AuthService {
   // PROFILE //
   /////////////
 
-  getUserFirstName(): String{
+  getUserFirstName(): string{
     return this.currentUser.firstName;
   }
-  getUserLastName(): String{
+  getUserLastName(): string{
     return this.currentUser.lastName;
   }
-  getUserNickName(): String{
+  getUserNickName(): string{
     return this.currentUser.nickName;
   }
-  getUserEmail(): String{
+  getUserEmail(): string{
     return this.currentUser.email;
   }
-  getUserPassword(): String{
+  getUserPassword(): string{
     return this.currentUser.password;
   }
   getUserProfilePicture(): number[]{
     return this.currentUser.profilePicture;
   }
 
-  getUserMyFriends(): String[]{
+  getUserMyFriends(): string[]{
     return this.currentUser.myFriends;
   }
-  getUserPendingFriends(): String[]{
+  getUserPendingFriends(): string[]{
     return this.currentUser.pendingFriends;
   }
-  getUserRequestFriends(): String[]{
+  getUserRequestFriends(): string[]{
     return this.currentUser.requestFriends;
   }
 

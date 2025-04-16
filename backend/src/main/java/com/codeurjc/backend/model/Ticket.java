@@ -1,5 +1,7 @@
 package com.codeurjc.backend.model;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -13,12 +15,15 @@ public class Ticket {
     private Long id;
 
     
-    private String statusName;
-    private Double statusPrice;
-    private String paidByName;
-    private Double paidByPice;
-    private String claimedBy;
-    private LocalDate date;
+    private String statusName;  //Winning - Not Winning - Pending - Reimbursement
+    private Double statusPrice;     //not used for Reimbursement
+    private String paidByName;  //also use for the account who owes to another account for reimbursement
+    private Double paidByPice;  //also use for the total of the reimbursement
+    private String claimedBy;   //also used for the account to be reimbursed
+    private LocalDate date;     
+    private Boolean balanced;   //helper var
+
+    private List<Long> idAccountsAreBeingPaid;   //also use for idTicketReimbursement when status = Reimbursement. This indicates the tickets who are implicates in the Reimbursement
 
     @ManyToOne
     @JoinColumn(name = "tickettype_id", nullable = false)
@@ -39,6 +44,29 @@ public class Ticket {
         this.paidByName = paidByName;
         this.paidByPice = paidByPice;
         this.date = date;
+        this.balanced = false;
+        this.idAccountsAreBeingPaid = new ArrayList<Long>();
+        if(this.statusName.equals("Winning"))
+            this.statusPrice = 100.00;
+        else if(this.statusName.equals("Pending"))
+            this.statusPrice = 0.00;
+        else
+            this.statusPrice = -10.00;
+    }
+
+    public Ticket(String statusName, String paidByName, Double paidByPice, String claimedBy, LocalDate date, List<Long> idTicketReimbursement){
+        this.statusName = statusName;
+        this.paidByName = paidByName;
+        this.paidByPice = paidByPice;
+        this.date = date;
+        this.balanced = false;
+        this.idAccountsAreBeingPaid = new ArrayList<Long>();
+        if(this.statusName.equals("Winning"))
+            this.statusPrice = 100.00;
+        else if(this.statusName.equals("Pending"))
+            this.statusPrice = 0.00;
+        else
+            this.statusPrice = -10.00;
     }
 
     public Ticket() {
@@ -80,6 +108,19 @@ public class Ticket {
     }
     public void setStatusPrice(Double statusPrice) {       
         this.statusPrice = statusPrice;
+    }
+    public Boolean isBalancedTicket(){
+        return this.balanced;
+    }
+    public void setBalancedTicket(Boolean balanced) {       
+        this.balanced = balanced;
+    }
+
+    public List<Long> getIdAccountsAreBeingPaid(){
+        return this.idAccountsAreBeingPaid;
+    }
+    public void setIdAccountsAreBeingPaid(List<Long> idAccountsAreBeingPaid) {       
+        this.idAccountsAreBeingPaid = idAccountsAreBeingPaid;
     }
 
 

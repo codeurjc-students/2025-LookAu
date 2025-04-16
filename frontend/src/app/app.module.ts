@@ -16,10 +16,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
-import { PopUpDialogComponent } from './components/childs/popup_dialog.component';
+import { PopUpDialogComponent } from './components/popUp/popup_dialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { IndividualComponent } from './components/individual/individual.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { GroupsComponent } from './components/gruops/groups.component';
+import { EditProfileComponent } from './components/profile/editProfile.component';
+import { MatButtonModule } from '@angular/material/button';
+import { PopUpDialogComponentTwo } from './components/popUp/popupTwo_dialog.component';
 
 
 
@@ -32,7 +36,10 @@ import { SignupComponent } from './components/signup/signup.component';
     SignupComponent,
     PopUpDialogComponent,
     ProfileComponent,
-    IndividualComponent
+    IndividualComponent,
+    GroupsComponent,
+    EditProfileComponent,
+    PopUpDialogComponentTwo,
 
   ], 
   imports: [
@@ -40,7 +47,8 @@ import { SignupComponent } from './components/signup/signup.component';
     BrowserModule,
     HttpClientModule,
     MatDialogModule,
-    FormsModule  
+    FormsModule,
+    MatButtonModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

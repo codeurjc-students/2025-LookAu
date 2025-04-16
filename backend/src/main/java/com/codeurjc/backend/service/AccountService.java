@@ -11,6 +11,7 @@ import com.codeurjc.backend.repository.AccountRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -78,29 +79,45 @@ public class AccountService {
         } 
     }
 
+    //seach if the account are in myfriends currentUser and if the currentUser are in myfriends account list
+    public Boolean isInMyFriends(Account acc, String nickNameRequest){
+
+        List<Account> lAccRquest = accountRepository.findByNickName(nickNameRequest);
+
+        if(!lAccRquest.isEmpty()){
+            return isAccountInList(acc.getMyFriends(), nickNameRequest) && isAccountInList(lAccRquest.get(0).getMyFriends(), acc.getNickName());
+        }else{
+            return false;
+        } 
+    }
+
+    
+
 
 
     ///// ACCTIONS /////
 
     //accounts that arent friends to send friend request 
-    public List<Account> getSearchingAccounts(String nickName, String myNickName){
+    public List<String> getSearchingAccounts(String nickName, String myNickName) {
 
         List<Account> lAccountsFiltered = accountRepository.findByNickNameContainingIgnoreCase(nickName);
         List<Account> lAccMy = accountRepository.findByNickName(myNickName);
 
-        lAccountsFiltered.removeAll(lAccMy.get(0).getMyFriends());
-        lAccountsFiltered.removeAll(lAccMy.get(0).getPendingFriends());
-        lAccountsFiltered.removeAll(lAccMy.get(0).getRequestFriends());
-        lAccountsFiltered.remove(lAccMy.get(0));
+        if (!lAccMy.isEmpty()) {
+            Account myAccount = lAccMy.get(0);
+            lAccountsFiltered.removeAll(myAccount.getMyFriends());
+            lAccountsFiltered.removeAll(myAccount.getPendingFriends());
+            lAccountsFiltered.removeAll(myAccount.getRequestFriends());
+            lAccountsFiltered.remove(myAccount);
+        }
 
-        return lAccountsFiltered;
+        return lAccountsFiltered.stream().map(this::convertToString).collect(Collectors.toList());
     }
 
     //set friends request to account
     public void sendFriendRequest(Account myAcc, String nickNameToSend){
 
         List<Account> lAccToSend = accountRepository.findByNickName(nickNameToSend);
-
         
         lAccToSend.get(0).getPendingFriends().add(myAcc);
         myAcc.getRequestFriends().add(lAccToSend.get(0));
@@ -138,6 +155,24 @@ public class AccountService {
         lAccToSend.add(myAcc);
 
         accountRepository.saveAll(lAccToSend);
+    }
+
+
+    //delete my friend, remove from my friend to login account and from my friend to other account
+    public void deleteMyFriend(Account myAcc, String nickNameToSend){
+
+        List<Account> lAccToSend = accountRepository.findByNickName(nickNameToSend);
+
+        if (!lAccToSend.isEmpty()) {
+            
+            lAccToSend.get(0).getMyFriends().remove(myAcc);        //remove from other acc my account
+
+            myAcc.getMyFriends().remove(lAccToSend.get(0));        //remove from login acc the friend
+
+            lAccToSend.add(myAcc);
+
+            accountRepository.saveAll(lAccToSend);
+        }
     }
 
 

@@ -1,0 +1,334 @@
+<br>
+
+<div class="row">
+    <div class="col-1"></div>
+
+    <div class="col-3">
+        <div class="card">
+
+            <!-- TITTLE -->
+            <div class="row">
+                <div class="col-12 barra-abajo">
+
+
+                    <div class="row ">
+
+                        <!-- Tittle -->
+                        <div class="col-1"></div>
+                        <div class="col-6 mt-3 d-flex justify-content-center align-items-center">
+                            <h3 class="ticket-name-group1 subtittle-tickets">PERSONAL</h3>
+                        </div>
+
+
+                        <!-- Buttons -->
+                        <div class="col-2 d-flex justify-content-end align-items-center mr-0 pr-0">
+                            <a class="nav-link nav-linkkk circle-linkkk" href="/profile">
+                                <i class="header-profilek login-icon-color fas fa-times"></i>
+                            </a>
+                        </div>
+
+                        <div class="col-2 d-flex justify-content-end align-items-center">
+                            <a class="nav-link nav-linkkk circle-linkkk" (click)="this.saveData()">
+                                <i class="header-profilek login-icon-color fas fa-check"></i>
+                            </a>
+                        </div>
+
+                        <div class="col-1"></div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+            <!-- INFORMATION -->
+            <div class="row">
+
+                <div class="col-1"></div>
+
+                <div class="col-11">
+
+                    <!-- Ticket Type -->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center">
+                                        <p class="subtittle-tickets">Nick Name:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <p class="card-status ml-3">{{this.authService.getUserNickName()}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center">
+                                        <p class="subtittle-tickets">First Name:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <input type="text" class="form-control ml-3" [(ngModel)]="firstName"
+                                                    placeholder="{{this.authService.getUserFirstName()}}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center mt-2">
+                                        <p class="subtittle-tickets">Last Name:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <input type="text" class="form-control ml-3" [(ngModel)]="lastName"
+                                                    placeholder="{{this.authService.getUserLastName()}}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="row align-items-center">
+                                        <p class="subtittle-tickets">New password:</p>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="card-ticket justify-content-center align-items-center">
+                                                <input type="password" class="form-control ml-3" [(ngModel)]="password"
+                                                    placeholder="" />
+                                            </div>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <br>
+
+                </div>
+
+            </div>
+            <br>
+
+
+            <!-- Photo -->
+            <div class="row">
+                <div class="col-12">
+
+                    <!-- Título -->
+                    <div class="row d-flex justify-content-center align-items-center mt-2">
+                        <p class="subtittle-tickets">Photo:</p>
+                    </div>
+
+                    <!-- Input de archivo -->
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-8">
+
+                            <div class="input-group justify-content-start">
+                                <input type="file" id="profilePicture" class="form-control custom-file-input justify-content-start" name="profilePicture" (change)="onFileSelected($event)">
+                                <label for="profilePicture" class="btn-outline-secondary custom-file-label ">
+                                    <i class="fas fa-upload ml-1"></i> {{ selectedFileName || 'No file selected' }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <!-- Imagen actual o preview -->
+                    <div class="row d-flex justify-content-center align-items-center mx-4">
+                        <img [src]="imagePreview || '/api/accounts/image/current'" alt="Profile photo"
+                            class="image-groups"
+                            style="width: 150px; height: 150px; border-radius: 50%; border: 1px solid #000;" />
+                    </div>
+
+                    <br>
+                  
+
+                </div>
+            </div>
+
+
+
+
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+
+
+
+    <div class="col-4">
+        <div class="card">
+
+            <!-- TITTLE -->
+            <div class="row">
+                <div class="col-12 barra-abajo ">
+
+
+                    <div class="row ">
+
+                        <!-- Tittle -->
+                        <div class="col-1"></div>
+                        <div class="col-5 mt-3 d-flex justify-content-center align-items-center">
+                            <h3 class="ticket-name-group1 subtittle-tickets">FRIENDS</h3>
+                        </div>
+                        <div class="col-3"></div>
+
+
+                        <!-- Buttons -->
+                        <div class="col-2 d-flex justify-content-end align-items-center mr-0 pr-0">
+                            <a class="nav-link nav-linkkk circle-linkkk ml-2 p-0" href="/profile">
+                                <i class="header-profilek login-icon-color fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <br>
+            <br>
+
+            <!----- FRIENDS ----->
+            <div class="row">
+
+
+
+                <div class="col-1"></div>
+
+                <div class="col-10">
+
+                    <!-- My friends -->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+
+                            <div class="row align-items-center">
+                                <p class="subtittle-tickets">My friends</p>
+                            </div>
+
+                            <div id="moreMyFriends" *ngIf="!this.isMyFriendsEmpty()">
+
+                                <div class="row" *ngFor="let myFriend of myFriends">
+                                    <div class="col-12">
+                                        <div class="card-ticket justify-content-center align-items-center my-2">
+
+                                            <div class="row">
+                                                <div class="col-4 barra-lateral-profile"
+                                                    style="border-right: 4px solid #2e2e2e;">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <img class="circular-img my-4"
+                                                            [src]="'/api/accounts/image?nickName=' + myFriend"
+                                                            alt="Card image cap"
+                                                            style="width: 50px; height: 50px; border-radius: 50%;">
+
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    class="col-5 d-flex justify-content-center align-items-center mt-3">
+                                                    <p class="card-status">{{myFriend}}</p>
+                                                </div>
+
+                                                <div class="col-3 d-flex align-items-center justify-content-center">
+                                                    <a (click)="deleteMyFriends(myFriend)">
+                                                        <i class="header-profilek login-icon-color fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row d-flex justify-content-center align-items-center"
+                                *ngIf="!this.isLastMyFriendsRequest">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <a class="btnnnn btn-dark" (click)="getMoreMyFriends()">More</a>
+                                </div>
+                            </div>
+
+                            <div class="row " *ngIf="this.isMyFriendsEmpty()">
+                                <div class="col-12 align-items-center">
+                                    <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No friends yet!</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+
+                </div>
+
+                <div class="col-1"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-1 p-0"></div>
+
+
+
+    <div class="col-3">
+        <app-individual></app-individual>
+    </div>
+
+</div>
+
+<br>
+<br>

@@ -138,7 +138,7 @@ public class ProfileController {
 
 
 
-    @GetMapping("/searchAccounts")
+    /*@GetMapping("/searchAccounts")
     public ModelAndView showSearchAccounts(HttpServletRequest request, HttpServletResponse response, Model model,
         @RequestParam String stringToFind) {
         
@@ -184,7 +184,7 @@ public class ProfileController {
         }
         
         return modelAndView;
-    }   
+    }   */
 
 
     @GetMapping("/sendPendingFriend/{nickName}")

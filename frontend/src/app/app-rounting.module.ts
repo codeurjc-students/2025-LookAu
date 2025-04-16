@@ -5,6 +5,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { GroupsComponent } from './components/gruops/groups.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditProfileComponent } from './components/profile/editProfile.component';
 // import { Main } from './components/main/main.component';
 // import { SubjectInfo } from './components/main/subject_info.component';
 // import { LoginComponent } from './components/auth/login.component';
@@ -27,14 +28,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 const routes: Routes = [
     {path: '', component: LoginComponent},
     {path: 'group', component: GroupsComponent},
-    {path: 'profile', component: ProfileComponent},
 
     {path: 'login', component: LoginComponent},
     {path: 'signup', component: SignupComponent},
     {path: 'error', component: ErrorComponent},
 
-    // {path: 'profile', component: ProfileComponent},
-    // {path: 'editProfile', component: EditProfileComponent},
+    {path: 'profile', component: ProfileComponent},
+    {path: 'editProfile', component: EditProfileComponent},
 
     // {path: 'subjects', component: SubjectsUser},
 
