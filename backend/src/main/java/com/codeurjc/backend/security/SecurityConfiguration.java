@@ -74,12 +74,27 @@ public class SecurityConfiguration {
 				.requestMatchers(HttpMethod.POST,"/api/accounts/image/current").permitAll()
 				.requestMatchers(HttpMethod.POST,"/api/accounts/image").permitAll()
 				.requestMatchers(HttpMethod.PUT,"/api/accounts/image").permitAll()
+				.requestMatchers(HttpMethod.GET,"/api/accounts/myFriends/**").permitAll()	
 				.requestMatchers(HttpMethod.POST,"/api/accounts/myFriends/**").permitAll()	
 				.requestMatchers(HttpMethod.DELETE,"/api/accounts/myFriends/**").permitAll()	
 				.requestMatchers(HttpMethod.PUT,"/api/accounts/pendingFriends/**").permitAll()
 				.requestMatchers(HttpMethod.DELETE,"/api/accounts/pendingFriends/**").permitAll()
 				.requestMatchers(HttpMethod.GET,"/api/accounts/**").permitAll()
 				.requestMatchers(HttpMethod.PUT,"/api/accounts/**").permitAll()
+
+				.requestMatchers(HttpMethod.PUT,"/api/accounts/teams").permitAll()
+
+				//TEAMS
+				//Main teams 
+				.requestMatchers(HttpMethod.GET,"/api/teams/**").permitAll()
+
+				//Profile
+				.requestMatchers(HttpMethod.POST,"/api/teams/**").permitAll()
+				.requestMatchers(HttpMethod.GET,"/api/teams/*/image").permitAll()
+				.requestMatchers(HttpMethod.PUT,"/api/teams/*/image").permitAll()
+				
+
+				//All account teams
 				
 
 

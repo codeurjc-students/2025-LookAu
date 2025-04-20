@@ -56,8 +56,12 @@ export class AuthService {
           this.userLoadedSubject.next(true); 
         },
         error: (err) => {
-          console.error('Error al cargar el usuario:', err);
           this.userLoadedSubject.next(false);
+          const currentUrl = this.router.url;
+
+          if (!['/', '/login', '/register'].includes(currentUrl)) {
+            this.router.navigate(['/error']);
+          }
         }
       });
 

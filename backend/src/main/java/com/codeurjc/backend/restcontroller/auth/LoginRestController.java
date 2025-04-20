@@ -1,4 +1,4 @@
-package com.codeurjc.backend.controller.auth;
+package com.codeurjc.backend.restcontroller.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

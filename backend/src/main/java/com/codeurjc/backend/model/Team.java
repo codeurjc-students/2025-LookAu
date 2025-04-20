@@ -29,14 +29,12 @@ public class Team {
 
     public Team(String name, byte[] profilePicture){
         this.name = name;
-
         this.accounts = new ArrayList<>();
         this.tickets = new ArrayList<>();
     }
 
     public Team(String name){
         this.name = name;
-
         this.accounts = new ArrayList<>();
     }
 

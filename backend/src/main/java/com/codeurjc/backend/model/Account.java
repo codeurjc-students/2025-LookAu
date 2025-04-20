@@ -74,6 +74,9 @@ public class Account {
 
         this.myFriends = new ArrayList<>();
         this.pendingFriends = new ArrayList<>();
+        this.pendingFriends = new ArrayList<>();
+        this.teams = new ArrayList<>();
+        this.tickets = new ArrayList<>();
     }
 
     public Account(String nickName, String firstName, String lastName, String email, String password){
@@ -85,6 +88,9 @@ public class Account {
         
         this.myFriends = new ArrayList<>();
         this.pendingFriends = new ArrayList<>();
+        this.pendingFriends = new ArrayList<>();
+        this.teams = new ArrayList<>();
+        this.tickets = new ArrayList<>();
     }
 
 
@@ -132,6 +138,14 @@ public class Account {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    //ListTeams
+    public List<Team> getTeams(){
+        return this.teams;
+    }
+    public void setTeams(List<Team> teams){
+        this.teams = teams;
     }
 
     //ListFriends

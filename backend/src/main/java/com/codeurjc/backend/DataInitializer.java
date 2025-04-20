@@ -59,7 +59,6 @@ public class DataInitializer {
     @PostConstruct
     public void init() throws Exception {
 
-
         /****************************/
         /****************************/ 
         /********** CREATE **********/
@@ -187,10 +186,15 @@ public class DataInitializer {
         /***************/
 
         Team team1 = new Team("Decramados Team", this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_team.jpg"));
+        team1.setProfilePicture(this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_team.jpg"));
         Team team2 = new Team("Rarw", photo);
+        team2.setProfilePicture(photo);
         Team team3 = new Team("All for one", photo);
+        team3.setProfilePicture(photo);
         Team team4 = new Team("Motogoat", photo);
+        team4.setProfilePicture(photo);
         Team team5 = new Team("Empty Sadness", photo);
+        team5.setProfilePicture(photo);
 
 
 
@@ -269,10 +273,8 @@ public class DataInitializer {
 
         Ticket reimbursement1 = new Ticket("Reimbursement", "LaTinyLoco", 15.50, "Pepiflor23", LocalDate.of(2025, 3, 27), new ArrayList<>(Arrays.asList(ticket11.getId(), ticket12.getId())));
         reimbursement1.setTeam(team1);
-        reimbursement1.setTicketType(null);
         Ticket reimbursement2 = new Ticket("Reimbursement", "LaTinyLoco", 32.83, "Akalpaca", LocalDate.of(2025, 3, 27), new ArrayList<>(Arrays.asList(ticket11.getId(), ticket12.getId())));
         reimbursement2.setTeam(team1);
-        reimbursement2.setTicketType(null);
 
         //team2
         Ticket ticket21 = new Ticket("Winning", "Alvarochi", 1.50, "Alvarochi", LocalDate.of(2025, 3, 27));
@@ -340,23 +342,32 @@ public class DataInitializer {
         account4.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
         account5.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
         account6.setRequestFriends(new ArrayList<>(Arrays.asList(account7)));
-        
 
+        
         //ACCOUNTS - TICKETS
-        account7.setTickets(new ArrayList<>(Arrays.asList(ticket1, ticket2, ticket3, ticket4, ticket5, ticket6)));
-        account1.setTickets(new ArrayList<>(Arrays.asList(ticket7, ticket8, ticket9, ticket10)));
+        account1.setTeams(new ArrayList<>(Arrays.asList(team1, team2, team3, team4)));
+        account2.setTeams(new ArrayList<>(Arrays.asList(team1)));
+        account3.setTeams(new ArrayList<>(Arrays.asList(team1, team3)));
+        account4.setTeams(new ArrayList<>(Arrays.asList(team2, team3)));
+        account5.setTeams(new ArrayList<>(Arrays.asList(team2, team3)));
+        account6.setTeams(new ArrayList<>(Arrays.asList(team2)));
+        account7.setTeams(new ArrayList<>(Arrays.asList(team4)));
+
+
 
         //TEAMS - TICKECTS
-        team1.setTickets(new ArrayList<>(Arrays.asList(ticket11, ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20)));
+        team1.setTickets(new ArrayList<>(Arrays.asList(ticket11, ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20, reimbursement1, reimbursement2)));
         team2.setTickets(new ArrayList<>(Arrays.asList(ticket21, ticket22, ticket23, ticket24, ticket25)));
         team3.setTickets(new ArrayList<>(Arrays.asList(ticket26, ticket27, ticket28, ticket29, ticket30)));
 
         //TEAMS - ACCOUNTS
         team1.setAccounts(new ArrayList<>(Arrays.asList(account1, account2, account3)));
-        team2.setAccounts(new ArrayList<>(Arrays.asList(account4, account5, account6)));
+        team2.setAccounts(new ArrayList<>(Arrays.asList(account1, account4, account5, account6)));
         team3.setAccounts(new ArrayList<>(Arrays.asList(account1, account3, account4, account5)));
         team4.setAccounts(new ArrayList<>(Arrays.asList(account1, account7)));       
         team5.setAccounts(new ArrayList<>(Arrays.asList()));       //empty
+
+        
 
 
         
@@ -394,10 +405,13 @@ public class DataInitializer {
         quintupleRepository.saveAll(new ArrayList<>(Arrays.asList(qt1, qt2, qt3)));
         quinielaRepository.saveAll(new ArrayList<>(Arrays.asList(q1, q2, q3)));
         quinigolRepository.saveAll(new ArrayList<>(Arrays.asList(qg1, qg2, qg3)));
-          
+
+        accountRepository.saveAll(new ArrayList<>(Arrays.asList(account1, account2, account3, account4, account5, account6, account7)));
+
         teamRepository.saveAll(new ArrayList<>(Arrays.asList(team1, team2, team3, team4)));
 
-        ticketRepository.saveAll(new ArrayList<>(Arrays.asList(ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8, ticket9, ticket10, ticket11, ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20, ticket21, ticket22, ticket23, ticket24, ticket25, ticket26, ticket27, ticket28, ticket29, ticket30)));
+        //ticketRepository.saveAll(new ArrayList<>(Arrays.asList(ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8, ticket9, ticket10, ticket11, ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20, ticket21, ticket22, ticket23, ticket24, ticket25, ticket26, ticket27, ticket28, ticket29, ticket30, reimbursement1, reimbursement2)));
+
     }
 
 

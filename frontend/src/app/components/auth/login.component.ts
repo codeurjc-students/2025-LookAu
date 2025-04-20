@@ -48,7 +48,7 @@ export class LoginComponent {
 
         this.userLoadedSubscription = this.authService.userLoaded().subscribe((loaded: boolean) => {
           if (loaded) {
-            this.router.navigate(['/group']);
+            this.router.navigate(['/team']);
           } else {
             this.router.navigate(['/error']);
           }

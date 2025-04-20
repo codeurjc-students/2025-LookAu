@@ -76,7 +76,6 @@ export class ProfileComponent {
         this.indexMyFriends++; //next ajax buttom
         this.loadingMyFriends = false; //hide the spinner
         this.isLastMyFriendsRequest = response.last;
-        console.log(response.last)
       }
     );
   }
@@ -204,7 +203,6 @@ export class ProfileComponent {
         this.indexRequestFriends++; //next ajax buttom
         this.loadingRequestFriends = false; //hide the spinner
         this.isLastRequestFriendsRequest = response.last;
-        console.log(response.last)
       }
     );
   }

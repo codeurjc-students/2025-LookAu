@@ -2,6 +2,6 @@ export interface Account{
   id: number;
   name: string;
   
-  accounts: string[];
+  //accounts: string[];
   //tickets: Number[];
 }

@@ -20,10 +20,12 @@ import { PopUpDialogComponent } from './components/popUp/popup_dialog.component'
 import { ProfileComponent } from './components/profile/profile.component';
 import { IndividualComponent } from './components/individual/individual.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { GroupsComponent } from './components/gruops/groups.component';
+import { TeamsComponent } from './components/teams/teams.component';
 import { EditProfileComponent } from './components/profile/editProfile.component';
 import { MatButtonModule } from '@angular/material/button';
 import { PopUpDialogComponentTwo } from './components/popUp/popupTwo_dialog.component';
+import { NewTeamComponent } from './components/teams/newTeam.component';
+import { CardTeamsComponent } from './components/teams/cardTeams.component';
 
 
 
@@ -37,9 +39,11 @@ import { PopUpDialogComponentTwo } from './components/popUp/popupTwo_dialog.comp
     PopUpDialogComponent,
     ProfileComponent,
     IndividualComponent,
-    GroupsComponent,
+    TeamsComponent,
     EditProfileComponent,
     PopUpDialogComponentTwo,
+    NewTeamComponent,
+    CardTeamsComponent
 
   ], 
   imports: [

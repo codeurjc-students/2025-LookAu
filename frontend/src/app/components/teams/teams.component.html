@@ -16,15 +16,15 @@
                 <div class="col-1"></div>
 
                 <!-- Button new group -->
-                <div class="col-2 d-flex justify-content-end">
-                    <a [href]="" class="btnnn btn-dark mb-0" value="Logout">New Group</a>
+                <div class="col-2 d-flex justify-content-end align-items-start">
+                    <a [href]="'/teams/newteam'" class="btnnn btn-dark" value="Logout">New Team</a>
                 </div>
 
 
                 <!-- Formulario -->
                 <div class="col-7">
 
-                    <form id="loginForm" (ngSubmit)="searchGroup(searchTerm)" method="get">
+                    <form id="loginForm" (ngSubmit)="searchTeam(searchTerm)" method="get">
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-group">
@@ -44,31 +44,21 @@
                             <div class="col-12 mt-2">
 
                                 <div class="row justify-content-center align-items-center mx-2"
-                                    *ngIf="isEmptySearchGroups">
+                                    *ngIf="isEmptySearchTeams">
                                     <p class="" style="color:#dc3545;">No results</p>
                                 </div>
 
-                                <div *ngIf="!isEmptySearchGroups">
+                                <div *ngIf="!isEmptySearchTeams">
 
-                                    <div class="row" *ngFor="let account of searchGroups">
+                                    <div class="row" *ngFor="let team of searchTeams">
                                         <div class="col-12">
-                                            <div
-                                                class="card-ticket justify-content-center align-items-center mx-4 my-2">
+                                            <a class="card-ticket justify-content-center align-items-center mx-4 my-2" style="cursor: pointer !important;" [routerLink]="['/teams', team.id]">
                                                 <div class="row">
-
-                                                    <div class="col-8 d-flex align-items-center">
-                                                        <p class="card-status ml-3 mb-0 my-2">{{account}}</p>
+                                                    <div class="col-12 d-flex align-items-center">
+                                                        <p class="card-status ml-3 mb-0 my-2">{{team.name}}</p>
                                                     </div>
-
-                                                    <div class="col-1 d-flex align-items-center">
-                                                        <a [href]="">
-                                                            <i
-                                                                class="header-profilek login-icon-color fas fa-arrow-right"></i>
-                                                        </a>
-                                                    </div>
-
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
 
@@ -98,9 +88,9 @@
             <div class="row">
                 <div class="col-12">
 
-                    <div id="moreMyFriends" *ngIf="!this.isMyFriendsEmpty()">
+                    <div id="moreMyFriends" *ngIf="!this.isTeamsEmpty()">
 
-                        <div class="row" *ngFor="let group of groups">
+                        <div class="row" *ngFor="let team of teams">
                             <div class="col-12">
 
 
@@ -109,68 +99,52 @@
 
                                     <!-- Gruop -->
                                     <div class="col-10">
-                                        <div class="card">
+                                        <div class="card" (click)="goToTeam(team.id)">
                                             <div class="row align-items-center">
 
                                                 <!-- Photo -->
-                                                <div class="col-2 mx-4 justify-content-center barra-lateral">
-                                                    <img class="circular-img my-3" src="http://localhost:4200/api/accounts/image?nickName=Alvarochi" alt="Card image cap" style="width: 100px; height: 100px; border-radius: 50%;">
+                                                <div class="col-3 d-flex justify-content-center align-items-center barra-lateral">
+                                                    <img class="circular-img my-3" src="/api/teams/{{team.id}}/image" alt="Card image cap" style="width: 100px; height: 100px; border-radius: 50%;">
                                                 </div>
 
+                                                <div class="col-1"></div>
+
                                                 <!-- Information -->
-                                                <div class="col-8 justify-content-center">
+                                                <div class="col-6 justify-content-start">
                                                     <div class="row">
 
                                                         <!-- Group name -->
-                                                        <div
-                                                            class="col-8 d-flex justify-content-center align-items-center">
-                                                            <h3 class="name-groups">{{group}}</h3>
-                                                        </div>
-
-                                                        <!-- Group price -->
-                                                        <div class="col-4">
-                                                            <div
-                                                                class="card card-price d-flex justify-content-center align-items-center">
-                                                                <p class="caddprice mb-0 my-2">- 7.38</p>
-                                                            </div>
+                                                        <div class="col-8 d-flex justify-content-start align-items-center">
+                                                            <h3 class="name-groups">{{team.name}}</h3>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-2"></div>
                                             </div>
                                         </div>
 
                                         <br>
 
                                     </div>
-
-                                    <!-- Button trash -->
-                                    <div class="col-1 d-flex align-items-center">
-                                        <a class="nav-link nav-linkk circle-linkk" id="pills-profile-tab"
-                                            data-toggle="pill" href="#pills-profile" role="tab"
-                                            aria-controls="pills-profile" aria-selected="false">
-                                            <i class="header-profile login-icon-color fas fa-trash"></i>
-                                        </a>
-                                    </div>
+                                    
 
                                 </div>
 
                             </div>
                         </div>
 
-                        <div class="row d-flex justify-content-center align-items-center" *ngIf="!this.isLastGroupsRequest">
+                        <div class="row d-flex justify-content-center align-items-center" *ngIf="!this.isLastTeamsRequest">
                             <div class="col-12 d-flex justify-content-center align-items-center">
-                                <a class="btnnnn btn-dark" (click)="getMoreMyFriends()">More</a>
+                                <a class="btnnnn btn-dark" (click)="getMoreTeams()">More</a>
                             </div>
                         </div>
                     </div>
 
                     
 
-                    <div class="row" *ngIf="this.isMyFriendsEmpty()">
+                    <div class="row" *ngIf="this.isTeamsEmpty()">
                         <div class="col-12 d-flex justify-content-center align-items-center">
-                            <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No groups yet!</p>
+                            <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No teams yet!</p>
                         </div>
                     </div>
 

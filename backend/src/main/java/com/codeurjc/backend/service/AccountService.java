@@ -6,9 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.model.Team;
 import com.codeurjc.backend.model.DTO.AccountDTO;
+import com.codeurjc.backend.model.DTO.TeamDTO;
 import com.codeurjc.backend.repository.AccountRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,6 +38,26 @@ public class AccountService {
 
     public void setAccount(Account acc){
         accountRepository.save(acc);
+    }
+
+    public void setAccounts(List<Account> lAcc){
+        accountRepository.saveAll(lAcc);
+    }
+
+    public List<Account> getAllByNicknames(List<String> nicknames) {
+        return accountRepository.findAllByNickname(nicknames);
+    }
+
+    public List<String> getSearchingMyFriends(String searchTerm, List<Account> lMyFriends) {
+
+        if(!lMyFriends.isEmpty()){
+            return lMyFriends.stream()
+            .filter(item -> item.getNickName() != null && item.getNickName().toLowerCase().contains(searchTerm.toLowerCase()))
+            .map(this::convertToString)
+            .collect(Collectors.toList());
+        }else{
+            return new ArrayList<String>();
+        }
     }
 
 
@@ -95,7 +118,7 @@ public class AccountService {
 
 
 
-    ///// ACCTIONS /////
+    ///// ACCTIONS /////    
 
     //accounts that arent friends to send friend request 
     public List<String> getSearchingAccounts(String nickName, String myNickName) {
@@ -175,7 +198,7 @@ public class AccountService {
         }
     }
 
-
+    
 
     
     /********************/
@@ -194,6 +217,10 @@ public class AccountService {
         return accountRepository.findAllRequestFriends(nickName, pageable).map(this::convertToString);
     }
 
+    public Page<TeamDTO> getAllTeamsPage(String nickName, Pageable pageable) {
+        return accountRepository.findAllTeams(nickName, pageable).map(this::convertToTeamDTO);
+    }
+
 
 
 
@@ -203,6 +230,10 @@ public class AccountService {
 
     private String convertToString(Account account) {
         return account.getNickName();
+    }
+
+    private TeamDTO convertToTeamDTO(Team team) {
+        return new TeamDTO(team.getId(), team.getName());
     }
 
     private Boolean isAccountInList(List<Account> lAcc, String nickName){

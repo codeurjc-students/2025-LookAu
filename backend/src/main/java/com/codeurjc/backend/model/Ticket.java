@@ -26,7 +26,7 @@ public class Ticket {
     private List<Long> idAccountsAreBeingPaid;   //also use for idTicketReimbursement when status = Reimbursement. This indicates the tickets who are implicates in the Reimbursement
 
     @ManyToOne
-    @JoinColumn(name = "tickettype_id", nullable = false)
+    @JoinColumn(name = "tickettype_id", nullable = true)
     private TicketType ticketType;
 
     

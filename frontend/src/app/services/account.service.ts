@@ -44,6 +44,16 @@ export class AccountService {
     }) as Observable<any>;
   }
 
+  getTeams(index: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', index.toString());
+    params = params.append('size', '3');
+
+    return this.http.get(BASE_URL+'teams', {
+      params: params,
+    }) as Observable<any>;
+  }
+
   acceptFriend(nickName: string): Observable<any>{
     return this.http.put(BASE_URL+'pendingFriends/'+nickName, null) as Observable<any>;
   }
@@ -56,8 +66,11 @@ export class AccountService {
     return this.http.delete(BASE_URL+'myFriends/'+nickName) as Observable<any>;
   }
 
+  searchMyFriend(searchTerm: string): Observable<any>{
+    return this.http.get(BASE_URL+'myFriends/'+searchTerm) as Observable<any>;
+  }
+
   searchFriend(searchTerm: string): Observable<any>{
-    console.log(this.http.get(BASE_URL+searchTerm) as Observable<any>);
     return this.http.get(BASE_URL+searchTerm) as Observable<any>;
   }
 
@@ -74,38 +87,5 @@ export class AccountService {
   editProfile(firstName: string, lastName: string, password: string){
     return this.http.put(BASE_URL, {firstName, lastName, password})
   }
-
-
-  // getUserSubjects(index: number): Observable<any> {
-  //   let params = new HttpParams();
-  //   params = params.append('page', index.toString());
-  //   params = params.append('size', '3');
-
-  //   return this.http.get(BASE_URL, {
-  //     params: params,
-  //   }) as Observable<any>;
-  // }
-
-  // isGmailTeacher(gmail: String): Observable<boolean>{
-  //   return this.http.get<boolean>(BASE_URL+'teacherGmail?gmail='+gmail)
-  // }
-
-  // isGmailStudent(gmail: String): Observable<boolean>{
-  //   return this.http.get<boolean>(BASE_URL+'studentGmail?gmail='+gmail)
-  // }
-
-  // enroll(id: BigInt, studentid: number) {
-  //   return this.http.post("/api/users/enroll/" + id.toString() + "/" + studentid.toString(), {})
-  // }
-
-  // setProfileImage(image: File){
-  //   const formData = new FormData();
-  //   formData.append('file', image);
-  //   return this.http.put('/api/users/image', formData, { withCredentials: true })
-  // }
-
-  // getUserSubjectsNP(): Observable<any>{
-  //   return this.http.get("/api/users/userSubjects", {}) as Observable<any>;;
-  // }
 
 }

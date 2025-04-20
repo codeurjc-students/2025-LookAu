@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/auth/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { GroupsComponent } from './components/gruops/groups.component';
+import { TeamsComponent } from './components/teams/teams.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditProfileComponent } from './components/profile/editProfile.component';
+import { NewTeamComponent } from './components/teams/newTeam.component';
+import { CardTeamsComponent } from './components/teams/cardTeams.component';
 // import { Main } from './components/main/main.component';
 // import { SubjectInfo } from './components/main/subject_info.component';
 // import { LoginComponent } from './components/auth/login.component';
@@ -26,9 +28,11 @@ import { EditProfileComponent } from './components/profile/editProfile.component
 
 
 const routes: Routes = [
-    {path: '', component: LoginComponent},
-    {path: 'group', component: GroupsComponent},
+    {path: 'teams', component: TeamsComponent},
+    {path: 'teams/newteam', component: NewTeamComponent},
+    {path: 'teams/:id', component: CardTeamsComponent},
 
+    {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
     {path: 'signup', component: SignupComponent},
     {path: 'error', component: ErrorComponent},

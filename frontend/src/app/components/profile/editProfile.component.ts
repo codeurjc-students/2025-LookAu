@@ -86,7 +86,6 @@ export class EditProfileComponent {
         this.indexMyFriends++; //next ajax buttom
         this.loadingMyFriends = false; //hide the spinner
         this.isLastMyFriendsRequest = response.last;
-        console.log(response.last)
       }
     );
   }
@@ -112,11 +111,8 @@ export class EditProfileComponent {
       if (this.password == "") {
         this.password = this.authService.getUserPassword();
       }
-      console.log(this.selectedFile);
       this.accountService.editProfile(this.firstName, this.lastName, this.password).subscribe(
         (response) => {
-
-          console.log(this.selectedFile);
 
           if (this.selectedFile != null) {
             this.accountService.setProfileImage(this.selectedFile).subscribe(
