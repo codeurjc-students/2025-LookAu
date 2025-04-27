@@ -58,10 +58,6 @@ export class TeamsComponent {
     );
   }
 
-  goToTeam(teamId: number){
-    this.router.navigate(['/teams',teamId]);
-  }
-
   /** Get Account Teams **/
   getTeams() {
     this.accountService.getTeams(0).subscribe(

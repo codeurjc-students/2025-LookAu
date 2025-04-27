@@ -40,6 +40,7 @@ public class Ticket {
 
 
     public Ticket(String statusName, String paidByName, Double paidByPice, String claimedBy, LocalDate date){
+        this.claimedBy = claimedBy;
         this.statusName = statusName;
         this.paidByName = paidByName;
         this.paidByPice = paidByPice;
@@ -55,6 +56,7 @@ public class Ticket {
     }
 
     public Ticket(String statusName, String paidByName, Double paidByPice, String claimedBy, LocalDate date, List<Long> idTicketReimbursement){
+        this.claimedBy = claimedBy;
         this.statusName = statusName;
         this.paidByName = paidByName;
         this.paidByPice = paidByPice;

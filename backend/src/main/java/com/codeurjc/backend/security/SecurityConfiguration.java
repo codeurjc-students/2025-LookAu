@@ -88,6 +88,10 @@ public class SecurityConfiguration {
 				//Main teams 
 				.requestMatchers(HttpMethod.GET,"/api/teams/**").permitAll()
 
+				//Tickets
+				.requestMatchers(HttpMethod.GET,"/api/teams/*/tickets").permitAll()
+				.requestMatchers(HttpMethod.GET,"/api/teams/*/tickets/**").permitAll()
+
 				//Profile
 				.requestMatchers(HttpMethod.POST,"/api/teams/**").permitAll()
 				.requestMatchers(HttpMethod.GET,"/api/teams/*/image").permitAll()

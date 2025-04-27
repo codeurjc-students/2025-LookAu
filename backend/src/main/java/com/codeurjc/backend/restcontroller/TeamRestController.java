@@ -36,6 +36,7 @@ import com.codeurjc.backend.model.Team;
 import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.RegisterAccountDTO;
 import com.codeurjc.backend.model.DTO.TeamDTO;
+import com.codeurjc.backend.model.DTO.TicketTeamDTO;
 import com.codeurjc.backend.service.AccountService;
 import com.codeurjc.backend.service.TeamService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -199,35 +200,43 @@ public class TeamRestController {
 	/******** AJAX FRIENDS ********/
 	/******************************/
 
-	// // https://localhost:8443/api/teams/?page=0&size=10
-	// @Operation(summary = "Get more account of the team")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "404", description = "Team not found", content = @Content) })
-	// @GetMapping("/{id}/accounts")
-	// public ResponseEntity<Page<String>> getMoreAcconutsTeams(HttpServletRequest request,
-	// 		@RequestParam(value = "page", defaultValue = "0") int page,
-	// 		@RequestParam(value = "size", defaultValue = "10") int size) {
+	// https://localhost:8443/api/teams/id/tickets?page=0&size=10
+	@Operation(summary = "Get more account of the team")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "404", description = "Team not found", content = @Content) })
+	@GetMapping("/{idTeam}/tickets")
+	public ResponseEntity<Page<TicketTeamDTO>> getMoreAcconutsTeams(HttpServletRequest request,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(value = "date", defaultValue = "") String date,
+			@RequestParam(value = "type", defaultValue = "") String type,
+			@PathVariable String idTeam) {
 		
-	// 	Optional<Team> accountOpp = teamService.getByEmail(request.getUserPrincipal().getName());
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
 
-	// 	if (accountOpp.isPresent()) {
+		if (accountOpp.isPresent()) {
 
-	// 		Account acc = accountOpp.get();
+			Page<TicketTeamDTO> lMyFriends;
 
-	// 		Page<String> lMyFriends = accountService.getAllMyFriendsPage(acc.getNickName(), PageRequest.of(page, size));
-	// 		if (lMyFriends.getSize() > 0) {
-	// 			return new ResponseEntity<>(lMyFriends, HttpStatus.OK);
-	// 		} else {
-	// 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 		}
+			if(type.equals("") && date.equals("")){
+				lMyFriends = teamService.getTeamTicketsPaged(idTeam, PageRequest.of(page, size));
+			}else{
+				lMyFriends = teamService.getTeamTicketsFilterPaged(idTeam, date, type, PageRequest.of(page, size));
+			}
+			
+			if (lMyFriends.getSize() > 0) {
+				return new ResponseEntity<>(lMyFriends, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
 
 			
-	// 	} else{
-	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 	}
-	// }
+		} else{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 
 

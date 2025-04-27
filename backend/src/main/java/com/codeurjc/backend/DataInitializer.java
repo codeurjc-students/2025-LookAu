@@ -237,7 +237,7 @@ public class DataInitializer {
         ticket10.setTicketType(qg1);
 
         //team1
-        Ticket ticket11 = new Ticket("Winning", "LaTinyLoco", 1.50, "LaTinyLoco", LocalDate.of(2025, 3, 27));
+        Ticket ticket11 = new Ticket("Winning", "LaTinyLoco", 1.50, "LaTinyLoco", LocalDate.of(2021, 3, 27));
         ticket11.setBalancedTicket(true);
         ticket11.setIdAccountsAreBeingPaid(new ArrayList<>(Arrays.asList(account2.getId(), account3.getId())));
         ticket11.setTeam(team1);
@@ -246,32 +246,32 @@ public class DataInitializer {
         ticket12.setBalancedTicket(true);
         ticket12.setTeam(team1);
         ticket12.setTicketType(ed2);
-        Ticket ticket13 = new Ticket("Pending", "LaTinyLoco", 1.50, "LaTinyLoco", LocalDate.of(2025, 1, 3));
+        Ticket ticket13 = new Ticket("Pending", "LaTinyLoco", 1.50, "LaTinyLoco", LocalDate.of(2023, 1, 3));
         ticket13.setTeam(team1);
         ticket13.setTicketType(em2);
-        Ticket ticket14 = new Ticket("Winning", "LaTinyLoco", 1.50, "LaTinyLoco", LocalDate.of(2025, 3, 27));
+        Ticket ticket14 = new Ticket("Winning", "LaTinyLoco", 1.50, "LaTinyLoco", LocalDate.of(2024, 7, 27));
         ticket14.setTeam(team1);
         ticket14.setTicketType(g2);
-        Ticket ticket15 = new Ticket("Not Winning", "Akalpaca", 1.50, "Akalpaca", LocalDate.of(2024, 9, 19));
+        Ticket ticket15 = new Ticket("Not Winning", "Akalpaca", 1.50, "Akalpaca", LocalDate.of(2024, 2, 19));
         ticket15.setTeam(team1);
         ticket15.setTicketType(l2);
         Ticket ticket16 = new Ticket("Pending", "Akalpaca", 1.50, "Akalpaca", LocalDate.of(2025, 1, 3));
         ticket16.setTeam(team1);
         ticket16.setTicketType(lt2);
-        Ticket ticket17 = new Ticket("Winning", "Akalpaca", 1.50, "Akalpaca", LocalDate.of(2025, 3, 27));
+        Ticket ticket17 = new Ticket("Winning", "Akalpaca", 1.50, "Akalpaca", LocalDate.of(2023, 11, 27));
         ticket17.setTeam(team1);
         ticket17.setTicketType(p2);
         Ticket ticket18 = new Ticket("Not Winning", "Akalpaca", 1.50, "Akalpaca", LocalDate.of(2024, 9, 19));
         ticket18.setTeam(team1);
         ticket18.setTicketType(qt2);
-        Ticket ticket19 = new Ticket("Pending", "Pepiflor23", 1.50, "Pepiflor23", LocalDate.of(2025, 1, 3));
+        Ticket ticket19 = new Ticket("Pending", "Pepiflor23", 1.50, "Pepiflor23", LocalDate.of(2025, 12, 3));
         ticket19.setTeam(team1);
         ticket19.setTicketType(q2);
-        Ticket ticket20 = new Ticket("Winning", "Pepiflor23", 1.50, "Pepiflor23", LocalDate.of(2025, 3, 27));
+        Ticket ticket20 = new Ticket("Winning", "Pepiflor23", 1.50, "Pepiflor23", LocalDate.of(2025, 3, 1));
         ticket20.setTeam(team1);
         ticket20.setTicketType(qg2);
 
-        Ticket reimbursement1 = new Ticket("Reimbursement", "LaTinyLoco", 15.50, "Pepiflor23", LocalDate.of(2025, 3, 27), new ArrayList<>(Arrays.asList(ticket11.getId(), ticket12.getId())));
+        Ticket reimbursement1 = new Ticket("Reimbursement", "LaTinyLoco", 15.50, "Pepiflor23", LocalDate.of(2024, 3, 27), new ArrayList<>(Arrays.asList(ticket11.getId(), ticket12.getId())));
         reimbursement1.setTeam(team1);
         Ticket reimbursement2 = new Ticket("Reimbursement", "LaTinyLoco", 32.83, "Akalpaca", LocalDate.of(2025, 3, 27), new ArrayList<>(Arrays.asList(ticket11.getId(), ticket12.getId())));
         reimbursement2.setTeam(team1);

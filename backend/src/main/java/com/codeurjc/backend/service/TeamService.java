@@ -2,17 +2,22 @@ package com.codeurjc.backend.service;
 import com.codeurjc.backend.security.CSRFHandlerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.model.Team;
+import com.codeurjc.backend.model.Ticket;
 import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.TeamDTO;
+import com.codeurjc.backend.model.DTO.TicketTeamDTO;
 import com.codeurjc.backend.repository.AccountRepository;
 import com.codeurjc.backend.repository.TeamRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,6 +58,88 @@ public class TeamService {
     }
 
 
+    /***********************/
+    /******* TICKETS *******/
+    /***********************/
+    public Page<TicketTeamDTO> getTeamTicketsPaged(String teamId, Pageable pageable) {
+        Long idTeamLong = Long.valueOf(teamId);
+
+        Optional<Team> test = getById(idTeamLong);
+    
+        return getById(idTeamLong)
+            .map(team -> {
+                List<Ticket> tickets = team.getTickets();
+    
+                //set pagination and order by date
+                List<Ticket> pagedTickets = tickets.stream()
+                    .sorted(Comparator.comparing(Ticket::getDate).reversed()) 
+                    .skip(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .collect(Collectors.toList());
+    
+                    List<TicketTeamDTO> dtoList = new ArrayList<>();
+
+                    for (Ticket ticket : pagedTickets) {
+                        try {
+                            // Intentamos convertir el ticket a DTO
+                            TicketTeamDTO ticketTeamDTO = this.convertToTicketTeamDTO(ticket);
+                            dtoList.add(ticketTeamDTO);  // Si la conversión es exitosa, lo añadimos a la lista
+                        } catch (Exception e) {
+                            // En caso de error en la conversión, logueamos el error para saber qué ha fallado
+                            System.err.println("Error al convertir el ticket: " + ticket);
+                            e.printStackTrace(); // Imprimimos la excepción para obtener más detalles
+                        }
+                    }
+    
+                return new PageImpl<>(dtoList, pageable, tickets.size());
+            })
+            .orElse(new PageImpl<>(Collections.emptyList(), pageable, 0));
+    }
+
+
+    public Page<TicketTeamDTO> getTeamTicketsFilterPaged(String teamId, String date, String type, Pageable pageable) {
+        Long idTeamLong = Long.valueOf(teamId);
+    
+        return getById(idTeamLong)
+            .map(team -> {
+                List<Ticket> tickets = team.getTickets();
+
+                //filter by date or type
+                List<Ticket> filteredTickets = tickets.stream()
+                .filter(ticket -> {
+                    boolean matchesDate = date == null || date.isEmpty() || 
+                        (ticket.getDate() != null && ticket.getDate().toString().contains(date));
+                    
+                    boolean matchesType = type == null || type.isEmpty() || 
+                        (ticket.getTicketType() != null && 
+                         ticket.getTicketType().getStringTickectType().equalsIgnoreCase(type.trim()));
+                    
+                    return matchesDate && matchesType;
+                })
+                .sorted(Comparator.comparing(Ticket::getDate).reversed())
+                .collect(Collectors.toList());
+    
+
+                //set pagination and order by date
+                List<Ticket> pagedTickets = filteredTickets.stream()
+                    .sorted(Comparator.comparing(Ticket::getDate).reversed()) 
+                    .skip(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .collect(Collectors.toList()
+                );
+    
+
+                //convert to dto
+                List<TicketTeamDTO> dtoList = pagedTickets.stream()
+                    .map(this::convertToTicketTeamDTO)
+                    .collect(Collectors.toList());
+    
+                return new PageImpl<>(dtoList, pageable, filteredTickets.size());
+            })
+            .orElse(new PageImpl<>(Collections.emptyList(), pageable, 0));
+    }
+    
+    
 
     /********************/
     /******* HELP *******/
@@ -60,6 +147,10 @@ public class TeamService {
 
     private TeamDTO convertToTeamDTO(Team team) {
         return new TeamDTO(team.getId(), team.getName());
+    }
+
+    private TicketTeamDTO convertToTicketTeamDTO(Ticket ticket) {
+        return new TicketTeamDTO(ticket);
     }
 
 

@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-1"></div>
 
-    <div class="col-7">
+    <div class="col-10">
 
         <!------------------------->
         <!------- SEARCH BAR ------>
@@ -17,7 +17,9 @@
 
                 <!-- Button new group -->
                 <div class="col-2 d-flex justify-content-end align-items-start">
-                    <a [href]="'/teams/newteam'" class="btnnn btn-dark" value="Logout">New Team</a>
+                    <a [href]="'/teams/newteam'" class="btnnn btn-dark" style="border-radius: 4px;" value="Logout">
+                        Add <i class="fas fa-users ml-2"></i>
+                    </a>
                 </div>
 
 
@@ -52,14 +54,15 @@
 
                                     <div class="row" *ngFor="let team of searchTeams">
                                         <div class="col-12">
-                                            <a class="card-ticket justify-content-center align-items-center mx-4 my-2" style="cursor: pointer !important;" [routerLink]="['/teams', team.id]">
-                                                <div class="row">
+                                            <a class="" [routerLink]="['/teams', team.id, 'tickets']">
+                                                <div class="card-ticket justify-content-center align-items-center mx-4 my-2">
                                                     <div class="col-12 d-flex align-items-center">
                                                         <p class="card-status ml-3 mb-0 my-2">{{team.name}}</p>
                                                     </div>
                                                 </div>
                                             </a>
                                         </div>
+                                        <br>
                                     </div>
 
                                 </div>
@@ -99,7 +102,7 @@
 
                                     <!-- Gruop -->
                                     <div class="col-10">
-                                        <div class="card" (click)="goToTeam(team.id)">
+                                        <a class="card" [routerLink]="['/teams', team.id, 'tickets']">
                                             <div class="row align-items-center">
 
                                                 <!-- Photo -->
@@ -121,7 +124,7 @@
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </a>
 
                                         <br>
 
@@ -157,15 +160,6 @@
     </div>
 
     <div class="col-1 p-0"></div>
-
-
-
-    <!------------------------->
-    <!------- INDIVIDUAL ------>
-    <!------------------------->
-    <div class="col-3">
-        <app-individual></app-individual>
-    </div>
 
 </div>
 

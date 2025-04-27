@@ -1,9 +1,7 @@
-<br>
-
 <div class="row">
     <div class="col-1"></div>
 
-    <div class="col-7">
+    <div class="col-7 mr-5">
 
         <!------------------------->
         <!------- SEARCH BAR ------>
@@ -12,81 +10,72 @@
         <div class="container">
 
             <div class="row">
-
-                <div class="col-1"></div>
-
-                <!-- Button new teams -->
-                <div class="col-2 d-flex justify-content-end">
-                    <a [href]="" class="btnnn btn-dark mb-0" value="Logout">New Ticket</a>
+                <!-- Botón New Ticket -->
+                <div class="col-6 d-flex justify-content-end align-items-center m-0">
+                    <a [routerLink]="'/teams/newteam'" class="btnnn btn-dark" style="border-radius: 4px;">
+                        Add <i class="fas fa-ticket ml-2"></i>
+                    </a>
                 </div>
 
+                <div class="col-6 d-flex justify-content-start align-items-center m-0">
+                    <button (click)="toggleFilters()" class="btnnn btn-dark" style="border-radius: 4px;">
+                        Filter <i class="fas fa-filter ml-2"></i>
+                    </button>
+                </div>
+            </div>
 
-                <!-- Formulario -->
-                <div class="col-7">
+            
 
-                    <form id="loginForm" (ngSubmit)="searchTeam(searchTerm)" method="get">
+            <div *ngIf="showFilters" class="row d-flex justify-content-center align-items-center">  
+                
+                <br>
+                <br>
+                
+                <div class="col-2 d-flex justify-content-end align-items-center m-0">
+                    <p style="color:#706d6d;" class="m-0">Filter by: </p>
+                </div>
+        
+                <!-- Filtros -->
+                <div class="col-6 d-flex justify-content-start align-items-center">
+                    <form>
                         <div class="row">
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <button class="btn-background btn btn-outline-secondary" type="submit">
-                                            <i class="login-icon-color fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                    <input name="stringToFind" id="stringToFind" type="text"
-                                        class="form-control-funcionapls form-control" placeholder="Find by date or type"
-                                        name="searchTerm" [(ngModel)]="searchTerm">
-                                </div>
+        
+                            <!-- Filtro de Fecha -->
+                            <div class="col-5 d-flex justify-content-center align-items-center">
+                                <input type="date" class="form-control" [(ngModel)]="selectedDate" name="selectedDate"
+                                    (ngModelChange)="applyFilters()" style="border-radius:8px; border: 1px solid #232323; background-color: #131313;">
                             </div>
-                        </div>
-
-                        <div class="row" *ngIf="searching">
-                            <div class="col-12 mt-2">
-
-                                <div class="row justify-content-center align-items-center mx-2"
-                                    *ngIf="isEmptySearchTeams">
-                                    <p class="" style="color:#dc3545;">No results</p>
-                                </div>
-
-                                <div *ngIf="!isEmptySearchTeams">
-
-                                    <div class="row" *ngFor="let team of searchTeams">
-                                        <div class="col-12">
-                                            <div
-                                                class="card-ticket justify-content-center align-items-center mx-4 my-2">
-                                                <div class="row">
-
-                                                    <div class="col-8 d-flex align-items-center">
-                                                        <p class="card-status ml-3 mb-0 my-2">{{team}}</p>
-                                                    </div>
-
-                                                    <div class="col-1 d-flex align-items-center">
-                                                        <a [href]="">
-                                                            <i
-                                                                class="header-profilek login-icon-color fas fa-arrow-right"></i>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+        
+                            <!-- Filtro de Tipo de Ticket -->
+                            <div class="col-5 d-flex justify-content-st align-items-center">
+                                <select class="form-control" [(ngModel)]="selectedTicketType" name="ticketType"
+                                    (ngModelChange)="applyFilters()" style="border-radius:8px; border: 1px solid #232323; background-color: #131313;">
+                                    <option value="">All Types</option>
+                                    <option *ngFor="let type of ticketTypes" [value]="type">
+                                        {{ type }}
+                                    </option>
+                                </select>
                             </div>
+        
+                            <!-- Botón borrar filtros -->
+                            <div class="col-2 d-flex justify-content-start align-items-center">
+                                <button type="button" (click)="deleteFilters()" class="k nav-linkkklk circle-linkkk"
+                                    style="color: rgb(112, 112, 112); border: 1.5px solid rgb(112, 112, 112); border-radius:50%;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+        
                         </div>
                     </form>
-
                 </div>
-                <div class="col-2"></div>
+
+              
+        
             </div>
+  
         </div>
-
-
-
+          
         <br>
-        <br>
-
 
         <!--------------------->
         <!------- GRUOPS ------>
@@ -97,16 +86,59 @@
             <!-- My friends -->
             <div class="row">
                 <div class="col-12">
+                    
 
-                    <div id="moreTeams" *ngIf="!this.isTeamsEmpty()">
+                    <div id="moreTickets" *ngIf="!this.isTicketsEmpty()">
 
-                        <div class="row" *ngFor="let teams of teams">
+                        <div class="row" *ngFor="let ticket of tickets">
                             <div class="col-12">
 
                                 <!------ REIMBURSEMENT TICKET ------>
-                                <div class="row" *ngIf="teams.statusName=='Reimbursement'; else elseStatusName">
+                                <div class="row" *ngIf="ticket.statusName=='Reimbursement'; else elseStatusName">
+
+                                    <div class="col-2"></div>
+
+                                    <div class="col-8">
+                                        <div class="card">
+                                            <div class="row">
+                                                <div class="col-10 d-flex justify-content-center align-items-center">
+                                                    <div class="col-1"></div>
+                                                    <div class="col-1">
+                                                        <i class="fa-solid fa-money-bill-transfer"
+                                                            style="color: rgb(92, 159, 99);"></i>
+                                                    </div>
+
+                                                    <div
+                                                        class="col-10 d-flex justify-content-center align-items-center my-3">
+                                                        <p class="m-0"
+                                                            style="color: rgb(170, 170, 170); font-size: 15px;">
+                                                            {{ticket.paidByName}} has made a reimbursement to
+                                                            {{ticket.claimedBy}} of {{ticket.statusPrice}} <i
+                                                                class="fas fa-euro-sign"></i></p>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                                    <div class="col-12 d-flex justify-content-start align-items-center">
+                                                        <button (click)="this.deleteReimbursement(ticket.id)"
+                                                            class="k nav-linkkklk circle-linkkk"
+                                                            style="color: rgb(112, 112, 112);">
+                                                            <i class="header-profilek login-icon-color fas fa-trash"
+                                                                style="color: rgb(112, 112, 112);"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
 
 
+                                </div>
+
+                                <div class="mb-1">
+                                    <br>
                                 </div>
 
                                 <!------ STANDART TICKET ------>
@@ -117,53 +149,90 @@
 
                                         <!-- Gruop -->
                                         <div class="col-10">
-                                            <div class="card">
-                                                <div class="row align-items-center">
+                                            <a class="card"
+                                                [routerLink]="['/teams', this.idTeam, 'tickets', ticket.id]">
+                                                <div class="row">
+
+                                                    <div
+                                                        class="col-1 d-flex align-items-center justify-content-center p-0 m-0">
+                                                        <i class="fa-solid fa-ticket m-0 p-0 ml-4"
+                                                            style="color: rgb(92, 140, 159);"></i>
+                                                    </div>
 
                                                     <!-- Photo -->
-                                                    <div class="col-2 mx-4 justify-content-center barra-lateral">
-                                                        <img class="circular-img my-3"
-                                                            src="http://localhost:4200/api/accounts/image?nickName=Alvarochi"
-                                                            alt="Card image cap"
-                                                            style="width: 100px; height: 100px; border-radius: 50%;">
+                                                    <div
+                                                        class="col-2 d-flex align-items-center justify-content-center barra-lateral p-0 m-0">
+                                                        <h5 class="name-groups m-0 p-0 mr-4">{{ticket.date}}</h5>
                                                     </div>
 
                                                     <!-- Information -->
-                                                    <div class="col-8 justify-content-center">
+                                                    <div class="col-9 m-0">
                                                         <div class="row">
 
-                                                            <!-- Group name -->
+
                                                             <div
-                                                                class="col-8 d-flex justify-content-center align-items-center">
-                                                                <h3 class="name-groups">{{teams}}</h3>
+                                                                class="col-3 d-flex align-items-center justify-content-center">
+                                                                <h5 class="name-groups m-0">{{ticket.type}}</h5>
                                                             </div>
 
-                                                            <!-- Group price -->
-                                                            <div class="col-4">
-                                                                <div
-                                                                    class="card card-price d-flex justify-content-center align-items-center">
-                                                                    <p class="caddprice mb-0 my-2">- 7.38</p>
+                                                            <div class="col-3 my-3">
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col-12 d-flex align-items-center justify-content-center">
+                                                                        <p class="m-0"
+                                                                            style="color: rgb(112, 112, 112); font-size: 13.5px;">
+                                                                            Status:</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col-12 d-flex align-items-center justify-content-center">
+                                                                        <h5 class="name-groups m-0">
+                                                                            {{ticket.statusPrice}}</h5>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="col-1"></div>
+
+                                                            <!-- Group price -->
+                                                            <div class="col-5 ">
+                                                                <div class="card card-price m-4">
+
+                                                                    <div
+                                                                        class="row d-flex align-items-center justify-content-center m-2">
+                                                                        <div class="col-3"
+                                                                            *ngIf="ticket?.statusName==='Winning'">
+                                                                            <i
+                                                                                class="login-icon-color fas fa-trophy"></i>
+                                                                        </div>
+                                                                        <div class="col-3"
+                                                                            *ngIf="ticket?.statusName==='Not Winning'">
+                                                                            <i class="login-icon-color fa-solid fa-ban"
+                                                                                style="color: rgb(112, 112, 112); font-size: 13.5px;"></i>
+                                                                        </div>
+                                                                        <div class="col-3"
+                                                                            *ngIf="ticket?.statusName==='Pending'">
+                                                                            <i class="login-icon-color fa-solid fa-hourglass-half"
+                                                                                style="color: rgb(112, 112, 112); font-size: 13.5px;"></i>
+                                                                        </div>
+                                                                        <div class="col-9">
+                                                                            <p class="caddprice mb-0">
+                                                                                {{ticket.statusName}}</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-2"></div>
                                                 </div>
-                                            </div>
-
-                                            <br>
-
-                                        </div>
-
-                                        <!-- Button trash -->
-                                        <div class="col-1 d-flex align-items-center">
-                                            <a class="nav-link nav-linkk circle-linkk" id="pills-profile-tab"
-                                                data-toggle="pill" href="#pills-profile" role="tab"
-                                                aria-controls="pills-profile" aria-selected="false">
-                                                <i class="header-profile login-icon-color fas fa-trash"></i>
                                             </a>
+
                                         </div>
+
                                     </div>
                                 </ng-template>
 
@@ -171,18 +240,18 @@
                         </div>
 
                         <div class="row d-flex justify-content-center align-items-center"
-                            *ngIf="!this.isLastTeamsRequest">
+                            *ngIf="!this.isLastTicketsRequest">
                             <div class="col-12 d-flex justify-content-center align-items-center">
-                                <a class="btnnnn btn-dark" (click)="getMoreTeams()">More</a>
+                                <a class="btnnnn btn-dark" (click)="getMoreTickets()">More</a>
                             </div>
                         </div>
                     </div>
 
 
 
-                    <div class="row" *ngIf="this.isTeamsEmpty()">
+                    <div class="row" *ngIf="this.isTicketsEmpty()">
                         <div class="col-12 d-flex justify-content-center align-items-center">
-                            <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No teams yet!</p>
+                            <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No tickets yet!</p>
                         </div>
                     </div>
 
@@ -194,14 +263,13 @@
         <br>
     </div>
 
-    <div class="col-1 p-0"></div>
 
 
 
     <!------------------------->
     <!------- INDIVIDUAL ------>
     <!------------------------->
-    <div class="col-3">
+    <div class="col-3 ml-3">
         <app-individual></app-individual>
     </div>
 

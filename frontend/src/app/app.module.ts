@@ -1,10 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-
-
 import { AppComponent } from './app.component';
-
 
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/childs/header.component';
@@ -26,6 +23,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { PopUpDialogComponentTwo } from './components/popUp/popupTwo_dialog.component';
 import { NewTeamComponent } from './components/teams/newTeam.component';
 import { CardTeamsComponent } from './components/teams/cardTeams.component';
+import { CardTicketsTeamsComponent } from './components/tickets/cardTicketsTeams.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 
 
 
@@ -43,7 +46,8 @@ import { CardTeamsComponent } from './components/teams/cardTeams.component';
     EditProfileComponent,
     PopUpDialogComponentTwo,
     NewTeamComponent,
-    CardTeamsComponent
+    CardTeamsComponent,
+    CardTicketsTeamsComponent,
 
   ], 
   imports: [
@@ -53,6 +57,12 @@ import { CardTeamsComponent } from './components/teams/cardTeams.component';
     MatDialogModule,
     FormsModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatOptionModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

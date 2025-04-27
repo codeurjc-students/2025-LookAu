@@ -8,6 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { EditProfileComponent } from './components/profile/editProfile.component';
 import { NewTeamComponent } from './components/teams/newTeam.component';
 import { CardTeamsComponent } from './components/teams/cardTeams.component';
+import { CardTicketsTeamsComponent } from './components/tickets/cardTicketsTeams.component';
 // import { Main } from './components/main/main.component';
 // import { SubjectInfo } from './components/main/subject_info.component';
 // import { LoginComponent } from './components/auth/login.component';
@@ -30,7 +31,8 @@ import { CardTeamsComponent } from './components/teams/cardTeams.component';
 const routes: Routes = [
     {path: 'teams', component: TeamsComponent},
     {path: 'teams/newteam', component: NewTeamComponent},
-    {path: 'teams/:id', component: CardTeamsComponent},
+    {path: 'teams/:id/tickets', component: CardTeamsComponent}, 
+    {path: 'teams/:id/tickets/:idTicket', component: CardTicketsTeamsComponent},
 
     {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},

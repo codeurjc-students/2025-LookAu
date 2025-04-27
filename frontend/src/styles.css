@@ -349,6 +349,22 @@ footer {
     border: 2px solid #938a24;
     background-color: #101010;
     padding: 5px; /* Ajusta el padding */
+} 
+
+.nav-linkkklk {
+    color: #e7d043;
+    margin-left: 10px;
+    border: 2px solid #AAAA;
+    background-color: #101010;
+    padding: 5px; /* Ajusta el padding */
+} 
+
+.nav-linkkk {
+    color: #e7d043;
+    margin-left: 10px;
+    border: 2px solid #938a24;
+    background-color: #101010;
+    padding: 5px; /* Ajusta el padding */
 }
 
 .barra-lateral-clarita {
@@ -459,3 +475,69 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     overflow-y: auto;  /* Habilita el scroll vertical */
     padding: 16px;
 }
+
+/** FILTERS TICKETS **/
+.mat-form-field {
+    background: rgb(16, 16, 16) !important;
+    color: #e7d043 !important; 
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background: rgb(16, 16, 16) !important;
+    border-radius: 4px;
+    color: #e7d043 !important; 
+
+}
+
+input.mat-input-element {
+    background: rgb(16, 16, 16) !important;
+    color: #e7d043 !important; 
+
+}
+
+.mat-select-trigger {
+    background: rgb(16, 16, 16) !important;
+    color: #e7d043 !important; 
+
+}
+
+.mat-select-panel {
+    background: rgb(16, 16, 16) !important;
+    color: #e7d043 !important; 
+
+}
+
+.mat-datepicker-content {
+    background: rgb(16, 16, 16) !important;
+    color: blanco !important; 
+
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex:hover,
+.mat-form-field-appearance-fill .mat-form-field-flex.mat-focused {
+    background: rgb(16, 16, 16) !important;
+    color: #e7d043 !important; 
+
+}
+
+.mat-select {
+    background: rgb(16, 16, 16) !important;
+    color: #e7d043 !important; 
+
+}
+
+.tryw{
+    background: rgb(16, 16, 16)!important;
+}
+
+.amarillo{
+    color: #e7d043 !important; 
+}
+
+.blanco{
+    color: rgb(112, 112, 112) !important; 
+}
+
+
+
+  

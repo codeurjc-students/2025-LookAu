@@ -6,20 +6,20 @@ import { TeamService } from '../../services/team.service';
 
 
 @Component({
-  selector: 'app-cardteams',
-  templateUrl: './cardTeams.component.html',
+  selector: 'app-cardticketsteams',
+  templateUrl: './cardTicketsTeams.component.html',
   standalone: false,
 })
 
-export class CardTeamsComponent {
+export class CardTicketsTeamsComponent {
 
   public idTeam: number = 0;
   
   //search bar
-  selectedDate: Date = new Date(NaN);
-  selectedTicketType: string = '';
-  ticketTypes: string[] = ['Bonoloto', 'Eurodreams', 'Euromillones', 'El Gordo' , 'Lotería Nacional', 'Lototurf', 'La Primitiva', 'La Quiniela', 'Quinigol', 'Quintuple plus'];
-  showFilters: boolean = false;
+  public searchTerm: string = "";
+  public searchTickets: any[] = [];
+  public isEmptySearchTickets: boolean = false;
+  public searching: boolean = false;
 
   //tickets
   public tickets: any[] = [];
@@ -39,33 +39,35 @@ export class CardTeamsComponent {
     });
     
     this.getTickets();  
-    
   }
 
 
-  /** Filters **/
-  applyFilters() {
-    this.getTickets();
+  /** Search Bar **/
+  searchTeam(searchTerm: string){
+    if (!searchTerm || searchTerm.trim() === '') {
+      this.searchTickets = [];
+      this.isEmptySearchTickets = false;
+      this.searching = false;
+      return;
+    }
+  
+    this.searching = true;
+    this.teamService.searchTeam(searchTerm).subscribe(
+      (response) => {
+        this.searchTickets = response;
+        this.isEmptySearchTickets = response.length === 0;
+        this.searching = true;
+      },
+      (error) => {
+        this.router.navigate(['/error']);
+      }
+    );
   }
-
-  deleteFilters() {
-    this.selectedDate = new Date(NaN);
-    this.selectedTicketType = '';
-    this.getTickets();
-  }
-
-  toggleFilters(){
-    this.showFilters = this.showFilters == true? false: true;
-    console.log(this.selectedDate);
-    console.log(typeof this.selectedDate);
-    this.deleteFilters();    
-  }
-
 
 
   /** Get Team Tickets **/
   getTickets() {
-    this.teamService.getTeamTickets(0, this.idTeam, this.selectedDate, this.selectedTicketType).subscribe(
+    this.teamService.getTeamTickets(0, this.idTeam, new Date, '').subscribe(
       (response) => {
         this.tickets = response.content;
         this.isLastTicketsRequest = response.last;
@@ -78,24 +80,19 @@ export class CardTeamsComponent {
 
   getMoreTickets() {
     this.loadingTickets = true; //show the spinner
-    this.teamService.getTeamTickets(this.indexTickets, this.idTeam, this.selectedDate, this.selectedTicketType).subscribe(
+    this.teamService.getTeamTickets(this.indexTickets, this.idTeam, new Date, '').subscribe(
       (response) => {
         this.tickets = this.tickets.concat(response.content);
         this.moreTickets = !response.last;
         this.indexTickets++; //next ajax buttom
         this.loadingTickets = false; //hide the spinner
         this.isLastTicketsRequest = response.last;
-        console.log(this.isLastTicketsRequest);
       }
     );
   }
 
   isTicketsEmpty(): boolean {
     return !this.tickets?.length;
-  }
-
-  /** Reimbursement **/
-  deleteReimbursement(teamId: string){
   }
 
 }

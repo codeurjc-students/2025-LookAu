@@ -238,7 +238,7 @@ main {
     line-height: 1.5; 
     transition: all 0.15s ease-in-out; 
     margin-bottom: 16px;
-    color: #e7d043;
+    color: #bfad38;
     background-color: #101010;
 }
 
@@ -453,3 +453,53 @@ main {
 .hidden {
     display: none;
 }
+  
+
+.solid-filters {
+    background: #ffffff;  /* Fondo blanco sólido */
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+  
+    .filter-row {
+      align-items: center;
+    }
+  
+    .solid-form-field {
+      width: 100%;
+      background: #f5f5f5;  /* Fondo gris claro para los campos */
+      border-radius: 4px;
+      padding: 0 8px;
+  
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+  
+      .mat-form-field-outline {
+        background-color: white;  /* Fondo blanco para el outline */
+        border-radius: 4px;
+      }
+    }
+  
+    .filter-button {
+      background: #f5f5f5;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+  
+      &:hover {
+        background: #e0e0e0;
+      }
+  
+      i {
+        color: #424242;
+      }
+    }
+  }
