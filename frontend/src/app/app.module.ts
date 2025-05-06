@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/childs/header.component';
 
 import { LoginComponent } from './components/auth/login.component';
@@ -29,7 +28,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
-
+import { BonolotoComponent } from './components/tickets/ticketsType/bonoloto.component';
+import { EurodreamsComponent } from './components/tickets/ticketsType/eurodreams.component';
+import { EuromillonesComponent } from './components/tickets/ticketsType/euromillones.component';
+import { GordoComponent } from './components/tickets/ticketsType/gordo.component';
+import { LoteriaComponent } from './components/tickets/ticketsType/loteria.component';
+import { LototurfComponent } from './components/tickets/ticketsType/lototurf.component';
+import { PrimitivaComponent } from './components/tickets/ticketsType/primitiva.component';
+import { QuintupleComponent } from './components/tickets/ticketsType/quintuple.component';
 
 
 @NgModule({
@@ -48,6 +54,14 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
     NewTeamComponent,
     CardTeamsComponent,
     CardTicketsTeamsComponent,
+    BonolotoComponent,
+    EurodreamsComponent,
+    EuromillonesComponent,
+    GordoComponent,
+    LoteriaComponent,
+    LototurfComponent,
+    PrimitivaComponent,
+    QuintupleComponent,
 
   ], 
   imports: [

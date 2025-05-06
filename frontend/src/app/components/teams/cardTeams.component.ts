@@ -69,9 +69,10 @@ export class CardTeamsComponent {
       (response) => {
         this.tickets = response.content;
         this.isLastTicketsRequest = response.last;
+        console.log(this.tickets);
       },
       (error) => {
-        console.error('Error al obtener los sujetos:', error);
+        this.router.navigate(['/error']);
       }
     );
   }
@@ -94,8 +95,21 @@ export class CardTeamsComponent {
     return !this.tickets?.length;
   }
 
+
   /** Reimbursement **/
   deleteReimbursement(teamId: string){
+  }
+
+  formatSignedAmountReimbursement(amountSring: string): string {
+    let amount = Number(amountSring);
+    const formatted = Math.abs(amount).toFixed(2);
+    return amount > 0 ? `+ ${formatted}` : formatted;
+  }
+
+  formatSignedAmount(amountSring: string): string {
+    let amount = Number(amountSring);
+    const formatted = amount.toFixed(2);
+    return amount > 0 ? `+ ${formatted}` : formatted;
   }
 
 }

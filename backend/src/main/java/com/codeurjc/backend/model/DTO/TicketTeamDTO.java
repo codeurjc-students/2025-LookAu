@@ -17,11 +17,11 @@ public class TicketTeamDTO {
     private String claimedBy;
     private String paidByName;
     private String paidByPice;  //also use for the total of the reimbursement
+    private String ticketTypeId;
 
     private Boolean balanced;   //helper var
 
     private List<String> idAccountsAreBeingPaid;
-
 
 
     public TicketTeamDTO(){}
@@ -37,12 +37,14 @@ public class TicketTeamDTO {
         this.paidByName = ticket.getPaidByName();
         this.paidByPice = String.valueOf(ticket.getPaidByPice());
         this.balanced = ticket.isBalancedTicket();
+        this.ticketTypeId = ticket.getTicketType()!=null? String.valueOf(ticket.getTicketType().getId()) : "";
         if (ticket.getIdAccountsAreBeingPaid() != null && !ticket.getIdAccountsAreBeingPaid().isEmpty()) {
             this.idAccountsAreBeingPaid = ticket.getIdAccountsAreBeingPaid().stream()
                 .map(Object::toString)
                 .collect(Collectors.toList());
+        }else{
+            this.idAccountsAreBeingPaid = null;
         }
-        String lleé;
     }
 
     public Long getId() {
@@ -104,5 +106,11 @@ public class TicketTeamDTO {
     }
     public void setIdAccountsAreBeingPaid(List<String> idAccountsAreBeingPaid) {
         this.idAccountsAreBeingPaid = idAccountsAreBeingPaid;
+    }
+    public String getTicketTypeId() {
+        return ticketTypeId;
+    }
+    public void setTicketTypeId(String ticketTypeId) {
+        this.ticketTypeId = ticketTypeId;
     }
 }

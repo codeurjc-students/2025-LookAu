@@ -113,8 +113,7 @@
                                                         <p class="m-0"
                                                             style="color: rgb(170, 170, 170); font-size: 15px;">
                                                             {{ticket.paidByName}} has made a reimbursement to
-                                                            {{ticket.claimedBy}} of {{ticket.statusPrice}} <i
-                                                                class="fas fa-euro-sign"></i></p>
+                                                            {{ticket.claimedBy}} of {{formatSignedAmountReimbursement(ticket.statusPrice)}} € </p>
                                                     </div>
 
                                                 </div>
@@ -188,7 +187,7 @@
                                                                     <div
                                                                         class="col-12 d-flex align-items-center justify-content-center">
                                                                         <h5 class="name-groups m-0">
-                                                                            {{ticket.statusPrice}}</h5>
+                                                                            {{formatSignedAmount(ticket.statusPrice)}}</h5>
                                                                     </div>
                                                                 </div>
                                                             </div>

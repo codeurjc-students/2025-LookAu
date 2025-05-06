@@ -69,5 +69,8 @@ public class TicketType {
     public void setStringTickectType(String ticketStringType) {
         this.ticketStringType = ticketStringType;
     }
+    public Long getId() {
+        return id;
+    }
 
 }

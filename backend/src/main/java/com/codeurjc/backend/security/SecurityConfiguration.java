@@ -98,7 +98,8 @@ public class SecurityConfiguration {
 				.requestMatchers(HttpMethod.PUT,"/api/teams/*/image").permitAll()
 				
 
-				//All account teams
+				//TICKETS
+				.requestMatchers(HttpMethod.PUT,"/api/tickets/**").permitAll()
 				
 
 

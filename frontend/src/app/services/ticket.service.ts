@@ -10,8 +10,12 @@ export class TicketService {
 
   constructor(private http: HttpClient) { }
 
-  getTicketId(id: number): Observable<number>{
-    return this.http.get<number>(BASE_URL+id);
+  getTicket(id: number): Observable<number>{
+    return this.http.get<number>(BASE_URL+id) as Observable<any>;
+  }
+
+  getTicketType(id: number): Observable<any>{
+    return this.http.get<number>(BASE_URL+id+'/ticketType') as Observable<any>;
   }
 
 

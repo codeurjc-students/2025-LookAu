@@ -66,7 +66,7 @@ export class TeamsComponent {
         this.isLastTeamsRequest = response.last;
       },
       (error) => {
-        console.error('Error al obtener los sujetos:', error);
+        this.router.navigate(['/error']);
       }
     );
   }

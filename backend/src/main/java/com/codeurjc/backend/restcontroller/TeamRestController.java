@@ -191,8 +191,23 @@ public class TeamRestController {
 		}
 	}
 
-	
-	
+
+	@Operation(summary = "Get all account of the team")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "404", description = "Team not found", content = @Content) })
+	@GetMapping("/{idTeam}/accounts")
+	public ResponseEntity<List<String>> getMoreAcconutsTeams(HttpServletRequest request, @PathVariable String idTeam) {
+		
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+			return ResponseEntity.ok(teamService.getAccountsTeam(Long.valueOf(idTeam)));		
+		} else{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 
 
@@ -220,7 +235,7 @@ public class TeamRestController {
 
 			Page<TicketTeamDTO> lMyFriends;
 
-			if(type.equals("") && date.equals("")){
+			if(type.equals("") && date.equals("")){	//if the filters are on
 				lMyFriends = teamService.getTeamTicketsPaged(idTeam, PageRequest.of(page, size));
 			}else{
 				lMyFriends = teamService.getTeamTicketsFilterPaged(idTeam, date, type, PageRequest.of(page, size));

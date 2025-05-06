@@ -3,6 +3,8 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { TeamService } from '../../services/team.service';
+import { TicketService } from '../../services/ticket.service';
+
 
 
 @Component({
@@ -13,50 +15,49 @@ import { TeamService } from '../../services/team.service';
 
 export class CardTicketsTeamsComponent {
 
-  public idTeam: number = 0;
+  public teamId: number = 0;
+  public ticketId: number = 0;
   
-  //search bar
-  public searchTerm: string = "";
-  public searchTickets: any[] = [];
-  public isEmptySearchTickets: boolean = false;
-  public searching: boolean = false;
-
   //tickets
-  public tickets: any[] = [];
-  public isLastTicketsRequest: boolean = false; //ajax
-  public loadingTickets: boolean = false; //ajax
-  public indexTickets: number = 1; //ajax
-  public moreTickets: boolean = false; //ajax
+  public ticket: any;
+  public accounts: any[] = [];
+  public transactions: Transaction[] = [];
 
 
-  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, private router: Router, private route:ActivatedRoute) {
+  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute) {
     this.authService.getCurrentUser();
+    
+    this.teamId = Number(this.route.snapshot.paramMap.get('teamId') || 0);
+    this.ticketId = Number(this.route.snapshot.paramMap.get('ticketId') || 0);
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.idTeam = params['id']; 
-    });
-    
-    this.getTickets();  
+    this.getTicket();  
+    this.getTeamAccounts();
   }
 
 
-  /** Search Bar **/
-  searchTeam(searchTerm: string){
-    if (!searchTerm || searchTerm.trim() === '') {
-      this.searchTickets = [];
-      this.isEmptySearchTickets = false;
-      this.searching = false;
-      return;
-    }
-  
-    this.searching = true;
-    this.teamService.searchTeam(searchTerm).subscribe(
+
+  /** Get Ticket **/
+  getTicket() {
+    this.ticketService.getTicket(this.ticketId).subscribe(
       (response) => {
-        this.searchTickets = response;
-        this.isEmptySearchTickets = response.length === 0;
-        this.searching = true;
+        this.ticket = response;
+        console.log(this.ticket.type);
+
+        this.calculateDebts();
+      },
+      (error) => {
+        this.router.navigate(['/error']);
+      }
+    );
+  }
+  
+  /** Get Accounts **/
+  getTeamAccounts(){
+    this.teamService.getAccountsTeam(String(this.teamId)).subscribe(
+      (response) => {
+        this.accounts = response;
       },
       (error) => {
         this.router.navigate(['/error']);
@@ -65,34 +66,109 @@ export class CardTicketsTeamsComponent {
   }
 
 
-  /** Get Team Tickets **/
-  getTickets() {
-    this.teamService.getTeamTickets(0, this.idTeam, new Date, '').subscribe(
-      (response) => {
-        this.tickets = response.content;
-        this.isLastTicketsRequest = response.last;
-      },
-      (error) => {
-        console.error('Error al obtener los sujetos:', error);
+  /** Calculate de bets **/
+  calculateDebts(){
+    if(this.ticket.statusName==='Winning'){
+      this.genereteWinningTransactions(this.accounts, this.ticket.paidByName, Number(this.ticket.paidByPice), Number(this.ticket.statusPrice), this.ticket.claimedBy);
+    }else if(this.ticket.statusName==='Pending'){
+      this.transactions = [];
+    }else{
+      this.genereteNotWinningTransactions(this.accounts, this.ticket.paidByName, Number(this.ticket.paidByPice));
+    }
+  }
+
+  genereteNotWinningTransactions(participants: string[], buyer: string, ticketPrice: number){
+    
+    participants.forEach(participant => {
+
+      if(participant!=buyer){
+        this.transactions.push({
+          from: participant,
+          to: buyer,
+          amount: Math.round(ticketPrice) / participants.length,
+        });
       }
-    );
+      
+    });
+    
   }
 
-  getMoreTickets() {
-    this.loadingTickets = true; //show the spinner
-    this.teamService.getTeamTickets(this.indexTickets, this.idTeam, new Date, '').subscribe(
-      (response) => {
-        this.tickets = this.tickets.concat(response.content);
-        this.moreTickets = !response.last;
-        this.indexTickets++; //next ajax buttom
-        this.loadingTickets = false; //hide the spinner
-        this.isLastTicketsRequest = response.last;
+  genereteWinningTransactions(participants: string[], buyer: string, ticketPrice: number, prizeAmount: number, claimer: string) {
+    const n = participants.length;
+    const perPersonCost = ticketPrice / n;
+    const perPersonPrize = prizeAmount / n;
+  
+    const balance: Record<string, number> = {};
+    this.transactions = [];
+  
+    //initialice balances
+    participants.forEach(p => balance[p] = 0);
+  
+    participants.forEach(p => {
+      balance[p] -= perPersonCost;
+    });
+    balance[buyer] += ticketPrice;
+  
+    participants.forEach(p => {
+      balance[p] += perPersonPrize;
+    });
+    balance[claimer] -= prizeAmount;
+  
+    //generet debts
+    const debtors = Object.entries(balance).filter(([_, amt]) => amt < -0.01).map(([p, amt]) => ({ person: p, amount: -amt }));
+    const creditors = Object.entries(balance).filter(([_, amt]) => amt > 0.01).map(([p, amt]) => ({ person: p, amount: amt }));
+  
+    const rawTransactions: { from: string; to: string; amount: number }[] = [];
+
+    let i = 0, j = 0;
+    while (i < debtors.length && j < creditors.length) {
+      const debtAmount = Math.min(debtors[i].amount, creditors[j].amount);
+  
+      rawTransactions.push({
+        from: debtors[i].person,
+        to: creditors[j].person,
+        amount: Math.round(debtAmount * 100) / 100,
+      });
+  
+      debtors[i].amount -= debtAmount;
+      creditors[j].amount -= debtAmount;
+  
+      if (debtors[i].amount < 0.01) i++;
+      if (creditors[j].amount < 0.01) j++;
+    }
+  
+    //agroups debs 
+    const grouped: Record<string, { from: string; to: string; amount: number }> = {};
+  
+    for (const t of rawTransactions) {
+      const key = `${t.from}->${t.to}`;
+      if (!grouped[key]) {
+        grouped[key] = { ...t };
+      } else {
+        grouped[key].amount += t.amount;
       }
-    );
+    }
+  
+    this.transactions = Object.values(grouped)
+      .map(t => ({
+        ...t,
+        amount: Math.round(t.amount * 100) / 100,
+      }))
+      .filter(t => t.amount > 0);
   }
 
-  isTicketsEmpty(): boolean {
-    return !this.tickets?.length;
-  }
 
+
+  /** Helper **/
+  formatSignedAmount(amount: number): string {
+    const formatted = amount.toFixed(2);
+    return amount > 0 ? `+ ${formatted}` : formatted;
+  }
+  
+}
+
+interface Transaction {
+  from: string;
+  to: string;
+  amount: number;
 }

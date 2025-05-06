@@ -12,6 +12,4 @@ export interface Account{
   myFriends: string[];
 
   teams: string[];
-  // tickets: Number[];
-
 }

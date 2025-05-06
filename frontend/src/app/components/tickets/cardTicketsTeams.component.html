@@ -3,272 +3,409 @@
 <div class="row">
     <div class="col-1"></div>
 
-    <div class="col-7">
+    <div class="col-7 mr-5">
 
+
+        <!-- BUTTONS -->
+        <div class="container">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-6 d-flex justify-content-end align-items-center m-0">
+                            <button  class="btnnn btn-dark" style="border-radius: 4px;">
+                                Delete <i class="fas fa-trash ml-2"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-6 d-flex justify-content-start align-items-center m-0">
+                            <button  class="btnnn btn-dark" style="border-radius: 4px;">
+                                Edit <i class="fas fa-pen ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- TICKET -->
         <div class="container">
 
             <div class="card">
+                <div class="row">
+                    <div class="col-3 barra-lateral-peque">
 
-                <!-- TITTLE -->
-                <div class="row">
-                    <div class="col-12 barra-abajo ">
-            
-            
-                        <div class="row d-flex align-items-center">
-            
-                            <!-- Tittle -->
-                            <div class="col-4">
-                                <h3 class="ticket-name-group1 subtittle-tickets">FINANCES</h3>
-                            </div>
-            
-                            <div class="col-6"></div>
-                        
-            
-                            <!-- Buttons -->
-                            <div class="col-1 d-flex align-items-end my-3 ml-5 mr-0">
-                                <a class="nav-link nav-linkkk circle-linkkk" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                    <i class="header-profilek login-icon-color fas fa-pen"></i> 
-                                </a>
-                            </div>
-                        </div>
-            
-                        
-                    </div>
-                    
-                </div>
-            
-                <!-- INFORMATION -->
-                <div class="row">
-            
-                    
-                    <!-------- 1º COL -------->
-                    <div class="col-4 barra-lateral-peque">
                         <br>
-            
+
+                        <!-- Title -->
+                        <div class="row mt-2 barra-abajo">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row d-flex justify-content-center">
+                                    <h5 class="ticket-name-group1 mx-1"><i class="fa-regular fa-lightbulb"></i></h5>
+                                    <h5 class="ticket-name-group1 ml-2"><b>Ticket Data</b></h5>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+
+                            <br>
+                            <br>
+
+                        </div>
+
+                        <br>
+
                         <!-- Ticket Type -->
-                        <div class="row">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Ticket Type:</p>
+                        <div class="row mt-2">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row mb-2">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">Ticket Type:</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-ticket">
+                                                    <p class="card-status ml-3">{{this.ticket.type}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <p class="card-status ml-3">El Gordo</p>
-                                </div>
-            
                             </div>
+                            <div class="col-2"></div>
                         </div>
-            
-                        <br>
-            
+
                         <!-- Date -->
                         <div class="row">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Date:</p>
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">Date:</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-ticket justify-content-center align-items-center">
+                                                    <p class="card-status ml-3">{{this.ticket.date}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <p class="card-status ml-3">17/092024</p>
-                                </div>
-            
                             </div>
+                            <div class="col-2"></div>
                         </div>
-            
+
                         <br>
-            
-                        <!--div class="row ml-3 mt-2 mr-2">
-                            <div class="col-12">
-                                <p class="subtittle-tickets">You can fill up to 8 bets in the table below. A sum of each bet will be made, but it will not be shown which have been awarded.</p>
-                            </div>
-                        </div-->  
-                        
-                        <!--{{>ticket-type/loterianacional}}-->
-                        
+                        <br>
+                        <br>
+
                     </div>
                     <!-------- END 1º COL -------->
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
                     <!-------- 2º COL -------->
-                    <div class="col-4 barra-lateral-peque">
+                    <div class="col-5 barra-lateral-peque">
                         <br>
-                        
-                        <!-- Paid By -->
-                        <div class="row">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Paid by:</p>
+
+                        <!-- Title -->
+                        <div class="row mt-2 barra-abajo">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row d-flex justify-content-center">
+                                    <h5 class="ticket-name-group1 mx-1"><i class="fas fa-chart-line"></i></h5>
+                                    <h5 class="ticket-name-group1 ml-2"><b>Ticket Status</b></h5>
                                 </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <div class="row">
-                                        <div class="col-6 barra-lateral-clarita">
-                                            <p class="card-status ml-3">Paco</p>
-                                        </div>
-            
-                                        <div class="col-6">
-                                            <p class="card-status ml-3">- 1.50</p>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-            
                             </div>
+                            <div class="col-2"></div>
+
+                            <br>
+                            <br>
+
                         </div>
-            
+
                         <br>
-            
+
                         <!-- Status -->
-                        <div class="row">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Status:</p>
+                        <div class="row my-2">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">Status:</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-ticket justify-content-center align-items-center">
+                                                    <p class="card-status ml-3">{{this.ticket.statusName}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <p class="card-status ml-3">+ 127.8</p>
-                                </div>
-            
                             </div>
+                            <div class="col-2"></div>
                         </div>
-            
-            
-                        <br>
-            
-            
+
+                        <!-- Award -->
+                        <div class="row" *ngIf="this.ticket.statusName==='Winning'">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">Award:</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-ticket justify-content-center align-items-center">
+                                                    <p class="card-status ml-3">+ {{ this.ticket.statusPrice |
+                                                        number:'1.2-2' }} €</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+
                         <!-- Benefit by participant -->
-                        <div class="row">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Benefit by participant:</p>
+                        <div class="row" *ngIf="this.ticket.statusName==='Winning'">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">Benefit by participant:</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-ticket justify-content-center align-items-center">
+                                                    <p class="card-status ml-3"> {{
+                                                        formatSignedAmount(ticket.statusPrice / accounts.length) }} €
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <div class="row barra-abajo-clarita">
-                                        <div class="col-6 barra-lateral-clarita">
-                                            <p class="card-status ml-3">Paco</p>
-                                        </div>
-            
-                                        <div class="col-6">
-                                            <p class="card-status ml-3">+ 15.50</p>
-                                        </div>
-                                    </div>
-            
-                                    <div class="row barra-abajo-clarita">
-                                        <div class="col-6 barra-lateral-clarita">
-                                            <p class="card-status ml-3">Alberto</p>
-                                        </div>
-            
-                                        <div class="col-6">
-                                            <p class="card-status ml-3">+ 65.50</p>
-                                        </div>
-                                    </div>
-            
-                                    <div class="row barra-abajo-clarita">
-                                        <div class="col-6 barra-lateral-clarita">
-                                            <p class="card-status ml-3">Diego</p>
-                                        </div>
-            
-                                        <div class="col-6">
-                                            <p class="card-status ml-3">+ 45.50</p>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-            
                             </div>
+                            <div class="col-2"></div>
                         </div>
-            
+
                         <br>
-            
+                        <br>
+
+                        <!-- Paid By -->
+                        <div class="row mb-2">
+
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <div class="row">
+
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">Paid by:</p>
+                                        </div>
+
+                                        <div class="card-ticket">
+                                            <div class="row">
+                                                <div class="col-7 barra-lateral-clarita ">
+                                                    <p class="card-status m-0 ml-3">{{this.ticket.paidByName}}</p>
+                                                </div>
+
+                                                <div class="col-4 p-0">
+                                                    <p class="card-status m-0 ml-4">- {{ this.ticket.paidByPice |
+                                                        number:'1.2-2' }} €</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+
+                        <br>
+
+
+                        <!-- Claimed By -->
+                        <div class="row" *ngIf="this.ticket.statusName==='Winning'">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">Claimed by:</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-ticket justify-content-center align-items-center">
+                                                    <p class="card-status ml-3">{{this.ticket.claimedBy}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+
                     </div>
                     <!-------- END 1º COL -------->
-            
-            
-            
-            
-            
+
+
+
+
+
                     <!-------- 3º COL -------->
                     <div class="col-4 barra-lateral-peque">
                         <br>
-                       
-                        <!-- Claimed By -->
-                        <div class="row barra-abajo pb-4">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Claimed by:</p>
+
+                        <!-- Title -->
+                        <div class="row mt-2 barra-abajo">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row d-flex justify-content-center">
+                                    <h5 class="ticket-name-group1 mx-1"><i class="fas fa-fire"></i></h5>
+                                    <h5 class="ticket-name-group1 ml-2"><b>Accounts Status</b></h5>
                                 </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <p class="card-status ml-3">Paco</p>
-                                </div>
-            
                             </div>
+                            <div class="col-2"></div>
+
+                            <br>
+                            <br>
+
                         </div>
-            
-            
-                        <!-- X owes Y -->
-                        <div class="row mt-2">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Paco owes Alberto:</p>
-                                </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <p class="card-status ml-3">42.93</p>
-                                </div>
-            
-                            </div>
-                        </div>
-            
-                        <div class="row mt-2">
-                            <div class="col-12">
-            
-                                <div class="row align-items-center ml-3 mt-2">
-                                    <p class="subtittle-tickets">Paco owes Diego:</p>
-                                </div>
-                    
-                                <div class="card-ticket justify-content-center align-items-center mx-4">
-                                    <p class="card-status ml-3">42.93</p>
-                                </div>
-            
-                            </div>
-                        </div>
-            
+
                         <br>
-                        
-                        
+
+                        <!-- X owes Y -->
+                        <div class="row mt-2" *ngFor="let tx of transactions">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <div class="row align-items-center">
+                                            <p class="subtittle-tickets">{{tx.from}} owes {{tx.to}}:</p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-ticket justify-content-center align-items-center">
+                                                    <p class="card-status ml-3">{{ tx.amount | number:'1.2-2' }} €</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+
+
+                        <br>
+
+
                     </div>
-                    <!-------- END 1º COL -------->
-            
+                    <!-------- END 3º COL -------->
+
                 </div>
             </div>
-            
-            
+
+            <br>
+            <br>
         </div>
+
+
+        <!-- TICKET TYPE -->
+        <div [ngSwitch]="this.ticket.type">
+            <div *ngSwitchCase="'Bonoloto'">
+                <app-bonoloto></app-bonoloto>
+            </div>
+            <div *ngSwitchCase="'Eurodreams'">
+                <app-eurodreams></app-eurodreams>
+            </div>
+            <div *ngSwitchCase="'Euromillones'">
+                <app-euromillones></app-euromillones>
+            </div>
+            <div *ngSwitchCase="'El Gordo'">
+                <app-gordo></app-gordo>
+            </div>
+            <div *ngSwitchCase="'Lototurf'">
+                <app-lototurf></app-lototurf>
+            </div>
+            <div *ngSwitchCase="'La Primitiva'">
+                <app-primitiva></app-primitiva>
+            </div>
+            <div *ngSwitchCase="'Quíntuple plus'">
+                <app-quintuple></app-quintuple>
+            </div>
+            <div *ngSwitchDefault>
+                <app-loteria></app-loteria>
+            </div>
+        </div>
+
+
+        
 
         <br>
     </div>
-
-    <div class="col-1 p-0"></div>
 
 
 
     <!------------------------->
     <!------- INDIVIDUAL ------>
     <!------------------------->
-    <div class="col-3">
+    <div class="col-3 ml-3">
         <app-individual></app-individual>
     </div>
 

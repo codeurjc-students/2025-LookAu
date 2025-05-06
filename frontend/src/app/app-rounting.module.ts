@@ -29,30 +29,18 @@ import { CardTicketsTeamsComponent } from './components/tickets/cardTicketsTeams
 
 
 const routes: Routes = [
-    {path: 'teams', component: TeamsComponent},
-    {path: 'teams/newteam', component: NewTeamComponent},
-    {path: 'teams/:id/tickets', component: CardTeamsComponent}, 
-    {path: 'teams/:id/tickets/:idTicket', component: CardTicketsTeamsComponent},
+  {path: 'teams', component: TeamsComponent},
+  {path: 'teams/newteam', component: NewTeamComponent},
+  {path: 'teams/:id/tickets', component: CardTeamsComponent}, 
+  {path: 'teams/:teamId/tickets/:ticketId', component: CardTicketsTeamsComponent},
 
-    {path: '', component: LoginComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'signup', component: SignupComponent},
-    {path: 'error', component: ErrorComponent},
+  {path: '', component: LoginComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'signup', component: SignupComponent},
+  {path: 'error', component: ErrorComponent},
 
-    {path: 'profile', component: ProfileComponent},
-    {path: 'editProfile', component: EditProfileComponent},
-
-    // {path: 'subjects', component: SubjectsUser},
-
-    // {path: 'admin', component: AdminAllSubject},
-    // {path: 'subject/:id/general', component: GeneralInformation},
-    // {path: 'subject/:id/exams', component: Exams},
-    // {path: 'subject/:id/marks', component: MarksStudent},
-    // {path: 'subject/:id/forum', component: ForumComponent},
-    // {path: 'subject/:subjectId/exam/:examId/examStudents', component: ExamsStudent},
-    // {path: 'subject/:id/exams/add-exam', component: AddExam},
-    // {path: 'admin/new-subject', component: AdminAddSubject},
-    // {path: 'admin/:id/add-teacher', component: AddUserSubject}
+  {path: 'profile', component: ProfileComponent},
+  {path: 'editProfile', component: EditProfileComponent},
 ];
 
 @NgModule({

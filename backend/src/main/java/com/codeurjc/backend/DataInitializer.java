@@ -96,6 +96,7 @@ public class DataInitializer {
         Primitiva p1 = new Primitiva(new ArrayList<>(Arrays.asList(3, 27, 2, 4, 6, 19, 8)));
         Primitiva p2 = new Primitiva(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
         Primitiva p3 = new Primitiva(new ArrayList<>(Arrays.asList(8, 9, 10, 11, 12, 13, 14)));
+        Primitiva p4 = new Primitiva(new ArrayList<>(Arrays.asList(8, 9, 10, 11, 12, 13, 14)));
 
         Quintuple qt1 = new Quintuple(new ArrayList<>(Arrays.asList(1, 4, 3, 42, 23, 7)));
         Quintuple qt2 = new Quintuple(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6)));
@@ -267,9 +268,12 @@ public class DataInitializer {
         Ticket ticket19 = new Ticket("Pending", "Pepiflor23", 1.50, "Pepiflor23", LocalDate.of(2025, 12, 3));
         ticket19.setTeam(team1);
         ticket19.setTicketType(q2);
-        Ticket ticket20 = new Ticket("Winning", "Pepiflor23", 1.50, "Pepiflor23", LocalDate.of(2025, 3, 1));
+        Ticket ticket20 = new Ticket("Winning", "Pepiflor23", 1.50, "Akalpaca", LocalDate.of(2025, 3, 1));
         ticket20.setTeam(team1);
         ticket20.setTicketType(qg2);
+        Ticket ticketInterrogacion = new Ticket("Winning", "Pepiflor23", 1.50, "Akalpaca", LocalDate.of(2025, 3, 1));
+        ticketInterrogacion.setTeam(team1);
+        ticketInterrogacion.setTicketType(p4);
 
         Ticket reimbursement1 = new Ticket("Reimbursement", "LaTinyLoco", 15.50, "Pepiflor23", LocalDate.of(2024, 3, 27), new ArrayList<>(Arrays.asList(ticket11.getId(), ticket12.getId())));
         reimbursement1.setTeam(team1);
@@ -356,7 +360,7 @@ public class DataInitializer {
 
 
         //TEAMS - TICKECTS
-        team1.setTickets(new ArrayList<>(Arrays.asList(ticket11, ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20, reimbursement1, reimbursement2)));
+        team1.setTickets(new ArrayList<>(Arrays.asList(ticket11, ticket12, ticket13, ticket14, ticket15, ticket16, ticket17, ticket18, ticket19, ticket20, reimbursement1, reimbursement2, ticketInterrogacion)));
         team2.setTickets(new ArrayList<>(Arrays.asList(ticket21, ticket22, ticket23, ticket24, ticket25)));
         team3.setTickets(new ArrayList<>(Arrays.asList(ticket26, ticket27, ticket28, ticket29, ticket30)));
 
@@ -401,7 +405,7 @@ public class DataInitializer {
         gordoRepository.saveAll(new ArrayList<>(Arrays.asList(g1, g2, g3)));
         loteriaRepository.saveAll(new ArrayList<>(Arrays.asList(l1, l2, l3)));
         lototurfRepository.saveAll(new ArrayList<>(Arrays.asList(lt1, lt2, lt3)));
-        primitivaRepository.saveAll(new ArrayList<>(Arrays.asList(p1, p2, p3)));
+        primitivaRepository.saveAll(new ArrayList<>(Arrays.asList(p1, p2, p3, p4)));
         quintupleRepository.saveAll(new ArrayList<>(Arrays.asList(qt1, qt2, qt3)));
         quinielaRepository.saveAll(new ArrayList<>(Arrays.asList(q1, q2, q3)));
         quinigolRepository.saveAll(new ArrayList<>(Arrays.asList(qg1, qg2, qg3)));
