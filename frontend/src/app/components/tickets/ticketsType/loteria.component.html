@@ -3,7 +3,7 @@
     <div class="card" style="margin-left: 10rem; margin-right: 10rem;">
 
 
-        <div class="row mt-4 barra-abajo">
+        <div class="row mt-4 barra-abajo m-0 p-0">
             <div class="col-2"></div>
             <div class="col-8">
 
@@ -12,7 +12,14 @@
                     <h5 class="ticket-name-group1 ml-2"><b>Bet Info</b></h5>
                 </div>
             </div>
-            <div class="col-2"></div>
+            <div class="col-2">
+                <button class="btnnn btn-dark btn-sm"
+                    (click)="applyTicketTypesChanges()"
+                    style="border-radius: 4px; color: #b9b9b9; border-color: #b9b9b9; font-size: 12px;"
+                    *ngIf="isEditing && !isApply">
+                    Apply <i class="fas fa-arrow-circle-right ml-2"></i>
+                </button>
+            </div>
 
             <br>
             <br>
@@ -34,12 +41,26 @@
                     </div>
                 </div>
 
+                <!-- number -->
                 <div class="row">
                     <div class="col-3"></div>
                     <div class="col-8">
-                        <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
-                            <p class="card-status m-0">{{this.number}}</p>
-                        </div>
+                        <ng-container *ngIf="!isEditing; else editBonoNumberTemplate">
+                            <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
+                                <p class="card-status m-0">{{ formatLotteryNumber(this.number) }}</p>
+                            </div>
+                        </ng-container>
+
+                        <ng-template #editBonoNumberTemplate>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="card-ticket justify-content-center align-items-center">
+                                        <input [(ngModel)]="this.number" type="text" class="form-control ml-3" (change)="setApply()"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </ng-template>
                     </div>
                 </div>
 
@@ -53,12 +74,26 @@
                     </div>
                 </div>
 
+                <!-- euros -->
                 <div class="row">
                     <div class="col-3"></div>
                     <div class="col-8">
-                        <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
-                            <p class="card-status m-0">{{this.euros}} €</p>
-                        </div>
+                        <ng-container *ngIf="!isEditing; else editBonoEurosTemplate">
+                            <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
+                                <p class="card-status m-0">{{this.euros}} €</p>
+                            </div>
+                        </ng-container>
+
+                        <ng-template #editBonoEurosTemplate>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="card-ticket justify-content-center align-items-center">
+                                        <input [(ngModel)]="this.euros" type="text" class="form-control ml-3" (change)="setApply()"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </ng-template>
                     </div>
                 </div>
             </div>
@@ -73,12 +108,26 @@
                     </div>
                 </div>
 
+                <!-- series -->
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-8">
-                        <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
-                            <p class="card-status m-0">{{this.series}}</p>
-                        </div>
+                        <ng-container *ngIf="!isEditing; else editBonoSeriesTemplate">
+                            <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
+                                <p class="card-status m-0">{{this.series}}</p>
+                            </div>
+                        </ng-container>
+                        
+                        <ng-template #editBonoSeriesTemplate>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="card-ticket justify-content-center align-items-center">
+                                        <input [(ngModel)]="this.series" type="text" class="form-control ml-3" (change)="setApply()"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </ng-template>
                     </div>
                 </div>
 
@@ -92,12 +141,26 @@
                     </div>
                 </div>
 
+                <!-- fraction -->
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-8">
-                        <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
-                            <p class="card-status m-0">{{this.fraction}}</p>
-                        </div>
+                        <ng-container *ngIf="!isEditing; else editBonoFractionTemplate">
+                            <div class="card-ticket d-flex justify-content-center align-items-center m-0 ml-3">
+                                <p class="card-status m-0">{{this.fraction}}</p>
+                            </div>
+                        </ng-container>
+                        
+                        <ng-template #editBonoFractionTemplate>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="card-ticket justify-content-center align-items-center">
+                                        <input [(ngModel)]="this.fraction" type="text" class="form-control ml-3" (change)="setApply()"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </ng-template>
                     </div>
                 </div>
             </div>

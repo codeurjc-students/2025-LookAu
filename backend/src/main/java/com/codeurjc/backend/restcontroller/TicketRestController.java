@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +53,7 @@ import com.codeurjc.backend.model.types.Quintuple;
 import com.codeurjc.backend.service.AccountService;
 import com.codeurjc.backend.service.TeamService;
 import com.codeurjc.backend.service.TicketService;
+import com.codeurjc.backend.service.TicketTypeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -78,6 +80,8 @@ public class TicketRestController {
 	private TeamService teamService;
 	@Autowired
 	private TicketService ticketService;
+	@Autowired
+	private TicketTypeService ticketTypeService;
 
 
 	/*********************************/
@@ -161,6 +165,81 @@ public class TicketRestController {
 		} else {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
+	}
+
+
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PutMapping("/{ticketId}")
+	public ResponseEntity<?> editProfile(HttpServletRequest request, @PathVariable String ticketId, @RequestBody TicketTeamDTO ticketDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+			Optional<Ticket> ticketOpp = ticketService.getById(Long.valueOf(ticketId));
+			
+			if (ticketOpp.isPresent()) {
+				Ticket ticket = ticketOpp.get();
+
+				ticket.setDate(LocalDate.parse(ticketDTO.getDate()));
+				ticket.setPaidByName(ticketDTO.getPaidByName());
+				ticket.setPaidByPice(Double.valueOf(ticketDTO.getPaidByPice()));
+				ticket.setClaimedBy(ticketDTO.getClaimedBy());
+
+				ticketService.setTicket(ticket);
+
+				return new ResponseEntity<>(null, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@DeleteMapping("/{ticketId}")
+	public ResponseEntity<?> deleteTicket(HttpServletRequest request, @PathVariable String ticketId)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+			Optional<Ticket> ticketOpp = ticketService.getById(Long.valueOf(ticketId));
+			
+			if (ticketOpp.isPresent()) {
+				Ticket ticket = ticketOpp.get();
+				TicketType ticketType = ticket.getTicketType();
+
+				ticket.setTicketType(null);
+				ticketService.setTicket(ticket);
+
+				ticketTypeService.deleteTicketType(ticketType);
+				ticketService.deleteTicket(ticket);
+				
+				return new ResponseEntity<>(null, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
 	}
 
 

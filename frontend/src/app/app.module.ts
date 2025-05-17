@@ -36,7 +36,10 @@ import { LoteriaComponent } from './components/tickets/ticketsType/loteria.compo
 import { LototurfComponent } from './components/tickets/ticketsType/lototurf.component';
 import { PrimitivaComponent } from './components/tickets/ticketsType/primitiva.component';
 import { QuintupleComponent } from './components/tickets/ticketsType/quintuple.component';
-
+import { QuinielaComponent } from './components/tickets/ticketsType/quiniela.component';
+import { QuinigolComponent } from './components/tickets/ticketsType/quinigol.component';
+import { TicketTypeService } from './services/ticketType.service';
+import { NewCardTicketsTeamsComponent } from './components/tickets/newCardTicketsTeams.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,9 @@ import { QuintupleComponent } from './components/tickets/ticketsType/quintuple.c
     LototurfComponent,
     PrimitivaComponent,
     QuintupleComponent,
+    QuinielaComponent,
+    QuinigolComponent,
+    NewCardTicketsTeamsComponent,
 
   ], 
   imports: [

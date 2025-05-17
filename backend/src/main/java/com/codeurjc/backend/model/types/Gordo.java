@@ -19,7 +19,7 @@ public class Gordo extends TicketType {
     private Integer num4;
     private Integer num5;
 
-    @Column(name = "`key`") // Escapa el nombre de la columna "key"
+    @Column(name = "`key`")
     private Integer key;
 
     private EnumTickectType tickectType;

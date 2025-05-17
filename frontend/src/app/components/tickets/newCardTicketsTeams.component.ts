@@ -12,24 +12,31 @@ import { E } from '@angular/cdk/keycodes';
 
 
 @Component({
-  selector: 'app-cardticketsteams',
-  templateUrl: './cardTicketsTeams.component.html',
-  standalone: false,
+  selector: 'app-newcardticketsteams',
+  templateUrl: './newCardTicketsTeams.component.html',
+  standalone: false
 })
 
-export class CardTicketsTeamsComponent {
+export class NewCardTicketsTeamsComponent {
 
   public teamId: number = 0;
-  public ticketId: number = 0;
+
+  //ticketType
+  public paidByName: string = '';
+  public paidByPice: string = '';
+  public accounts: string[] = [];
+
+  public selectedTicketType: string = '';
+  public ticketTypes: string[] = ['Bonoloto', 'Eurodreams', 'Euromillones', 'El Gordo' , 'Lotería Nacional', 'Lototurf', 'La Primitiva', 'La Quiniela', 'Quinigol', 'Quintuple plus'];
   
+  public date: string = '';
+
+
   //tickets
   public ticket: any;
   public ticketType: any;
-  public accounts: any[] = [];
-  public transactions: Transaction[] = [];
 
   //edit
-  public isEditing = false;
   public save = false;
 
 
@@ -37,22 +44,11 @@ export class CardTicketsTeamsComponent {
     this.authService.getCurrentUser();
     
     this.teamId = Number(this.route.snapshot.paramMap.get('teamId') || 0);
-    this.ticketId = Number(this.route.snapshot.paramMap.get('ticketId') || 0);
   }
 
   ngOnInit() {
     this.save = false;
-    this.getTicket();  
     this.getTeamAccounts();
-  }
-
-
-  ///////////////////
-  // DELETE TICKET //
-  ///////////////////
-
-  deleteTicket(){
-    this.popupService.openPopUpTwoDeleteTicket("Are you sure to delete the ticket?", this.ticketId, this.teamId);
   }
 
 
@@ -60,9 +56,9 @@ export class CardTicketsTeamsComponent {
   // EDIT TICKET //
   /////////////////
 
-  saveTicket(){
+  saveNewTicket(){
 
-    this.ticketService.saveTicket(this.ticketId, this.ticket).subscribe(
+    /*this.ticketService.saveNewTicket(this.ticket).subscribe(
       (response) => {
 
         //if the ticket type has any change
@@ -110,7 +106,7 @@ export class CardTicketsTeamsComponent {
     (error) => {
         this.router.navigate(['/error']);
       }
-    );
+    );*/
   }
 
   saveTicketBonoloto(){
@@ -224,17 +220,11 @@ export class CardTicketsTeamsComponent {
   }
 
   showIsSave(){
-    this.isEditing = false;
     this.save = true;
     this.popupService.openPopUp('Ticket successfully saved.');
   }
 
-  editTicket(){
-    this.isEditing = true;
-  }
-
   discardTicket(){
-    this.isEditing = false;
   }
 
   getDataTicketType(data: string) {
@@ -249,21 +239,6 @@ export class CardTicketsTeamsComponent {
   // VIEW TICKET //
   /////////////////
 
-  /** Get Ticket **/
-  getTicket() {
-    this.ticketService.getTicket(this.ticketId).subscribe(
-      (response) => {
-        this.ticket = response;
-        this.calculateDebts();
-        this.save = false;
-      },
-      (error) => {
-        this.router.navigate(['/error']);
-      }
-    );
-  }
-  
-
   /** Get Accounts **/
   getTeamAccounts(){
     this.teamService.getAccountsTeam(String(this.teamId)).subscribe(
@@ -277,108 +252,16 @@ export class CardTicketsTeamsComponent {
   }
 
 
-  /** Calculate de bets **/
-  calculateDebts(){
-    if(this.ticket.statusName==='Winning'){
-      this.genereteWinningTransactions(this.accounts, this.ticket.paidByName, Number(this.ticket.paidByPice), Number(this.ticket.statusPrice), this.ticket.claimedBy);
-    }else if(this.ticket.statusName==='Pending'){
-      this.transactions = [];
-    }else{
-      this.genereteNotWinningTransactions(this.accounts, this.ticket.paidByName, Number(this.ticket.paidByPice));
-    }
-  }
-
-  genereteNotWinningTransactions(participants: string[], buyer: string, ticketPrice: number){
-    participants.forEach(participant => {
-
-      if(participant!=buyer){
-        this.transactions.push({
-          from: participant,
-          to: buyer,
-          amount: Math.round(ticketPrice) / participants.length,
-        });
-      }
-      
-    });
-    
-  }
-
-  genereteWinningTransactions(participants: string[], buyer: string, ticketPrice: number, prizeAmount: number, claimer: string) {
-    let n = participants.length;
-    let perPersonCost = ticketPrice / n;
-    let perPersonPrize = prizeAmount / n;
-  
-    let balance: Record<string, number> = {};
-    this.transactions = [];
-  
-    //initialice balances
-    participants.forEach(p => balance[p] = 0);
-  
-    participants.forEach(p => {
-      balance[p] -= perPersonCost;
-    });
-    balance[buyer] += ticketPrice;
-  
-    participants.forEach(p => {
-      balance[p] += perPersonPrize;
-    });
-    balance[claimer] -= prizeAmount;
-  
-    //generet debts
-    let debtors = Object.entries(balance).filter(([_, amt]) => amt < -0.01).map(([p, amt]) => ({ person: p, amount: -amt }));
-    let creditors = Object.entries(balance).filter(([_, amt]) => amt > 0.01).map(([p, amt]) => ({ person: p, amount: amt }));
-  
-    let rawTransactions: { from: string; to: string; amount: number }[] = [];
-
-    let i = 0, j = 0;
-    while (i < debtors.length && j < creditors.length) {
-      let debtAmount = Math.min(debtors[i].amount, creditors[j].amount);
-  
-      rawTransactions.push({
-        from: debtors[i].person,
-        to: creditors[j].person,
-        amount: Math.round(debtAmount * 100) / 100,
-      });
-  
-      debtors[i].amount -= debtAmount;
-      creditors[j].amount -= debtAmount;
-  
-      if (debtors[i].amount < 0.01) i++;
-      if (creditors[j].amount < 0.01) j++;
-    }
-  
-    //agroups debs 
-    let grouped: Record<string, { from: string; to: string; amount: number }> = {};
-  
-    for (let t of rawTransactions) {
-      let key = `${t.from}->${t.to}`;
-      if (!grouped[key]) {
-        grouped[key] = { ...t };
-      } else {
-        grouped[key].amount += t.amount;
-      }
-    }
-  
-    this.transactions = Object.values(grouped)
-      .map(t => ({
-        ...t,
-        amount: Math.round(t.amount * 100) / 100,
-      }))
-      .filter(t => t.amount > 0);
-  }
-
-
-
   /** Helper **/
   formatSignedAmount(amount: number): string {
     let formatted = amount.toFixed(2);
     return amount > 0 ? `+ ${formatted}` : formatted;
   }
-  
-}
 
-interface Transaction {
-  from: string;
-  to: string;
-  amount: number;
+  onTicketTypeChange(type: string) {
+    console.log(type);
+    this.selectedTicketType = type;
+  }
+
+  
 }

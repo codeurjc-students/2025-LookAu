@@ -39,7 +39,12 @@ export class CardTeamsComponent {
     });
     
     this.getTickets();  
-    
+  }
+  
+
+  /** New Ticket **/
+  newTicket(){
+    this.router.navigate(['/teams/',this.idTeam,'tickets','new']);
   }
 
 
@@ -56,8 +61,6 @@ export class CardTeamsComponent {
 
   toggleFilters(){
     this.showFilters = this.showFilters == true? false: true;
-    console.log(this.selectedDate);
-    console.log(typeof this.selectedDate);
     this.deleteFilters();    
   }
 
@@ -69,7 +72,6 @@ export class CardTeamsComponent {
       (response) => {
         this.tickets = response.content;
         this.isLastTicketsRequest = response.last;
-        console.log(this.tickets);
       },
       (error) => {
         this.router.navigate(['/error']);
@@ -86,7 +88,6 @@ export class CardTeamsComponent {
         this.indexTickets++; //next ajax buttom
         this.loadingTickets = false; //hide the spinner
         this.isLastTicketsRequest = response.last;
-        console.log(this.isLastTicketsRequest);
       }
     );
   }

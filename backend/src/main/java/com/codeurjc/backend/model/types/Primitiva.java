@@ -34,7 +34,7 @@ public class Primitiva extends TicketType {
     }
 
     public Primitiva(List<Integer> numbers){
-        super(EnumTickectType.LOTOTURF);
+        super(EnumTickectType.PRIMITIVA);
         this.num1 = numbers.get(0);
         this.num2 = numbers.get(1);
         this.num3 = numbers.get(2);

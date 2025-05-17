@@ -1,0 +1,86 @@
+<div class="col-12">
+
+    <div class="card mx-auto" style="max-width: 1000px;">
+
+
+        <div class="row mt-4 barra-abajo m-0 p-0">
+            <div class="col-2"></div>
+            <div class="col-8">
+
+                <div class="row d-flex justify-content-center">
+                    <h5 class="ticket-name-group1 mx-1"><i class="fa-solid fa-dice"></i></h5>
+                    <h5 class="ticket-name-group1 ml-2"><b>Bet Info</b></h5>
+                </div>
+            </div>
+            <div class="col-2">
+                <button  class="btnnn btn-dark btn-sm" style="border-radius: 4px; color: #b9b9b9; border-color: #b9b9b9; font-size: 12px;" (click)="applyTicketTypesChanges()" *ngIf="isEditing && !isApply">
+                    Apply <i class="fas fa-arrow-circle-right ml-2"></i>
+                </button>
+            </div>
+
+            <br>
+            <br>
+        </div>
+
+        <br>
+
+        <div class="row px-5">
+            <div style="overflow-x: auto;">
+                
+                <table class="table-sm" style="min-width: 1500px;">
+                    
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th class="text-center" style="color: #a1a0a0" scope="col" *ngFor="let i of range">
+                                Bet {{i}} 
+                                <button class="btn btn-sm btn-dark ml-2" *ngIf="isEditing"
+                                    (click)="deleteRow(i)"
+                                    style="font-size: 0.85rem; border-radius: 3px; color: #b9b9b9; border-color: #a1a0a0;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr *ngFor="let row of buttonMatrix; let i = index">
+                            <td *ngFor="let cell of row; let j = index">
+                                <ng-container *ngIf="j === 0; else buttonsTemplate">
+                                    <div class="d-flex justify-content-center align-items-center"  style="color: #a1a0a0">
+                                        <strong>Match {{ i + 1 }}</strong>
+                                    </div>
+                                </ng-container>
+                                
+                                <ng-template #buttonsTemplate>
+                                    <div class="d-flex justify-content-center" style="color: #a1a0a0">
+                                        <button *ngFor="let label of (i === 14 ? ['0', '1', '2', 'M'] : ['1', 'X', '2']); let k = index" 
+                                                class="btn btn-sm mx-1" 
+                                                [ngClass]="{'btn-outline-dark': !buttonMatrix[i][j][k], 'btn-dark': buttonMatrix[i][j][k]}" 
+                                                (click)="toggleButton(i, j, k)"
+                                                [disabled]="!isEditing">
+                                            {{ label }}
+                                        </button>   
+                                    </div>
+                                </ng-template>
+                            </td>
+                        </tr>                        
+
+                    </tbody>
+
+                </table>
+
+                <br>
+
+            </div>
+        </div>
+
+        <br>
+
+    </div>
+
+    
+
+</div>

@@ -1,7 +1,6 @@
-<div class="row">
-    <div class="col-1"></div>
+<div class="row ml-5">
 
-    <div class="col-7 mr-5">
+    <div class="col-8">
 
         <!------------------------->
         <!------- SEARCH BAR ------>
@@ -12,9 +11,9 @@
             <div class="row">
                 <!-- Botón New Ticket -->
                 <div class="col-6 d-flex justify-content-end align-items-center m-0">
-                    <a [routerLink]="'/teams/newteam'" class="btnnn btn-dark" style="border-radius: 4px;">
+                    <button (click)="newTicket()" class="btnnn btn-dark" style="border-radius: 4px;">
                         Add <i class="fas fa-ticket ml-2"></i>
-                    </a>
+                    </button>
                 </div>
 
                 <div class="col-6 d-flex justify-content-start align-items-center m-0">
@@ -268,8 +267,13 @@
     <!------------------------->
     <!------- INDIVIDUAL ------>
     <!------------------------->
-    <div class="col-3 ml-3">
-        <app-individual></app-individual>
+    <div class="col-4">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <app-individual></app-individual>
+            </div>
+        </div>
     </div>
 
 </div>

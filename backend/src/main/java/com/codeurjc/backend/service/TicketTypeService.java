@@ -8,41 +8,43 @@ import org.springframework.stereotype.Service;
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.model.Team;
 import com.codeurjc.backend.model.Ticket;
+import com.codeurjc.backend.model.TicketType;
 import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.TeamDTO;
 import com.codeurjc.backend.repository.AccountRepository;
 import com.codeurjc.backend.repository.TicketRepository;
+import com.codeurjc.backend.repository.TicketTypeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TicketService {
+public class TicketTypeService {
 
     private final CSRFHandlerConfiguration CSRFHandlerConfiguration;
 
     @Autowired
-    private TicketRepository tickectRepository;
+    private TicketTypeRepository tickectTypeRepository;
 
-    TicketService(CSRFHandlerConfiguration CSRFHandlerConfiguration) {
+    TicketTypeService(CSRFHandlerConfiguration CSRFHandlerConfiguration) {
         this.CSRFHandlerConfiguration = CSRFHandlerConfiguration;
     } 
 
-    public Optional<Ticket> getById(Long id){
-        return tickectRepository.findById(id);
+    public Optional<TicketType> getById(Long id){
+        return tickectTypeRepository.findById(id);
     }
 
-    public void setTicket(Ticket ticket){
-        tickectRepository.save(ticket);
+    public void setTicketType(TicketType ticketType){
+        tickectTypeRepository.save(ticketType);
     }
 
-    public void setTickets(List<Ticket> lTickets){
-        tickectRepository.saveAll(lTickets);
+    public void setTicketTypes(List<TicketType> lTicketTypes){
+        tickectTypeRepository.saveAll(lTicketTypes);
     }
 
-    public void deleteTicket(Ticket ticket){
-        tickectRepository.delete(ticket);
+    public void deleteTicketType(TicketType ticketType){
+        tickectTypeRepository.delete(ticketType);
     }
 
 //     public List<Account> getAllByNicknames(List<String> nicknames) {

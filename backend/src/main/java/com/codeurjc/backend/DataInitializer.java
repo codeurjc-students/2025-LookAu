@@ -102,67 +102,70 @@ public class DataInitializer {
         Quintuple qt2 = new Quintuple(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6)));
         Quintuple qt3 = new Quintuple(new ArrayList<>(Arrays.asList(7, 8, 9, 10, 11, 12)));
 
-        Quiniela q1 = new Quiniela(  
-            new ArrayList<>(Arrays.asList("1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X", "2")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"))
+        Quiniela q1 = new Quiniela(
+            new ArrayList<>(Arrays.asList("1", "X", "2", "2", "X", "1", "2", "1", "X", "2", "1", "X", "1", "2", "M")),
+            new ArrayList<>(Arrays.asList("X", "2", "1", "1", "X", "2", "1", "2", "X", "1", "2", "1", "X", "2", "1")),
+            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "1", "X", "2", "X", "1", "X", "1", "2", "1", "X", "2")),
+            new ArrayList<>(Arrays.asList("1", "X", "2", "X", "1", "2", "2", "1", "X", "2", "X", "1", "2", "1", "0")),
+            new ArrayList<>(Arrays.asList("X", "2", "1", "2", "X", "1", "1", "2", "X", "1", "2", "X", "1", "2", "M")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "2")),
+            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "0")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "1"))
         );
         Quiniela q2 = new Quiniela(
-            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2")), 
-            new ArrayList<>(Arrays.asList("1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X", "2")), 
-            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"))
+            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "M")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "1")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "2", "X", "1", "1", "2", "X", "1", "X", "2", "1", "X", "0")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "2")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "0")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "2", "X", "1", "1", "2", "X", "1", "X", "2", "1", "X", "M")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "1")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "2"))
         );
         Quiniela q3 = new Quiniela(
-            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X", "2", "1", "X")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"))
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "2")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "M")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "0")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "M")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "1")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "2")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "0")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "M"))
         );
 
+
+
         Quinigol qg1 = new Quinigol( 
-            new ArrayList<>(Arrays.asList("1", "3", "2", "1", "3", "2", "1", "3", "2", "1", "3", "2", "1", "3", "2")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"))
+            new ArrayList<>(Arrays.asList("1", "M")), 
+            new ArrayList<>(Arrays.asList("0", "2")), 
+            new ArrayList<>(Arrays.asList("1", "0")), 
+            new ArrayList<>(Arrays.asList("2", "2")), 
+            new ArrayList<>(Arrays.asList("M", "1")), 
+            new ArrayList<>(Arrays.asList("0", "1")), 
+            new ArrayList<>(Arrays.asList("2", "M")), 
+            new ArrayList<>(Arrays.asList("1", "2"))
         );
-        Quinigol qg2 = new Quinigol(
-            new ArrayList<>(Arrays.asList("2", "1", "3", "2", "1", "3", "2", "1", "3", "2", "1", "3", "2", "1", "3")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"))
+        Quinigol qg2 = new Quinigol( 
+            new ArrayList<>(Arrays.asList("2", "M")), 
+            new ArrayList<>(Arrays.asList("1", "0")), 
+            new ArrayList<>(Arrays.asList("2", "2")), 
+            new ArrayList<>(Arrays.asList("0", "1")), 
+            new ArrayList<>(Arrays.asList("M", "2")), 
+            new ArrayList<>(Arrays.asList("0", "0")), 
+            new ArrayList<>(Arrays.asList("1", "1")), 
+            new ArrayList<>(Arrays.asList("0", "2"))
         );
-        Quinigol qg3 = new Quinigol(
-            new ArrayList<>(Arrays.asList("3", "2", "1", "3", "2", "1", "3", "2", "1", "3", "2", "1", "3", "2", "1")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")), 
-            new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"))
+        Quinigol qg3 = new Quinigol( 
+            new ArrayList<>(Arrays.asList("1", "2")), 
+            new ArrayList<>(Arrays.asList("0", "M")), 
+            new ArrayList<>(Arrays.asList("M", "M")), 
+            new ArrayList<>(Arrays.asList("2", "1")), 
+            new ArrayList<>(Arrays.asList("0", "1")), 
+            new ArrayList<>(Arrays.asList("1", "2")), 
+            new ArrayList<>(Arrays.asList("0", "0")), 
+            new ArrayList<>(Arrays.asList("2", "0"))
         );
+
 
 
 

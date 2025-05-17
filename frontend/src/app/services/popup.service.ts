@@ -5,6 +5,7 @@ import { PopUpDialogComponentTwo } from '../components/popUp/popupTwo_dialog.com
 import { AccountService } from './account.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { TicketService } from './ticket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 
 export class PopUpService {
 
-  constructor(private dialog: MatDialog, private accountService: AccountService, private router: Router) { }
+  constructor(private dialog: MatDialog, private accountService: AccountService, private router: Router, private ticketService:TicketService) { }
 
   openPopUp(message: string): void {
     this.dialog.open(PopUpDialogComponent, {
@@ -24,14 +25,14 @@ export class PopUpService {
   }
 
 
-  openPopUpTwo(message: string, nickName: string): void {
+  openPopUpTwoDeletefriend(message: string, nickName: string): void {
     const dialogRef = this.dialog.open(PopUpDialogComponentTwo, {
       width: '300px',
       data: message
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'delete') {        
+      if (result === 'confirm') {        
         this.accountService.deleteFriend(nickName).subscribe(
           (response) => {
             
@@ -43,6 +44,50 @@ export class PopUpService {
 
       } else {
         
+      }
+    });
+  }
+
+
+  openPopUpTwoDeleteTicket(message:string, ticketId: number, teamId:number): void {
+    const dialogRef = this.dialog.open(PopUpDialogComponentTwo, {
+      width: '300px',
+      data: message
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {        
+        this.ticketService.deleteTicket(ticketId).subscribe(
+          (response) => {
+            this.openPopUp('Ticket successfully deleted.');
+            this.router.navigate(['/teams',teamId,'tickets']);
+          },
+          (error) => {
+            this.router.navigate(['/error']);
+          }
+        );
+
+      } else {
+        
+      }
+    });
+  }
+
+
+  
+
+
+  openPopUpTwoTickettype(message: string): any {
+    const dialogRef = this.dialog.open(PopUpDialogComponentTwo, {
+      width: '300px',
+      data: message
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {        
+        return true;
+      } else {
+        return false;
       }
     });
   }

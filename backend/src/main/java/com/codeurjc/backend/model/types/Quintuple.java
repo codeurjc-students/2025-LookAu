@@ -58,7 +58,7 @@ public class Quintuple extends TicketType {
     }
 
     public String getTicketTypeName(){
-        return "Quituple Plus";
+        return "Quítuple Plus";
     }
 
     public EnumTickectType getTickectType() {

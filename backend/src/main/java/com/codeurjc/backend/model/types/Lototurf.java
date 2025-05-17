@@ -61,7 +61,7 @@ public class Lototurf extends TicketType {
     }
 
     public String getTicketTypeName(){
-        return "Eurodreams";
+        return "Lototurf";
     }
     public EnumTickectType getTickectType() {
         return tickectType;

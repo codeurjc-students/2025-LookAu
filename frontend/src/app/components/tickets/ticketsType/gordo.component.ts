@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
 import { TeamService } from '../../../services/team.service';
 import { TicketService } from '../../../services/ticket.service';
+import { PopUpService } from '../../../services/popup.service';
 
 
 @Component({
@@ -14,6 +15,12 @@ import { TicketService } from '../../../services/ticket.service';
 
 export class GordoComponent {
 
+  @Input() isEditing: boolean = false;
+  @Output() dataEmitter = new EventEmitter<any>();
+
+  public isApply = true;
+
+  public ticketType: any = {};
   public ticketId: number = 0;
 
   public num1: number = 0;
@@ -23,12 +30,47 @@ export class GordoComponent {
   public num5: number = 0;
   public key: number = 0; 
 
-  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute) {
+  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute, private popupService:PopUpService) {
     this.ticketId = Number(this.route.snapshot.paramMap.get('ticketId') || 0);
   }
 
   ngOnInit() {
-    this.getTicketType();
+    if(this.ticketId!=0){
+      this.getTicketType();
+    }
+  }
+
+  /** Send To Ticket the New TycketsTypes Changes **/
+  applyTicketTypesChanges(){
+
+    if(this.isApplicable()){
+      this.isApply = true;
+
+      this.ticketType.num1 = this.num1;
+      this.ticketType.num2 = this.num2;
+      this.ticketType.num3 = this.num3;
+      this.ticketType.num4 = this.num4;
+      this.ticketType.num5 = this.num5;
+      this.ticketType.num6 = this.key;
+      
+      this.dataEmitter.emit(this.ticketType);
+    }else{
+      this.popupService.openPopUp('Fill all the box with numbers in range.');
+    }
+    
+  }
+
+  isApplicable(): boolean{
+    let numbers = [
+      Number(this.num1),
+      Number(this.num2),
+      Number(this.num3),
+      Number(this.num4),
+      Number(this.num5),
+      Number(this.key),
+    ];
+
+    return numbers.every(num => !isNaN(num) && num >= 1 && num <= 49);
   }
 
 
@@ -36,6 +78,7 @@ export class GordoComponent {
   getTicketType() {
     this.ticketService.getTicketType(this.ticketId).subscribe(
       (response) => {
+        this.ticketType = response;
         this.num1 = response.num1;
         this.num2 = response.num2;
         this.num3 = response.num3;
@@ -48,6 +91,12 @@ export class GordoComponent {
         this.router.navigate(['/error']);
       }
     );
+  }
+
+
+  /** Set TicketType Changes **/
+  setApply(){
+    this.isApply = false;
   }
   
 }

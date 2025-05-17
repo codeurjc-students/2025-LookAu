@@ -1,0 +1,94 @@
+<div class="col-12">
+
+    <div class="card mx-auto" style="max-width: 500px;">
+
+
+        <div class="row mt-4 barra-abajo m-0 p-0">
+            <div class="col-2"></div>
+            <div class="col-7">
+
+                <div class="row d-flex justify-content-center">
+                    <h5 class="ticket-name-group1 mx-1"><i class="fa-solid fa-dice"></i></h5>
+                    <h5 class="ticket-name-group1 ml-2"><b>Bet Info</b></h5>
+                </div>
+            </div>
+            <div class="col-3">
+                <button  class="btnnn btn-dark btn-sm" style="border-radius: 4px; color: #b9b9b9; border-color: #b9b9b9; font-size: 12px;" (click)="applyTicketTypesChanges()" *ngIf="isEditing && !isApply">
+                    Apply <i class="fas fa-arrow-circle-right ml-2"></i>
+                </button>
+            </div>
+
+            <br>
+            <br>
+        </div>
+
+        <br>
+
+        <div class="row d-flex justify-content-center">
+
+            <table class="table-sm">
+
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th class="text-center d-flex justify-content-strat align-items-center" style="color: #a1a0a0"
+                            scope="col">
+                            <div class=" mb-3">
+                                <button class="btn btn-sm btn-dark ml-1" *ngIf="isEditing"
+                                    (click)="deleteRow()"
+                                    style="font-size: 0.85rem; border-radius: 3px; color: #b9b9b9; border-color: #a1a0a0;">
+                                    Clear <i class="fas fa-trash ml-2"></i>
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <ng-container *ngFor="let row of mainRows; let i = index" >
+                        <!-- Subfila 1: Team 1 -->
+                        <tr>
+                            <td style="color: #a1a0a0"><strong>Team 1</strong></td>
+                            <td class="mr-2">
+
+                                <button *ngFor="let label of ['0', '1', '2', 'M']; let k = index"
+                                    class="btn btn-sm mx-1"
+                                    [ngClass]="{'btn-outline-dark': !buttonMatrix[i][0][k], 'btn-dark': buttonMatrix[i][0][k]}"
+                                    (click)="toggleButton(i, 0, k)"
+                                    [disabled]="!isEditing">
+                                    {{ label }}
+                                </button>
+
+                            </td>
+                        </tr>
+
+                        <!-- Subfila 2: Team 2 -->
+                        <tr>
+                            <td style="color: #a1a0a0"><strong>Team 2</strong></td>
+                            <td>
+                                <button *ngFor="let label of ['0', '1', '2', 'M']; let k = index"
+                                    class="btn btn-sm mx-1"
+                                    [ngClass]="{'btn-outline-dark': !buttonMatrix[i][1][k], 'btn-dark': buttonMatrix[i][1][k]}"
+                                    (click)="toggleButton(i, 1, k)"
+                                    [disabled]="!isEditing">
+                                    {{ label }}
+                                </button>
+                            </td>
+                        </tr>
+                        <br>
+                    </ng-container>
+                </tbody>
+
+            </table>
+
+            <br>
+
+        </div>
+
+        <br>
+
+    </div>
+
+
+
+</div>

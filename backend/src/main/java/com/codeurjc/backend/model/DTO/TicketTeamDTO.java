@@ -28,7 +28,7 @@ public class TicketTeamDTO {
 
     public TicketTeamDTO(Ticket ticket){
         this.id = ticket.getId();
-        this.date = ticket.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.date = ticket.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.type = ticket.getTicketType()!=null ? ticket.getTicketType().getStringTickectType() : "";
         this.statusName = ticket.getStatusName();
         this.statusPrice = String.valueOf(ticket.getStatusPrice());
