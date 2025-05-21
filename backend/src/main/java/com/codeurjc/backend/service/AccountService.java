@@ -2,16 +2,21 @@ package com.codeurjc.backend.service;
 import com.codeurjc.backend.security.CSRFHandlerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.model.Team;
+import com.codeurjc.backend.model.Ticket;
 import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.TeamDTO;
+import com.codeurjc.backend.model.DTO.TicketTeamDTO;
 import com.codeurjc.backend.repository.AccountRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,6 +62,15 @@ public class AccountService {
             .collect(Collectors.toList());
         }else{
             return new ArrayList<String>();
+        }
+    }
+
+    public List<TicketTeamDTO> getAllTicketAccount(List<Ticket> lTeams) {
+
+        if(!lTeams.isEmpty()){
+            return lTeams.stream().map(this::convertToTicketTeamDTO).collect(Collectors.toList());
+        }else{
+            return new ArrayList<TicketTeamDTO>();
         }
     }
 
@@ -198,6 +212,72 @@ public class AccountService {
         }
     }
 
+
+    /***********************/
+    /******* TICKETS *******/
+    /***********************/
+    public Page<TicketTeamDTO> getAccountTicketsPaged(List<Ticket> tickets, Pageable pageable) {
+         
+        //set pagination and order by date
+        List<Ticket> pagedTickets = tickets.stream()
+            .sorted(Comparator.comparing(Ticket::getDate).reversed()) 
+            .skip(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .collect(Collectors.toList());
+
+        List<TicketTeamDTO> dtoList = new ArrayList<>();
+
+        for (Ticket ticket : pagedTickets) {
+            try {
+                TicketTeamDTO ticketTeamDTO = this.convertToTicketTeamDTO(ticket);
+                dtoList.add(ticketTeamDTO); 
+            } catch (Exception e) {
+                System.err.println("Error al convertir el ticket: " + ticket);
+                e.printStackTrace(); 
+            }
+        }
+
+        return new PageImpl<>(dtoList, pageable, tickets.size());
+            
+    }
+
+
+    public Page<TicketTeamDTO> getAccountTicketsFilterPaged(List<Ticket> tickets, String date, String type, Pageable pageable) {
+
+        //filter by date or type
+        List<Ticket> filteredTickets = tickets.stream()
+        .filter(ticket -> {
+            boolean matchesDate = date == null || date.isEmpty() || 
+                (ticket.getDate() != null && ticket.getDate().toString().contains(date));
+            
+            boolean matchesType = type == null || type.isEmpty() || 
+                (ticket.getTicketType() != null && 
+                    ticket.getTicketType().getStringTickectType().equalsIgnoreCase(type.trim()));
+            
+            return matchesDate && matchesType;
+        })
+        .sorted(Comparator.comparing(Ticket::getDate).reversed())
+        .collect(Collectors.toList());
+
+
+        //set pagination and order by date
+        List<Ticket> pagedTickets = filteredTickets.stream()
+            .sorted(Comparator.comparing(Ticket::getDate).reversed()) 
+            .skip(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .collect(Collectors.toList()
+        );
+
+
+        //convert to dto
+        List<TicketTeamDTO> dtoList = pagedTickets.stream()
+            .map(this::convertToTicketTeamDTO)
+            .collect(Collectors.toList());
+
+        return new PageImpl<>(dtoList, pageable, filteredTickets.size());
+            
+    }
+
     
 
     
@@ -243,5 +323,9 @@ public class AccountService {
             }
         }
         return false;
+    }
+
+    private TicketTeamDTO convertToTicketTeamDTO(Ticket ticket) {
+        return new TicketTeamDTO(ticket);
     }
 }

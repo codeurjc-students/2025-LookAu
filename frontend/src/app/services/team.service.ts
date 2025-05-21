@@ -10,7 +10,21 @@ export class TeamService {
   constructor(private http: HttpClient) { }
 
   searchTeam(searchTerm: string): Observable<any>{
-    return this.http.get(BASE_URL+searchTerm) as Observable<any>;
+    let params = new HttpParams();
+    params = params.append('searchTerm', searchTerm);
+
+    return this.http.get(BASE_URL, {params: params,}) as Observable<any>;
+  }
+
+  getTeam(teamId: number){
+    return this.http.get(BASE_URL+teamId) as Observable<any>;
+  }
+
+  deleteAccountTeam(teamId:number, nickName:string){
+    let params = new HttpParams();
+    params = params.append('nickName', nickName);
+
+    return this.http.delete(BASE_URL+teamId, {params: params,}) as Observable<any>;
   }
 
   getAccountsTeam(teamId: string): Observable<any>{
@@ -49,6 +63,14 @@ export class TeamService {
     return this.http.get(BASE_URL+idTeam+'/tickets', {
       params: params,
     }) as Observable<any>;
+  }
+
+  getAllTickets(teamId: number){
+    return this.http.get(BASE_URL+teamId+'/ticketss') as Observable<any>;
+  }
+
+  updateTeam(name:string, teamId: number){
+    return this.http.put<string>(BASE_URL+teamId, {name,});
   }
 
 }

@@ -22,6 +22,13 @@ export class TicketService {
   saveTicket(id: number, ticket:Ticket): Observable<any>{
     return this.http.put<number>(BASE_URL+id, ticket) as Observable<any>;
   }
+  
+  saveNewTicket(ticket:Ticket, teamId:number): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('teamId', teamId);
+
+    return this.http.post<number>(BASE_URL, ticket, {params: params,}) as Observable<any>;
+  }
 
   deleteTicket(ticketId: number){
     return this.http.delete<number>(BASE_URL+ticketId) as Observable<any>;

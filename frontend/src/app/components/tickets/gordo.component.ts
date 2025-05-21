@@ -1,19 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from '../../../services/account.service';
-import { TeamService } from '../../../services/team.service';
-import { TicketService } from '../../../services/ticket.service';
-import { PopUpService } from '../../../services/popup.service';
+import { AccountService } from '../../services/account.service';
+import { TeamService } from '../../services/team.service';
+import { TicketService } from '../../services/ticket.service';
+import { PopUpService } from '../../services/popup.service';
 
 
 @Component({
-  selector: 'app-euromillones',
-  templateUrl: './euromillones.component.html',
+  selector: 'app-gordo',
+  templateUrl: './gordo.component.html',
   standalone: false,
 })
 
-export class EuromillonesComponent {
+export class GordoComponent {
 
   @Input() isEditing: boolean = false;
   @Output() dataEmitter = new EventEmitter<any>();
@@ -28,10 +28,9 @@ export class EuromillonesComponent {
   public num3: number = 0;
   public num4: number = 0;
   public num5: number = 0;
-  public star1: number = 0;
-  public star2: number = 0; 
+  public key: number = 0; 
 
-  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute, private popupService: PopUpService) {
+  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute, private popupService:PopUpService) {
     this.ticketId = Number(this.route.snapshot.paramMap.get('ticketId') || 0);
   }
 
@@ -52,8 +51,7 @@ export class EuromillonesComponent {
       this.ticketType.num3 = this.num3;
       this.ticketType.num4 = this.num4;
       this.ticketType.num5 = this.num5;
-      this.ticketType.star1 = this.star1;
-      this.ticketType.star2 = this.star2;
+      this.ticketType.num6 = this.key;
       
       this.dataEmitter.emit(this.ticketType);
     }else{
@@ -69,8 +67,7 @@ export class EuromillonesComponent {
       Number(this.num3),
       Number(this.num4),
       Number(this.num5),
-      Number(this.star1),
-      Number(this.star2),
+      Number(this.key),
     ];
 
     return numbers.every(num => !isNaN(num) && num >= 1 && num <= 49);
@@ -87,8 +84,7 @@ export class EuromillonesComponent {
         this.num3 = response.num3;
         this.num4 = response.num4;
         this.num5 = response.num5;
-        this.star1 = response.star1;
-        this.star2 = response.star2;
+        this.key = response.key;
 
       },
       (error) => {
@@ -96,6 +92,7 @@ export class EuromillonesComponent {
       }
     );
   }
+
 
   /** Set TicketType Changes **/
   setApply(){

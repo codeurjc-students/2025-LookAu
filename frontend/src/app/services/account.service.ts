@@ -88,4 +88,26 @@ export class AccountService {
     return this.http.put(BASE_URL, {firstName, lastName, password})
   }
 
+  getAccountTickets(index: number, date:Date, type:string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', index.toString());
+    params = params.append('size', '5');
+    
+    if(typeof date === 'string'){
+      params = params.append('date', date);
+    }
+
+    if(type != ''){
+      params = params.append('type', type);
+    }
+
+    return this.http.get(BASE_URL+'/tickets', {
+      params: params,
+    }) as Observable<any>;
+  }
+
+  getAllAccountTickets(): Observable<any> {
+    return this.http.get(BASE_URL+'/ticketss') as Observable<any>;
+  }
+
 }

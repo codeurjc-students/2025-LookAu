@@ -87,6 +87,27 @@ public class TicketRestController {
 	/*********************************/
 	/******** TEAMS INTERFACE ********/
 	/*********************************/
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Get tickets")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@GetMapping("/")
+	public ResponseEntity<?> getTicketSave(HttpServletRequest request)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()){
+
+			return new ResponseEntity<>(null, HttpStatus.OK);
+			
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	@Operation(summary = "Get a ticket")
 	@ApiResponses(value = {
@@ -202,7 +223,77 @@ public class TicketRestController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
 
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Create a ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/")
+	public ResponseEntity<?> newTicket(HttpServletRequest request, @RequestBody TicketTeamDTO ticketDTO, @RequestParam String teamId)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent() && ticketDTO.getTicketTypeId()!=null && teamId!=null){
+
+			Optional<TicketType> ticketTypeOpp = ticketTypeService.getById(Long.valueOf(ticketDTO.getTicketTypeId()));
+				
+			if(Long.valueOf(teamId)>0){
+
+				Optional<Team> teamOpp = teamService.getById(Long.valueOf(teamId));
+			
+				if (ticketTypeOpp.isPresent() && teamOpp.isPresent()){
+			
+					Ticket ticket = new Ticket();
+
+					ticket.setDate(LocalDate.parse(ticketDTO.getDate()));
+					ticket.setPaidByName(ticketDTO.getPaidByName());
+					ticket.setPaidByPice(Double.valueOf(ticketDTO.getPaidByPice()));
+					ticket.setClaimedBy(ticketDTO.getClaimedBy());
+					ticket.setStatusName("Pending");
+					ticket.setStatusPrice(0.0);
+					
+					ticket.setTicketType(ticketTypeOpp.get());
+					ticket.setTeam(teamOpp.get());
+
+					ticketService.setTicket(ticket);
+
+					return new ResponseEntity<>(null, HttpStatus.OK);
+
+				} else {
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+
+			}else{
+
+				if (ticketTypeOpp.isPresent()){
+			
+					Ticket ticket = new Ticket();
+
+					ticket.setDate(LocalDate.parse(ticketDTO.getDate()));
+					ticket.setPaidByPice(Double.valueOf(ticketDTO.getPaidByPice()));
+					ticket.setStatusName("Pending");
+					ticket.setStatusPrice(0.0);
+					
+					ticket.setTicketType(ticketTypeOpp.get());
+					ticket.setAccount(accountOpp.get());
+
+					ticketService.setTicket(ticket);
+
+					return new ResponseEntity<>(null, HttpStatus.OK);
+
+				} else {
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+			}
+			
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 
@@ -241,456 +332,4 @@ public class TicketRestController {
 		}
 
 	}
-
-
-
-
-	// /**********************************/
-	// /******** PROFILES DETAILS ********/
-	// /**********************************/
-
-	// @Operation(summary = "Get the image profile of a team")
-	// @ApiResponses(value = {
-	// 	@ApiResponse(responseCode = "200", description = "Found the image profile", content = {
-	// 		@Content(mediaType = "image/jpg") }),
-	// 	@ApiResponse(responseCode = "404", description = "Image profile not found", content = @Content),
-	// 	@ApiResponse(responseCode = "403", description = "Forbidden or you don't have permissions", content = @Content) })
-	// @GetMapping("/{teamId}/image")
-	// public ResponseEntity<byte[]> downloadProfileImageByEmail(@PathVariable Long teamId) {
-
-	// 	Optional<Team> teamOpp = teamService.getById(teamId);
-
-	// 	if (teamOpp.isPresent()) {
-
-	// 		Team team = teamOpp.get();
-
-	// 		byte[] imageData = team.getProfilePicture();
-	// 		if (imageData != null && imageData.length > 0) {
-	// 			return ResponseEntity.ok()
-	// 					.header(HttpHeaders.CONTENT_TYPE, "image/png")
-	// 					.contentLength(imageData.length)
-	// 					.body(imageData);
-	// 		} else {
-	// 			return ResponseEntity.notFound().build();
-	// 		}
-	// 	} else {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-	// }
-
-	// @Operation(summary = "Set the image profile of the team")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "200", description = "Found the image profile", content = {
-	// 				@Content(mediaType = "image/jpg") }),
-	// 		@ApiResponse(responseCode = "404", description = "image profile not found", content = @Content),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @PutMapping("/{teamId}/image")
-	// public ResponseEntity<Object> updateFile(HttpServletRequest request, @RequestBody MultipartFile file, @PathVariable Long teamId) throws IOException {
-
-	// 	byte[] foto;
-	// 	Optional<Account> currentUser = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (currentUser.isPresent()) {
-
-	// 		Optional<Team> teamOpp = teamService.getById(teamId);
-
-	// 		if (teamOpp.isPresent()) {
-	// 			foto = file.getBytes();
-	// 			Team team = teamOpp.get();
-
-	// 			team.setProfilePicture(foto);
-	// 			teamService.setTeam(team);
-				
-	// 			URI location = fromCurrentRequest().build().toUri();
-				
-	// 			return ResponseEntity.created(location).build();
-	// 		}else{
-	// 			return ResponseEntity.notFound().build();
-	// 		}
-
-	// 	} else {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-
-	// }
-
-
-	// @Operation(summary = "Create a team")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "201", description = "Team created", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @PostMapping("/")
-	// public ResponseEntity<?> register(@RequestBody TeamDTO post, HttpServletRequest request) throws IOException, SQLException {
-
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-	// 		List<Account> lAccountToAddTeam = accountService.getAllByNicknames(Arrays.asList(post.getFriendsTeam()));
-	// 		lAccountToAddTeam.add(accountOpp.get());
-
-	// 		add the account to the team
-	// 		Team team = new Team(post.getName());
-	// 		team.setAccounts(lAccountToAddTeam);
-
-	// 		add the teams to the accounts
-	// 		for(Account acc: lAccountToAddTeam){
-	// 			acc.getTeams().add(team);
-	// 		}			
-
-	// 		save both
-	// 		teamService.setTeam(team);
-	// 		accountService.setAccounts(lAccountToAddTeam);
-
-	// 		return ResponseEntity.ok(new TeamDTO(team));
-	// 	} else {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-	// }
-
-	
-	
-
-
-
-	// /******************************/
-	// /******** AJAX FRIENDS ********/
-	// /******************************/
-
-	// https://localhost:8443/api/teams/id/tickets?page=0&size=10
-	// @Operation(summary = "Get more account of the team")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "404", description = "Team not found", content = @Content) })
-	// @GetMapping("/{idTeam}/tickets")
-	// public ResponseEntity<Page<TicketTeamDTO>> getMoreAcconutsTeams(HttpServletRequest request,
-	// 		@RequestParam(value = "page", defaultValue = "0") int page,
-	// 		@RequestParam(value = "size", defaultValue = "10") int size,
-	// 		@RequestParam(value = "date", defaultValue = "") String date,
-	// 		@RequestParam(value = "type", defaultValue = "") String type,
-	// 		@PathVariable String idTeam) {
-		
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-
-	// 		Page<TicketTeamDTO> lMyFriends;
-
-	// 		if(type.equals("") && date.equals("")){
-	// 			lMyFriends = teamService.getTeamTicketsPaged(idTeam, PageRequest.of(page, size));
-	// 		}else{
-	// 			lMyFriends = teamService.getTeamTicketsFilterPaged(idTeam, date, type, PageRequest.of(page, size));
-	// 		}
-			
-	// 		if (lMyFriends.getSize() > 0) {
-	// 			return new ResponseEntity<>(lMyFriends, HttpStatus.OK);
-	// 		} else {
-	// 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 		}
-
-			
-	// 	} else{
-	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 	}
-	// }
-
-
-
-
-
-	// @GetMapping("/currentAccount")
-	// public ResponseEntity<Optional<Account>> currentAccount(HttpServletRequest request) {
-	// 	Principal principal = request.getUserPrincipal();
-	// 	if (principal == null) {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-
-	// 	try {
-	// 		Optional<Account> currentAccount = accountService.getByEmail(request.getUserPrincipal().getName());
-	// 		return ResponseEntity.ok(currentAccount);
-	// 	} catch (NoSuchElementException e) {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-	// }
-
-
-	// @Operation(summary = "Get account information")
-	// @ApiResponses(value = {
-	// 	@ApiResponse(responseCode = "200", description = "Account information or not registered", 
-	// 		content = @Content(mediaType = "application/json")),
-	// 	@ApiResponse(responseCode = "403", description = "Forbidden or don't have permissions", 
-	// 		content = @Content)
-	// })
-	// @GetMapping("/me")
-	// public ResponseEntity<Map<String, Object>> profile(HttpServletRequest request) {
-		
-	// 	if (request.getUserPrincipal() == null) {
-	// 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-	// 	}
-
-	// 	Optional<Account> currentAccount = accountService.getByEmail(request.getUserPrincipal().getName());
-		
-	// 	if (currentAccount.isPresent()) {
-	// 		return ResponseEntity.ok()
-	// 			.body(Map.of(
-	// 				"status", "registered",
-	// 				"account", new AccountDTO(currentAccount.get())
-	// 			));
-	// 	} else {
-	// 		return ResponseEntity.ok()
-	// 			.body(Map.of(
-	// 				"status", "not_registered",
-	// 				"message", "User authenticated but not registered in the system"
-	// 			));
-	// 	}
-	// }
-
-
-
-
-	
-
-	// @Operation(summary = "Register a account")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "201", description = "User created", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @PostMapping("/")
-	// public ResponseEntity<?> register(@RequestBody RegisterAccountDTO post) throws IOException, SQLException {
-
-	// 	if(!accountService.emailRepeat(post.getEmail())){
-	// 		if(!accountService.nickNameRepeat(post.getNickName())){
-	// 			Account acc = new Account(post.getNickName(), post.getFirstName(), post.getLastName(), post.getEmail(), post.getPassword());
-	// 			accountService.setAccount(acc);
-
-	// 			URI location = fromCurrentRequest().path("/{id}").buildAndExpand(acc.getId()).toUri();
-	// 			return ResponseEntity.created(location).body(acc);
-	// 		}else{
-	// 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Nickname already taken");
-	// 		}
-	// 	}else{
-	// 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error: Email already registered");
-	// 	}
-	// }
-
-
-
-
-
-
-
-	// @SuppressWarnings("null")
-	// @Operation(summary = "Update the account profile")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "200", description = "Profile updated", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
-	// 		@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @PutMapping("/")
-	// public ResponseEntity<?> editProfile(HttpServletRequest request, @RequestBody AccountDTO post)throws IOException, SQLException {
-
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-	// 		Account acc = accountOpp.get();
-
-	// 		if (acc != null) {
-	// 			acc.setFirstName(post.getFirstName());
-	// 			acc.setLastName(post.getLastName());
-	// 			acc.setPassword(post.getPassword());
-
-	// 			accountService.setAccount(acc);
-
-	// 			return new ResponseEntity<>(null, HttpStatus.OK);
-	// 		} else {
-	// 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 		}
-
-	// 	} else {
-	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 	}
-
-	// }
-
-	
-
-
-
-	// /*********************************/
-	// /******** ACTIONS FRIENDS ********/
-	// /*********************************/
-
-	// @Operation(summary = "Send friend request")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "201", description = "Searching friends", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @PutMapping("/{nickName}")
-	// public ResponseEntity<?> sendFriendRequest(HttpServletRequest request, @PathVariable String nickName) throws IOException, SQLException {
-
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-
-	// 		Account account = accountOpp.get();
-
-	// 		accountService.sendFriendRequest(account, nickName);
-
-	// 		return ResponseEntity.ok(null);
-			
-
-	// 	} else {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-	// }
-
-
-
-
-	// @Operation(summary = "Delete a friend")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "201", description = "Accepted friend", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @DeleteMapping("/myFriends/{nickName}")
-	// public ResponseEntity<?> deleteMyFriend(HttpServletRequest request, @PathVariable String nickName) throws IOException, SQLException {
-
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-
-	// 		Account account = accountOpp.get();
-
-	// 		if(accountService.isInMyFriends(account, nickName)){
-	// 			accountService.deleteMyFriend(account, nickName);
-	// 			return ResponseEntity.ok(null);
-	// 		}else{
-	// 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error");
-	// 		}
-
-	// 	} else {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-	// }
-
-
-
-	// @Operation(summary = "Acept a pending friend")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "201", description = "Accepted friend", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @PutMapping("/pendingFriends/{nickName}")
-	// public ResponseEntity<?> aceptPendingFriend(HttpServletRequest request, @PathVariable String nickName) throws IOException, SQLException {
-
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-
-	// 		Account account = accountOpp.get();
-
-	// 		if(accountService.isInPendingAndRequestFriends(account, nickName)){
-	// 			accountService.aceptPendingFriend(account, nickName);
-	// 			return ResponseEntity.ok(null);
-	// 		}else{
-	// 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error");
-	// 		}
-
-	// 	} else {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-	// }
-
-	// @Operation(summary = "Deny a pending friend")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "201", description = "Denied friend", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	// @DeleteMapping("/pendingFriends/{nickName}")
-	// public ResponseEntity<?> denyPendingFriend(HttpServletRequest request, @PathVariable String nickName) throws IOException, SQLException {
-		
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-
-	// 		Account account = accountOpp.get();
-
-	// 		if(accountService.isInPendingAndRequestFriends(account, nickName)){
-	// 			accountService.denyPendingFriend(account, nickName);
-	// 			return ResponseEntity.ok(null);
-	// 		}else{
-	// 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error");
-	// 		}
-
-	// 	} else {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-
-	// }
-
-
-
-
-
-
-	// https://localhost:8443/api/users/?page=0&size=10
-	// @Operation(summary = "Get more pending friends of the user")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "200", description = "Found more friends", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "404", description = "Account not found", content = @Content) })
-	// @GetMapping("/pendingFriends")
-	// public ResponseEntity<Page<String>> getMorePendingFriends(HttpServletRequest request,
-	// 		@RequestParam(value = "page", defaultValue = "0") int page,
-	// 		@RequestParam(value = "size", defaultValue = "10") int size) {
-		
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-
-	// 		Account acc = accountOpp.get();
-
-	// 		Page<String> lMyFriends = accountService.getAllPendingFriendsPage(acc.getNickName(), PageRequest.of(page, size));
-	// 		if (lMyFriends.getSize() > 0) {
-	// 			return new ResponseEntity<>(lMyFriends, HttpStatus.OK);
-	// 		} else {
-	// 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 		}
-
-			
-	// 	} else{
-	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 	}
-	// }
-
-
-	// https://localhost:8443/api/users/?page=0&size=10
-	// @Operation(summary = "Get more request friends of the user")
-	// @ApiResponses(value = {
-	// 		@ApiResponse(responseCode = "200", description = "Found more friends", content = {
-	// 				@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
-	// 		@ApiResponse(responseCode = "404", description = "Account not found", content = @Content) })
-	// @GetMapping("/requestFriends")
-	// public ResponseEntity<Page<String>> getMoreRequestFriends(HttpServletRequest request,
-	// 		@RequestParam(value = "page", defaultValue = "0") int page,
-	// 		@RequestParam(value = "size", defaultValue = "10") int size) {
-		
-	// 	Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
-
-	// 	if (accountOpp.isPresent()) {
-
-	// 		Account acc = accountOpp.get();
-
-	// 		Page<String> lMyFriends = accountService.getAllRequestFriendsPage(acc.getNickName(), PageRequest.of(page, size));
-	// 		if (lMyFriends.getSize() > 0) {
-	// 			return new ResponseEntity<>(lMyFriends, HttpStatus.OK);
-	// 		} else {
-	// 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 		}
-
-			
-	// 	} else{
-	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 	}
 }

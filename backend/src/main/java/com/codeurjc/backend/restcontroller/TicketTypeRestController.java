@@ -195,6 +195,39 @@ public class TicketTypeRestController {
 	}
 
 
+	@SuppressWarnings("null")
+	@Operation(summary = "Create the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/bonoloto")
+	public ResponseEntity<?> saveTicketBonoloto(HttpServletRequest request, @RequestBody BonolotoDTO bonolotoDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+		
+			Bonoloto bonoloto = new Bonoloto();
+
+			bonoloto.setNum1(bonolotoDTO.getNum1());
+			bonoloto.setNum2(bonolotoDTO.getNum2());
+			bonoloto.setNum3(bonolotoDTO.getNum3());
+			bonoloto.setNum4(bonolotoDTO.getNum4());
+			bonoloto.setNum5(bonolotoDTO.getNum5());
+			bonoloto.setNum6(bonolotoDTO.getNum6());
+
+			ticketTypeService.setTicketType(bonoloto);
+
+			return new ResponseEntity<>(bonoloto.getId(), HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+
 	/** EURODREAMS **/
 	@Operation(summary = "Get a ticket")
 	@ApiResponses(value = {
@@ -261,6 +294,40 @@ public class TicketTypeRestController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Create the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/eurodreams")
+	public ResponseEntity<?> saveTicketEurodreams(HttpServletRequest request, @RequestBody EurodreamsDTO eurodreamsDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+			
+			Eurodreams eurodreams = new Eurodreams();
+
+			eurodreams.setNum1(eurodreamsDTO.getNum1());
+			eurodreams.setNum2(eurodreamsDTO.getNum2());
+			eurodreams.setNum3(eurodreamsDTO.getNum3());
+			eurodreams.setNum4(eurodreamsDTO.getNum4());
+			eurodreams.setNum5(eurodreamsDTO.getNum5());
+			eurodreams.setNum6(eurodreamsDTO.getNum6());
+			eurodreams.setDream(eurodreamsDTO.getDream());
+
+			ticketTypeService.setTicketType(eurodreams);
+
+			return new ResponseEntity<>(eurodreams.getId(), HttpStatus.OK);
 
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -342,6 +409,41 @@ public class TicketTypeRestController {
 	}
 
 
+	@SuppressWarnings("null")
+	@Operation(summary = "Create the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/euromillones")
+	public ResponseEntity<?> saveProfile(HttpServletRequest request, @RequestBody EuromillonesDTO euromillonesDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+			
+			Euromillones euromillones = new Euromillones();
+
+			euromillones.setNum1(euromillonesDTO.getNum1());
+			euromillones.setNum2(euromillonesDTO.getNum2());
+			euromillones.setNum3(euromillonesDTO.getNum3());
+			euromillones.setNum4(euromillonesDTO.getNum4());
+			euromillones.setNum5(euromillonesDTO.getNum5());
+			euromillones.setStar1(euromillonesDTO.getStar1());
+			euromillones.setStar2(euromillonesDTO.getStar2());
+
+			ticketTypeService.setTicketType(euromillones);
+
+			return new ResponseEntity<>(euromillones.getId(), HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+
 	/** GORDO **/
 	@Operation(summary = "Get a ticket")
 	@ApiResponses(value = {
@@ -407,6 +509,38 @@ public class TicketTypeRestController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Create the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/gordo")
+	public ResponseEntity<?> newTicketGordo(HttpServletRequest request, @RequestBody GordoDTO gordoDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+	
+			Gordo gordo = new Gordo();
+
+			gordo.setNum1(gordoDTO.getNum1());
+			gordo.setNum2(gordoDTO.getNum2());
+			gordo.setNum3(gordoDTO.getNum3());
+			gordo.setNum4(gordoDTO.getNum4());
+			gordo.setNum5(gordoDTO.getNum5());
+			gordo.setKey(gordoDTO.getKey());
+
+			ticketTypeService.setTicketType(gordo);
+
+			return new ResponseEntity<>(gordo.getId(), HttpStatus.OK);
 
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -478,6 +612,36 @@ public class TicketTypeRestController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/loteria")
+	public ResponseEntity<?> newTicketLoteria(HttpServletRequest request, @RequestBody LoteriaDTO loteriaDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Loteria loteria = new Loteria();
+
+			loteria.setNumber(loteriaDTO.getNumber());
+			loteria.setEuros(loteriaDTO.getEuros());
+			loteria.setSeries(loteriaDTO.getSeries());
+			loteria.setFraction(loteriaDTO.getFraction());
+
+			ticketTypeService.setTicketType(loteria);
+
+			return new ResponseEntity<>(loteria.getId(), HttpStatus.OK);
 
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -556,7 +720,39 @@ public class TicketTypeRestController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
 
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/lototurf")
+	public ResponseEntity<?> newTicketLototurf(HttpServletRequest request, @RequestBody LototurfDTO lototurfDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Lototurf lototurf = new Lototurf();
+
+			lototurf.setNum1(lototurfDTO.getNum1());
+			lototurf.setNum2(lototurfDTO.getNum2());
+			lototurf.setNum3(lototurfDTO.getNum3());
+			lototurf.setNum4(lototurfDTO.getNum4());
+			lototurf.setNum5(lototurfDTO.getNum5());
+			lototurf.setNum6(lototurfDTO.getNum6());
+			lototurf.setHorse(lototurfDTO.getHorse());
+
+			ticketTypeService.setTicketType(lototurf);
+
+			return new ResponseEntity<>(lototurf.getId(), HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 
@@ -630,7 +826,39 @@ public class TicketTypeRestController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
 
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/primitiva")
+	public ResponseEntity<?> newTicketPrimitiva(HttpServletRequest request, @RequestBody PrimitivaDTO primitivaDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Primitiva primitiva = new Primitiva();
+
+			primitiva.setNum1(primitivaDTO.getNum1());
+			primitiva.setNum2(primitivaDTO.getNum2());
+			primitiva.setNum3(primitivaDTO.getNum3());
+			primitiva.setNum4(primitivaDTO.getNum4());
+			primitiva.setNum5(primitivaDTO.getNum5());
+			primitiva.setNum6(primitivaDTO.getNum6());
+			primitiva.setReimbursement(primitivaDTO.getReimbursement());
+
+			ticketTypeService.setTicketType(primitiva);
+
+			return new ResponseEntity<>(primitiva.getId(), HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 
@@ -705,7 +933,41 @@ public class TicketTypeRestController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
 
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/quiniela")
+	public ResponseEntity<?> newTicketQuiniela(HttpServletRequest request, @RequestBody QuinielaDTO quinielaDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Quiniela quiniela = new Quiniela();
+
+			quiniela.setBet1(quinielaDTO.getBet1());
+			quiniela.setBet2(quinielaDTO.getBet2());
+			quiniela.setBet3(quinielaDTO.getBet3());
+			quiniela.setBet4(quinielaDTO.getBet4());
+			quiniela.setBet5(quinielaDTO.getBet5());
+			quiniela.setBet6(quinielaDTO.getBet6());
+			quiniela.setBet7(quinielaDTO.getBet7());
+			quiniela.setBet8(quinielaDTO.getBet8());
+
+			ticketTypeService.setTicketType(quiniela);
+
+			return new ResponseEntity<>(quiniela.getId(), HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 
@@ -778,7 +1040,39 @@ public class TicketTypeRestController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
 
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/quinigol")
+	public ResponseEntity<?> newProfile(HttpServletRequest request, @RequestBody QuinigolDTO quinigolDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()){
+		
+			Quinigol quinigol = new Quinigol();
+
+			quinigol.setBet1(quinigolDTO.getBet1());
+			quinigol.setBet2(quinigolDTO.getBet2());
+			quinigol.setBet3(quinigolDTO.getBet3());
+			quinigol.setBet4(quinigolDTO.getBet4());
+			quinigol.setBet5(quinigolDTO.getBet5());
+			quinigol.setBet6(quinigolDTO.getBet6());
+
+			ticketTypeService.setTicketType(quinigol);
+
+			return new ResponseEntity<>(quinigol.getId(), HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 
@@ -837,7 +1131,7 @@ public class TicketTypeRestController {
 
 					ticketTypeService.setTicketType(quintuple);
 
-					return new ResponseEntity<>(null, HttpStatus.OK);
+					return new ResponseEntity<>(quintuple.getId(), HttpStatus.OK);
 
 				} else {
 					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -851,7 +1145,39 @@ public class TicketTypeRestController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
 
+
+	@SuppressWarnings("null")
+	@Operation(summary = "Update the ticket")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Profile updated", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = AccountDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Profile not found ", content = @Content),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PostMapping("/quintuple")
+	public ResponseEntity<?> newTicketQuintuple(HttpServletRequest request, @RequestBody QuintupleDTO quintupleDTO)throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+					
+			Quintuple quintuple = new Quintuple();
+
+			quintuple.setNum1(quintupleDTO.getNum1());
+			quintuple.setNum2(quintupleDTO.getNum2());
+			quintuple.setNum3(quintupleDTO.getNum3());
+			quintuple.setNum4(quintupleDTO.getNum4());
+			quintuple.setNum5(quintupleDTO.getNum5());
+			quintuple.setNum6(quintupleDTO.getNum6());
+
+			ticketTypeService.setTicketType(quintuple);
+
+			return new ResponseEntity<>(quintuple.getId(), HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	

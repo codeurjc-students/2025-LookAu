@@ -21,9 +21,11 @@ public class Ticket {
     private Double paidByPice;  //also use for the total of the reimbursement
     private String claimedBy;   //also used for the account to be reimbursed
     private LocalDate date;     
-    private Boolean balanced;   //helper var
+    private Boolean isBalanced;  
 
     private List<Long> idAccountsAreBeingPaid;   //also use for idTicketReimbursement when status = Reimbursement. This indicates the tickets who are implicates in the Reimbursement
+    private List<Long> idReimbursementAreReferenced;   
+
 
     @ManyToOne
     @JoinColumn(name = "tickettype_id", nullable = true)
@@ -45,7 +47,7 @@ public class Ticket {
         this.paidByName = paidByName;
         this.paidByPice = paidByPice;
         this.date = date;
-        this.balanced = false;
+        this.isBalanced = false;
         this.idAccountsAreBeingPaid = new ArrayList<Long>();
         if(this.statusName.equals("Winning"))
             this.statusPrice = 100.00;
@@ -61,7 +63,7 @@ public class Ticket {
         this.paidByName = paidByName;
         this.paidByPice = paidByPice;
         this.date = date;
-        this.balanced = false;
+        this.isBalanced = false;
         this.idAccountsAreBeingPaid = new ArrayList<Long>();
         if(this.statusName.equals("Winning"))
             this.statusPrice = 100.00;
@@ -112,10 +114,10 @@ public class Ticket {
         this.statusPrice = statusPrice;
     }
     public Boolean isBalancedTicket(){
-        return this.balanced;
+        return this.isBalanced;
     }
-    public void setBalancedTicket(Boolean balanced) {       
-        this.balanced = balanced;
+    public void setBalancedTicket(Boolean isBalanced) {       
+        this.isBalanced = isBalanced;
     }
 
     public List<Long> getIdAccountsAreBeingPaid(){
@@ -123,6 +125,12 @@ public class Ticket {
     }
     public void setIdAccountsAreBeingPaid(List<Long> idAccountsAreBeingPaid) {       
         this.idAccountsAreBeingPaid = idAccountsAreBeingPaid;
+    }
+    public List<Long> getIdReimbursementAreReferenced() {
+        return idReimbursementAreReferenced;
+    }
+    public void setIdReimbursementAreReferenced(List<Long> idReimbursementAreReferenced) {
+        this.idReimbursementAreReferenced = idReimbursementAreReferenced;
     }
 
 

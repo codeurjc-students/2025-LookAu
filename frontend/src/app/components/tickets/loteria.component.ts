@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from '../../../services/account.service';
-import { TeamService } from '../../../services/team.service';
-import { TicketService } from '../../../services/ticket.service';
-import { PopUpService } from '../../../services/popup.service';
+import { AccountService } from '../../services/account.service';
+import { TeamService } from '../../services/team.service';
+import { TicketService } from '../../services/ticket.service';
+import { PopUpService } from '../../services/popup.service';
 
 
 @Component({

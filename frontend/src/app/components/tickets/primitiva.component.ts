@@ -1,19 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from '../../../services/account.service';
-import { TeamService } from '../../../services/team.service';
-import { TicketService } from '../../../services/ticket.service';
-import { PopUpService } from '../../../services/popup.service';
+import { AccountService } from '../../services/account.service';
+import { TeamService } from '../../services/team.service';
+import { TicketService } from '../../services/ticket.service';
+import { PopUpService } from '../../services/popup.service';
 
 
 @Component({
-  selector: 'app-gordo',
-  templateUrl: './gordo.component.html',
+  selector: 'app-primitiva',
+  templateUrl: './primitiva.component.html',
   standalone: false,
 })
 
-export class GordoComponent {
+export class PrimitivaComponent {
 
   @Input() isEditing: boolean = false;
   @Output() dataEmitter = new EventEmitter<any>();
@@ -28,7 +28,8 @@ export class GordoComponent {
   public num3: number = 0;
   public num4: number = 0;
   public num5: number = 0;
-  public key: number = 0; 
+  public num6: number = 0; 
+  public reimbursement: number = 0; 
 
   constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute, private popupService:PopUpService) {
     this.ticketId = Number(this.route.snapshot.paramMap.get('ticketId') || 0);
@@ -51,7 +52,8 @@ export class GordoComponent {
       this.ticketType.num3 = this.num3;
       this.ticketType.num4 = this.num4;
       this.ticketType.num5 = this.num5;
-      this.ticketType.num6 = this.key;
+      this.ticketType.num6 = this.num6;
+      this.reimbursement = this.reimbursement;
       
       this.dataEmitter.emit(this.ticketType);
     }else{
@@ -67,7 +69,8 @@ export class GordoComponent {
       Number(this.num3),
       Number(this.num4),
       Number(this.num5),
-      Number(this.key),
+      Number(this.num6),
+      Number(this.reimbursement),
     ];
 
     return numbers.every(num => !isNaN(num) && num >= 1 && num <= 49);
@@ -79,12 +82,14 @@ export class GordoComponent {
     this.ticketService.getTicketType(this.ticketId).subscribe(
       (response) => {
         this.ticketType = response;
+        
         this.num1 = response.num1;
         this.num2 = response.num2;
         this.num3 = response.num3;
         this.num4 = response.num4;
         this.num5 = response.num5;
-        this.key = response.key;
+        this.num6 = response.num6;
+        this.reimbursement = response.reimbursement;
 
       },
       (error) => {
@@ -92,7 +97,6 @@ export class GordoComponent {
       }
     );
   }
-
 
   /** Set TicketType Changes **/
   setApply(){

@@ -12,43 +12,45 @@ import { E } from '@angular/cdk/keycodes';
 
 
 @Component({
-  selector: 'app-newcardticketsteams',
-  templateUrl: './newCardTicketsTeams.component.html',
-  standalone: false
+  selector: 'app-cardticketspersonal',
+  templateUrl: './cardTicketsPersonal.component.html',
+  standalone: false,
 })
 
-export class NewCardTicketsTeamsComponent {
+export class CardTicketsPersonalComponent {
 
   public teamId: number = 0;
-
-  //ticketType
-  public paidByName: string = '';
-  public paidByPice: string = '';
-  public accounts: string[] = [];
-
-  public selectedTicketType: string = '';
-  public ticketTypes: string[] = ['Bonoloto', 'Eurodreams', 'Euromillones', 'El Gordo' , 'Lotería Nacional', 'Lototurf', 'La Primitiva', 'La Quiniela', 'Quinigol', 'Quintuple plus'];
+  public ticketId: number = 0;
   
-  public date: string = '';
-
-
   //tickets
   public ticket: any;
   public ticketType: any;
+  public accounts: any[] = [];
 
   //edit
+  public isEditing = false;
   public save = false;
 
 
   constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private ticketTypeService: TicketTypeService, private router: Router, private route:ActivatedRoute, private popupService: PopUpService) {
     this.authService.getCurrentUser();
-    
-    this.teamId = Number(this.route.snapshot.paramMap.get('teamId') || 0);
+
+    this.ticketId = Number(this.route.snapshot.paramMap.get('ticketId') || 0);
   }
 
   ngOnInit() {
     this.save = false;
     this.getTeamAccounts();
+    this.getTicket();  
+  }
+
+
+  ///////////////////
+  // DELETE TICKET //
+  ///////////////////
+
+  deleteTicket(){
+    this.popupService.openPopUpTwoDeleteTicket("Are you sure to delete the ticket?", this.ticketId, this.teamId);
   }
 
 
@@ -56,9 +58,9 @@ export class NewCardTicketsTeamsComponent {
   // EDIT TICKET //
   /////////////////
 
-  saveNewTicket(){
+  saveTicket(){
 
-    /*this.ticketService.saveNewTicket(this.ticket).subscribe(
+    this.ticketService.saveTicket(this.ticketId, this.ticket).subscribe(
       (response) => {
 
         //if the ticket type has any change
@@ -106,7 +108,7 @@ export class NewCardTicketsTeamsComponent {
     (error) => {
         this.router.navigate(['/error']);
       }
-    );*/
+    );
   }
 
   saveTicketBonoloto(){
@@ -220,11 +222,17 @@ export class NewCardTicketsTeamsComponent {
   }
 
   showIsSave(){
+    this.isEditing = false;
     this.save = true;
     this.popupService.openPopUp('Ticket successfully saved.');
   }
 
+  editTicket(){
+    this.isEditing = true;
+  }
+
   discardTicket(){
+    this.isEditing = false;
   }
 
   getDataTicketType(data: string) {
@@ -239,6 +247,21 @@ export class NewCardTicketsTeamsComponent {
   // VIEW TICKET //
   /////////////////
 
+  /** Get Ticket **/
+  getTicket() {
+    this.ticketService.getTicket(this.ticketId).subscribe(
+      (response) => {
+        this.ticket = response;
+        this.getTeamAccounts();
+        this.save = false;
+      },
+      (error) => {
+        this.router.navigate(['/error']);
+      }
+    );
+  }
+  
+
   /** Get Accounts **/
   getTeamAccounts(){
     this.teamService.getAccountsTeam(String(this.teamId)).subscribe(
@@ -250,18 +273,5 @@ export class NewCardTicketsTeamsComponent {
       }
     );
   }
-
-
-  /** Helper **/
-  formatSignedAmount(amount: number): string {
-    let formatted = amount.toFixed(2);
-    return amount > 0 ? `+ ${formatted}` : formatted;
-  }
-
-  onTicketTypeChange(type: string) {
-    console.log(type);
-    this.selectedTicketType = type;
-  }
-
   
 }

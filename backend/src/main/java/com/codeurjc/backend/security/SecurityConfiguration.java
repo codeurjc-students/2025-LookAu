@@ -100,10 +100,12 @@ public class SecurityConfiguration {
 
 				//TICKETS
 				.requestMatchers(HttpMethod.GET,"/api/tickets/**").permitAll()
+				.requestMatchers(HttpMethod.POST,"/api/tickets/**").permitAll()
 				.requestMatchers(HttpMethod.PUT,"/api/tickets/**").permitAll()
 				.requestMatchers(HttpMethod.DELETE,"/api/tickets/**").permitAll()
 				.requestMatchers(HttpMethod.GET,"/api/ticketTypes/**").permitAll()
 				.requestMatchers(HttpMethod.PUT,"/api/ticketTypes/**").permitAll()
+				.requestMatchers(HttpMethod.POST,"/api/ticketTypes/**").permitAll()
 				
 
 

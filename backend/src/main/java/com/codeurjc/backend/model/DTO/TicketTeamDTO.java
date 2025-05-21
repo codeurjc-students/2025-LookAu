@@ -3,6 +3,7 @@ package com.codeurjc.backend.model.DTO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.codeurjc.backend.model.Ticket;
@@ -19,7 +20,7 @@ public class TicketTeamDTO {
     private String paidByPice;  //also use for the total of the reimbursement
     private String ticketTypeId;
 
-    private Boolean balanced;   //helper var
+    private Boolean isBalanced;   //helper var
 
     private List<String> idAccountsAreBeingPaid;
 
@@ -36,10 +37,11 @@ public class TicketTeamDTO {
         this.claimedBy = ticket.getClaimedBy();
         this.paidByName = ticket.getPaidByName();
         this.paidByPice = String.valueOf(ticket.getPaidByPice());
-        this.balanced = ticket.isBalancedTicket();
+        this.isBalanced = ticket.isBalancedTicket();
         this.ticketTypeId = ticket.getTicketType()!=null? String.valueOf(ticket.getTicketType().getId()) : "";
         if (ticket.getIdAccountsAreBeingPaid() != null && !ticket.getIdAccountsAreBeingPaid().isEmpty()) {
             this.idAccountsAreBeingPaid = ticket.getIdAccountsAreBeingPaid().stream()
+                .filter(Objects::nonNull)
                 .map(Object::toString)
                 .collect(Collectors.toList());
         }else{
@@ -96,10 +98,10 @@ public class TicketTeamDTO {
         this.paidByPice = paidByPice;
     }
     public Boolean getBalanced() {
-        return balanced;
+        return isBalanced;
     }
-    public void setBalanced(Boolean balanced) {
-        this.balanced = balanced;
+    public void setBalanced(Boolean isBalanced) {
+        this.isBalanced = isBalanced;
     }
     public List<String> getIdAccountsAreBeingPaid() {
         return idAccountsAreBeingPaid;

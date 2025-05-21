@@ -10,6 +10,7 @@ export interface Ticket{
   ticketTypeId: string;
   
   idAccountsAreBeingPaid: string[];
+  idReimbursementAreReferenced: string[];
 
-  balanced: boolean;
+  isBalanced: boolean;
 }

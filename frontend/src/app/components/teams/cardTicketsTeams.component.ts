@@ -42,8 +42,8 @@ export class CardTicketsTeamsComponent {
 
   ngOnInit() {
     this.save = false;
-    this.getTicket();  
     this.getTeamAccounts();
+    this.getTicket();  
   }
 
 
@@ -254,7 +254,9 @@ export class CardTicketsTeamsComponent {
     this.ticketService.getTicket(this.ticketId).subscribe(
       (response) => {
         this.ticket = response;
+        this.getTeamAccounts();
         this.calculateDebts();
+        console.log(this.transactions);
         this.save = false;
       },
       (error) => {

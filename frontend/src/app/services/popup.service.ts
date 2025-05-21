@@ -6,6 +6,7 @@ import { AccountService } from './account.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { TicketService } from './ticket.service';
+import { TeamService } from './team.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { TicketService } from './ticket.service';
 
 export class PopUpService {
 
-  constructor(private dialog: MatDialog, private accountService: AccountService, private router: Router, private ticketService:TicketService) { }
+  constructor(private dialog: MatDialog, private accountService: AccountService, private router: Router, private ticketService:TicketService, private teamService:TeamService) { }
 
   openPopUp(message: string): void {
     this.dialog.open(PopUpDialogComponent, {
@@ -60,7 +61,11 @@ export class PopUpService {
         this.ticketService.deleteTicket(ticketId).subscribe(
           (response) => {
             this.openPopUp('Ticket successfully deleted.');
-            this.router.navigate(['/teams',teamId,'tickets']);
+            if(teamId>0)  {
+              this.router.navigate(['/teams',teamId,'tickets']);
+            } else{
+              this.router.navigate(['/personal','tickets']);
+            }    
           },
           (error) => {
             this.router.navigate(['/error']);
@@ -75,6 +80,24 @@ export class PopUpService {
 
 
   
+  openPopUpTwoDiscardTicket(message:string, teamId:number): void {
+    const dialogRef = this.dialog.open(PopUpDialogComponentTwo, {
+      width: '300px',
+      data: message
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') { 
+        if(teamId>0)  {
+          this.router.navigate(['/teams',teamId,'tickets']);
+        } else{
+          this.router.navigate(['/personal','tickets']);
+        }    
+      } else {
+        
+      }
+    });
+  }
 
 
   openPopUpTwoTickettype(message: string): any {
@@ -88,6 +111,31 @@ export class PopUpService {
         return true;
       } else {
         return false;
+      }
+    });
+  }
+
+  openPopUpTwoLeaveTeam(message: string, nickName:string, teamId:number): void{
+    const dialogRef = this.dialog.open(PopUpDialogComponentTwo, {
+      width: '300px',
+      data: message
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {        
+        
+        this.teamService.deleteAccountTeam(teamId, nickName).subscribe(
+          (response) => {
+            this.openPopUp('You left the team successfully.');
+            this.router.navigate(['/teams']);
+          },
+          (error) => {
+            this.router.navigate(['/error']);
+          }
+        );
+
+      } else {
+        
       }
     });
   }

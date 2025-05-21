@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -25,9 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codeurjc.backend.model.Account;
+import com.codeurjc.backend.model.Team;
+import com.codeurjc.backend.model.Ticket;
 import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.RegisterAccountDTO;
 import com.codeurjc.backend.model.DTO.TeamDTO;
+import com.codeurjc.backend.model.DTO.TicketTeamDTO;
 import com.codeurjc.backend.service.AccountService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -401,6 +405,67 @@ public class AccountRestController {
 			return ResponseEntity.notFound().build();
 		}
 
+	}
+
+
+	/*************************/
+	/******** TICKETS ********/
+	/*************************/
+
+
+	@Operation(summary = "Get all tickets account")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "404", description = "Team not found", content = @Content) })
+	@GetMapping("/ticketss")
+	public ResponseEntity<?> getAllTicketsAccount(HttpServletRequest request) {
+		
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+			return new ResponseEntity<>(accountService.getAllTicketAccount(accountOpp.get().getTickets()), HttpStatus.OK);
+		} else{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	// https://localhost:8443/api/teams/id/tickets?page=0&size=10
+	@Operation(summary = "Get more tickets of the team")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "404", description = "Team not found", content = @Content) })
+	@GetMapping("/tickets")
+	public ResponseEntity<Page<TicketTeamDTO>> getMoreAcconutsTeams(HttpServletRequest request,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(value = "date", defaultValue = "") String date,
+			@RequestParam(value = "type", defaultValue = "") String type) {
+		
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Page<TicketTeamDTO> lMyFriends;
+			List<Ticket> lTickets = accountOpp.get().getTickets();
+
+			if(type.equals("") && date.equals("")){	//if the filters are on
+				lMyFriends = accountService.getAccountTicketsPaged(lTickets, PageRequest.of(page, size));
+			}else{
+				lMyFriends = accountService.getAccountTicketsFilterPaged(lTickets, date, type, PageRequest.of(page, size));
+			}
+			
+			if (lMyFriends.getSize() > 0) {
+				return new ResponseEntity<>(lMyFriends, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+			
+		} else{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 

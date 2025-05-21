@@ -8,8 +8,12 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { EditProfileComponent } from './components/profile/editProfile.component';
 import { NewTeamComponent } from './components/teams/newTeam.component';
 import { CardTeamsComponent } from './components/teams/cardTeams.component';
-import { CardTicketsTeamsComponent } from './components/tickets/cardTicketsTeams.component';
-import { NewCardTicketsTeamsComponent } from './components/tickets/newCardTicketsTeams.component';
+import { CardTicketsTeamsComponent } from './components/teams/cardTicketsTeams.component';
+import { NewCardTicketsTeamsComponent } from './components/teams/newCardTicketsTeams.component';
+import { EditTeamComponent } from './components/teams/editTeam.component';
+import { CardTicketsPersonalComponent } from './components/personal/cardTicketsPersonal.component';
+import { CardPersonalComponent } from './components/personal/cardPersonal.component';
+import { NewCardTicketsPersonal } from './components/personal/newCardTicketsPersonal.component';
 
 
 const routes: Routes = [
@@ -17,7 +21,12 @@ const routes: Routes = [
   {path: 'teams/newteam', component: NewTeamComponent},
   {path: 'teams/:teamId/tickets/new', component: NewCardTicketsTeamsComponent},
   {path: 'teams/:teamId/tickets/:ticketId', component: CardTicketsTeamsComponent},
-  {path: 'teams/:id/tickets', component: CardTeamsComponent},
+  {path: 'teams/:teamId/edit', component: EditTeamComponent},
+  {path: 'teams/:id/tickets', component: CardTeamsComponent}, 
+
+  {path: 'personal/tickets', component: CardPersonalComponent},
+  {path: 'personal/tickets/new', component: NewCardTicketsPersonal},
+  {path: 'personal/tickets/:ticketId', component: CardTicketsPersonalComponent},
 
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},

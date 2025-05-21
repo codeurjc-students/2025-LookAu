@@ -7,21 +7,30 @@
         <!----- HEAD ----->
         <div class="row">
             <!-- Photo -->
-            <div class="col-3 d-flex justify-content-start align-items-center">
+            <div class="col-3 d-flex justify-content-start align-items-center" *ngIf="teamId>0">
                 <img class="circular-img ml-3"
-                src="http://localhost:4200/api/accounts/image?nickName=Alvarochi"
+                src="/api/teams/{{this.teamId}}/image"
+                alt="Card image cap"
+                style="width: 50px; height: 50px; border-radius: 50%;">            
+            </div>
+            <div class="col-3 d-flex justify-content-start align-items-center" *ngIf="teamId<=0">
+                <img class="circular-img ml-3"
+                src="/api/accounts/image/current"
                 alt="Card image cap"
                 style="width: 50px; height: 50px; border-radius: 50%;">            
             </div>
 
-            <!-- Name -->
-            <div class="col-6 d-flex align-items-center">
-                <h4 class="ticket-name-group1">URJC PlayGround</h4>
+            <!-- Name -->   
+            <div class="col-6 d-flex align-items-center" *ngIf="teamId>0">
+                <a href="/teams/{{this.teamId}}/tickets" class="ticket-name-group1" style="font-size:23px; font-weight: bold;">{{team.name}}</a>
+            </div>
+            <div class="col-6 d-flex align-items-center" *ngIf="teamId<=0">
+                <a href="/profile" class="ticket-name-group1" style="font-size:23px; font-weight: bold;">{{this.authService.getUserNickName()}}</a>
             </div>
 
             <!-- Edit Button -->
-            <div class="col-1 d-flex align-items-center">
-                <a class="nav-link nav-linkkk circle-linkkk" href="/editProfile">
+            <div class="col-1 d-flex align-items-center" *ngIf="teamId>0">
+                <a class="nav-link nav-linkkk circle-linkkk" href="/teams/{{this.teamId}}/edit">
                     <i class="header-profilek login-icon-color fas fa-pen"></i>
                 </a>
             </div>
@@ -48,7 +57,7 @@
                 </div>
 
                 <div class="col-6">
-                    <p class="ticket-name-group1 m-2">+ 34.57</p>
+                    <p class="ticket-name-group1 m-2">{{formatSignedAmount(total.cost)}} €</p>
                 </div>
             </div>
 
@@ -59,7 +68,7 @@
                 </div>
 
                 <div class="col-6">
-                    <p class="ticket-name-group1 m-2">- 8.19</p>
+                    <p class="ticket-name-group1 m-2">{{formatSignedAmount(total.income)}} €</p>
                 </div>
             </div>
 
@@ -70,7 +79,18 @@
                 </div>
 
                 <div class="col-6">
-                    <p class="ticket-name-group1 m-2">+ 26.52</p>
+                    <p class="ticket-name-group1 m-2">{{formatSignedAmount(total.income+total.cost)}} €</p>
+                </div>
+            </div>
+
+            <!-- Individual Profit -->
+            <div class="row" *ngIf="teamId>0">
+                <div class="col-6 barra-lateral-peque">
+                    <p class="ticket-name-group1 subtittle-tickets m-2">Individual profit</p>
+                </div>
+
+                <div class="col-6">
+                    <p class="ticket-name-group1 m-2">{{formatSignedAmount((total.income-total.cost)/accounts.length)}} €</p>
                 </div>
             </div>
         </div>
@@ -90,7 +110,7 @@
                 </div>
 
                 <div class="col-6">
-                    <p class="ticket-name-group1 m-2">7</p>
+                    <p class="ticket-name-group1 m-2">{{total.winning}}</p>
                 </div>
             </div>
 
@@ -101,7 +121,7 @@
                 </div>
 
                 <div class="col-6">
-                    <p class="ticket-name-group1 m-2">3</p>
+                    <p class="ticket-name-group1 m-2">{{total.nowinning}}</p>
                 </div>
             </div>
 
@@ -112,7 +132,7 @@
                 </div>
 
                 <div class="col-6">
-                    <p class="ticket-name-group1 m-2">2</p>
+                    <p class="ticket-name-group1 m-2">{{total.pending}}</p>
                 </div>
             </div>
 
@@ -126,16 +146,16 @@
 
 
         <!----- INDIVIDUAL RESUME ----->
-        <div class="card">
+        <!--div class="card"-->
 
-            <!-- Tittle -->
+            <!-- Tittle >
             <div class="row">
                 <div class="col-12 barra-abajo">
                     <h4 class="ticket-name-group1 profit-name-group1 m-2">INDIVIDUAL RESUME</h4>
                 </div>
-            </div>
+            </div-->
 
-            <!-- Total Cost -->
+            <!-- Total Cost >
             <div class="row">
                 <div class="col-6 barra-lateral-peque barra-abajo">
                     <p class="ticket-name-group1 subtittle-tickets m-2">Paco (me)</p>
@@ -144,9 +164,9 @@
                 <div class="col-6 barra-abajo">
                     <p class="ticket-name-group1 m-2">+ 13.57</p>
                 </div>
-            </div>
+            </div-->
 
-            <!-- Total Income -->
+            <!-- Total Income >
             <div class="row barra-abajo">
                 <div class="col-6 barra-lateral-peque">
                     <p class="ticket-name-group1 subtittle-tickets m-2">Alberto</p>
@@ -155,9 +175,9 @@
                 <div class="col-6">
                     <p class="ticket-name-group1 subtittle-tickets m-2">+ 12.45</p>
                 </div>
-            </div>
+            </div-->
 
-            <!-- Total Profit -->
+            <!-- Total Profit >
             <div class="row">
                 <div class="col-6 barra-lateral-peque">
                     <p class="ticket-name-group1 subtittle-tickets m-2">Diego</p>
@@ -167,7 +187,7 @@
                     <p class="ticket-name-group1 m-2">- 2.06</p>
                 </div>
             </div>
-        </div>
+        </div-->
         <!----- ENDINDIVIDUAL RESUME ----->
 
 
@@ -175,7 +195,7 @@
         <br>
 
 
-        <!-- PEOPLE OWES -->
+        <!-- PEOPLE OWES >
         <div class="card">
 
             <div class="row">
@@ -192,7 +212,7 @@
 
         </div>
 
-        <br>
+        <br-->
     </div>
 
     <div clas="col-2">

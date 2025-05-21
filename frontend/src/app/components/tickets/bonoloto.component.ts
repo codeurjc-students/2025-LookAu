@@ -1,19 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from '../../../services/account.service';
-import { TeamService } from '../../../services/team.service';
-import { TicketService } from '../../../services/ticket.service';
-import { PopUpService } from '../../../services/popup.service';
+import { AccountService } from '../../services/account.service';
+import { TeamService } from '../../services/team.service';
+import { TicketService } from '../../services/ticket.service';
+import { PopUpService } from '../../services/popup.service';
 
 
 @Component({
-  selector: 'app-primitiva',
-  templateUrl: './primitiva.component.html',
+  selector: 'app-bonoloto',
+  templateUrl: './bonoloto.component.html',
   standalone: false,
 })
 
-export class PrimitivaComponent {
+export class BonolotoComponent {
 
   @Input() isEditing: boolean = false;
   @Output() dataEmitter = new EventEmitter<any>();
@@ -23,15 +23,14 @@ export class PrimitivaComponent {
   public ticketType: any = {};
   public ticketId: number = 0;
 
-  public num1: number = 0;
-  public num2: number = 0;
-  public num3: number = 0;
-  public num4: number = 0;
-  public num5: number = 0;
-  public num6: number = 0; 
-  public reimbursement: number = 0; 
+  public num1: string = '0';
+  public num2: string = '0';
+  public num3: string = '0';
+  public num4: string = '0';
+  public num5: string = '0';
+  public num6: string = '0'; 
 
-  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute, private popupService:PopUpService) {
+  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, public ticketService: TicketService, private router: Router, private route:ActivatedRoute, private popupService: PopUpService) {
     this.ticketId = Number(this.route.snapshot.paramMap.get('ticketId') || 0);
   }
 
@@ -53,7 +52,6 @@ export class PrimitivaComponent {
       this.ticketType.num4 = this.num4;
       this.ticketType.num5 = this.num5;
       this.ticketType.num6 = this.num6;
-      this.reimbursement = this.reimbursement;
       
       this.dataEmitter.emit(this.ticketType);
     }else{
@@ -70,7 +68,6 @@ export class PrimitivaComponent {
       Number(this.num4),
       Number(this.num5),
       Number(this.num6),
-      Number(this.reimbursement),
     ];
 
     return numbers.every(num => !isNaN(num) && num >= 1 && num <= 49);
@@ -82,14 +79,13 @@ export class PrimitivaComponent {
     this.ticketService.getTicketType(this.ticketId).subscribe(
       (response) => {
         this.ticketType = response;
-        
+
         this.num1 = response.num1;
         this.num2 = response.num2;
         this.num3 = response.num3;
         this.num4 = response.num4;
         this.num5 = response.num5;
         this.num6 = response.num6;
-        this.reimbursement = response.reimbursement;
 
       },
       (error) => {
@@ -98,9 +94,9 @@ export class PrimitivaComponent {
     );
   }
 
+
   /** Set TicketType Changes **/
   setApply(){
     this.isApply = false;
   }
-  
 }

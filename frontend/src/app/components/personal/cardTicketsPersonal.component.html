@@ -1,0 +1,342 @@
+<div class="row ml-5">
+
+    <div class="col-8">
+
+
+        <!-- BUTTONS -->
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6 d-flex justify-content-end align-items-center m-0">
+                            <button class="btnnn btn-dark" style="border-radius: 4px;" *ngIf="!isEditing"
+                                (click)="deleteTicket()">
+                                Delete <i class="fas fa-trash ml-2"></i>
+                            </button>
+                            <button class="btnnn btn-dark" style="border-radius: 4px;" *ngIf="isEditing"
+                                (click)="discardTicket()">
+                                Discard <i class="fas fa-xmark ml-2"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-6 d-flex justify-content-start align-items-center m-0">
+                            <button class="btnnn btn-dark" style="border-radius: 4px;" *ngIf="!isEditing"
+                                (click)="editTicket()">
+                                Edit <i class="fas fa-pen ml-2"></i>
+                            </button>
+                            <button class="btnnn btn-dark" style="border-radius: 4px;" *ngIf="isEditing"
+                                (click)="saveTicket()">
+                                Save <i class="fas fa-save ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+
+        <!-- TICKET -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-6 barra-lateral-peque">
+
+                                <br>
+
+                                <!-- Title -->
+                                <div class="row mt-2 barra-abajo">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+
+                                        <div class="row d-flex justify-content-center">
+                                            <h5 class="ticket-name-group1 mx-1"><i class="fa-regular fa-lightbulb"></i>
+                                            </h5>
+                                            <h5 class="ticket-name-group1 ml-2"><b>Ticket Data</b></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <br>
+                                    <br>
+
+                                </div>
+
+                                <br>
+
+                                <!-- Ticket Type -->
+                                <div class="row mt-2">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+
+                                        <div class="row mb-2">
+                                            <div class="col-12">
+
+                                                <div class="row align-items-center">
+                                                    <p class="subtittle-tickets">Ticket Type:</p>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card-ticket">
+
+                                                            <p class="card-status ml-3">{{ this.ticket.type }}</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <!-- Date -->
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <div class="row align-items-center">
+                                                    <p class="subtittle-tickets">Date:</p>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card-ticket">
+                                                            <ng-container *ngIf="!isEditing; else editDateTemplate">
+                                                                <p class="card-status ml-3">{{ ticket.date }}</p>
+                                                            </ng-container>
+
+                                                            <ng-template #editDateTemplate>
+                                                                <div class="col-12">
+                                                                    <input type="date" class="form-control"
+                                                                        [(ngModel)]="ticket.date">
+                                                                </div>
+                                                            </ng-template>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <br>
+                                <br>
+                                <br>
+
+                            </div>
+                            <!-------- END 1º COL -------->
+
+
+
+
+
+
+                            <!-------- 2º COL -------->
+                            <div class="col-6 barra-lateral-peque">
+                                <br>
+
+                                <!-- Title -->
+                                <div class="row mt-2 barra-abajo">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+
+                                        <div class="row d-flex justify-content-center">
+                                            <h5 class="ticket-name-group1 mx-1"><i class="fas fa-chart-line"></i></h5>
+                                            <h5 class="ticket-name-group1 ml-2"><b>Ticket Status</b></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+
+                                    <br>
+                                    <br>
+
+                                </div>
+
+                                <br>
+
+                                <!-- Status -->
+                                <div class="row my-2">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+
+
+                                        <div class="row" *ngIf="!isEditing">
+                                            <div class="col-12">
+
+                                                <div class="row align-items-center">
+                                                    <p class="subtittle-tickets">Status:</p>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div
+                                                            class="card-ticket justify-content-center align-items-center">
+                                                            <p class="card-status ml-3">{{this.ticket.statusName}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <!-- Award -->
+                                <div class="row" *ngIf="this.ticket.statusName==='Winning' && !isEditing">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <div class="row align-items-center">
+                                                    <p class="subtittle-tickets">Award:</p>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div
+                                                            class="card-ticket justify-content-center align-items-center">
+                                                            <p class="card-status ml-3">+ {{ this.ticket.statusPrice |
+                                                                number:'1.2-2' }} €</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <br *ngIf="!isEditing">
+                                <br *ngIf="!isEditing">
+
+                                <!-- Paid By -->
+                                <div class="row mb-2">
+
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+                                        <div class="row">
+
+                                            <div class="col-12">
+
+                                                <div class="row align-items-center">
+                                                    <p class="subtittle-tickets">Price:</p>
+                                                </div>
+
+                                                <div class="card-ticket">
+
+                                                    <ng-container *ngIf="!isEditing; else editPaidByTemplate">
+                                                        <p class="card-status m-0 ml-4">- {{ this.ticket.paidByPice |
+                                                            number:'1.2-2' }} €</p>
+                                                    </ng-container>
+
+                                                    <ng-template #editPaidByTemplate>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="card-ticket">
+                                                                    <input type="text" class="form-control ml-3"
+                                                                        [(ngModel)]="ticket.paidByPice" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <br>
+
+                            </div>
+                            <!-------- END 1º COL -------->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+
+
+            <br>
+            <br>
+        </div>
+
+
+        <!-- TICKET TYPE -->
+        <div [ngSwitch]="this.ticket.type">
+            <div *ngSwitchCase="'Bonoloto'">
+                <app-bonoloto [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-bonoloto>
+            </div>
+            <div *ngSwitchCase="'Eurodreams'">
+                <app-eurodreams [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-eurodreams>
+            </div>
+            <div *ngSwitchCase="'Euromillones'">
+                <app-euromillones [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-euromillones>
+            </div>
+            <div *ngSwitchCase="'El Gordo'">
+                <app-gordo [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-gordo>
+            </div>
+            <div *ngSwitchCase="'Lototurf'">
+                <app-lototurf [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-lototurf>
+            </div>
+            <div *ngSwitchCase="'La Primitiva'">
+                <app-primitiva [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-primitiva>
+            </div>
+            <div *ngSwitchCase="'Quíntuple plus'">
+                <app-quintuple [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-quintuple>
+            </div>
+            <div *ngSwitchCase="'El Quinigol'">
+                <app-quinigol [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-quinigol>
+            </div>
+            <div *ngSwitchCase="'La Quiniela'">
+                <app-quiniela [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-quiniela>
+            </div>
+            <div *ngSwitchCase="'Lotería Nacional'">
+                <app-loteria [isEditing]="isEditing" (dataEmitter)="getDataTicketType($event)"></app-loteria>
+            </div>
+        </div>
+
+        <br>
+    </div>
+
+    <!------------------------->
+    <!------- INDIVIDUAL ------>
+    <!------------------------->
+    <div class="col-4">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <app-individual></app-individual>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br>
+<br>

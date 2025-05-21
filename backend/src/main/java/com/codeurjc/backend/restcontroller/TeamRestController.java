@@ -68,19 +68,111 @@ public class TeamRestController {
 	/*********************************/
 	/******** TEAMS INTERFACE ********/
 	/*********************************/
+
+	@Operation(summary = "Get a team")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Searching friends", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@GetMapping("/{teamId}")
+	public ResponseEntity<?> updateTeam(HttpServletRequest request, @PathVariable Long teamId) throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Optional<Team> teamOpp = teamService.getById(teamId);
+
+			if (teamOpp.isPresent()) {
+				return ResponseEntity.ok(new TeamDTO(teamOpp.get()));
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@Operation(summary = "Update a team")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Searching friends", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@PutMapping("/{teamId}")
+	public ResponseEntity<?> getTeam(HttpServletRequest request, @PathVariable Long teamId, @RequestBody String name) throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+		String[] parts = name.split("\"");
+
+
+		if (accountOpp.isPresent()) {
+
+			Optional<Team> teamOpp = teamService.getById(teamId);
+
+			if (teamOpp.isPresent()) {
+
+				Team team = teamOpp.get();
+				team.setName(parts[3]);
+				teamService.setTeam(team);
+
+				return ResponseEntity.ok(null);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@Operation(summary = "Delete a account from a team")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Searching friends", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
+	@DeleteMapping("/{teamId}")
+	public ResponseEntity<?> deleteAccountTeam(HttpServletRequest request, @PathVariable Long teamId, @RequestParam String nickName) throws IOException, SQLException {
+
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Optional<Team> teamOpp = teamService.getById(teamId);
+
+			if (teamOpp.isPresent()) {
+
+				Team team = teamOpp.get();
+				team.getAccounts().removeIf(account -> nickName.equals(account.getNickName()));
+				teamService.setTeam(team);
+
+				Account account = accountOpp.get();
+				account.getTeams().removeIf(teamRemove -> team.getName().equals(teamRemove.getName()));
+				accountService.setAccount(account);
+
+				if(team.getAccounts().size()==0){
+					teamService.deleteTeam(team);
+				}
+
+				return ResponseEntity.ok(null);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 	
 	@Operation(summary = "Search a team")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Searching friends", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
 			@ApiResponse(responseCode = "403", description = "forbiden o dont have permissions", content = @Content) })
-	@GetMapping("/{searchTem}")
-	public ResponseEntity<?> searchFriend(HttpServletRequest request, @PathVariable String searchTem) throws IOException, SQLException {
+	@GetMapping("/")
+	public ResponseEntity<?> searchFriend(HttpServletRequest request, @RequestParam String searchTerm) throws IOException, SQLException {
 
 		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
 
 		if (accountOpp.isPresent()) {
-			return ResponseEntity.ok(teamService.getSearchingTeams(searchTem, accountOpp.get().getTeams()));
+			return ResponseEntity.ok(teamService.getSearchingTeams(searchTerm, accountOpp.get().getTeams()));
 		} else {
 			return ResponseEntity.notFound().build();
 		}
@@ -192,7 +284,7 @@ public class TeamRestController {
 	}
 
 
-	@Operation(summary = "Get all account of the team")
+	@Operation(summary = "Get all accounts of the team")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
@@ -204,6 +296,34 @@ public class TeamRestController {
 
 		if (accountOpp.isPresent()) {
 			return ResponseEntity.ok(teamService.getAccountsTeam(Long.valueOf(idTeam)));		
+		} else{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+
+	@Operation(summary = "Get all tickets of the team")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Found more accounts", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Account.class)) }),
+			@ApiResponse(responseCode = "404", description = "Team not found", content = @Content) })
+	@GetMapping("/{teamId}/ticketss")
+	public ResponseEntity<?> getAllAcconutsTeams(HttpServletRequest request, @PathVariable String teamId) {
+		
+		Optional<Account> accountOpp = accountService.getByEmail(request.getUserPrincipal().getName());
+
+		if (accountOpp.isPresent()) {
+
+			Long idTeamLong = Long.valueOf(teamId);
+        	Optional<Team> teamOpp = teamService.getById(idTeamLong);
+
+			if(teamOpp.isPresent()){
+				return new ResponseEntity<>(teamService.getAllTicketTeams(teamOpp.get().getTickets()), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+
+			
 		} else{
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

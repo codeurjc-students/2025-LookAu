@@ -22,24 +22,28 @@ import { MatButtonModule } from '@angular/material/button';
 import { PopUpDialogComponentTwo } from './components/popUp/popupTwo_dialog.component';
 import { NewTeamComponent } from './components/teams/newTeam.component';
 import { CardTeamsComponent } from './components/teams/cardTeams.component';
-import { CardTicketsTeamsComponent } from './components/tickets/cardTicketsTeams.component';
+import { CardTicketsTeamsComponent } from './components/teams/cardTicketsTeams.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
-import { BonolotoComponent } from './components/tickets/ticketsType/bonoloto.component';
-import { EurodreamsComponent } from './components/tickets/ticketsType/eurodreams.component';
-import { EuromillonesComponent } from './components/tickets/ticketsType/euromillones.component';
-import { GordoComponent } from './components/tickets/ticketsType/gordo.component';
-import { LoteriaComponent } from './components/tickets/ticketsType/loteria.component';
-import { LototurfComponent } from './components/tickets/ticketsType/lototurf.component';
-import { PrimitivaComponent } from './components/tickets/ticketsType/primitiva.component';
-import { QuintupleComponent } from './components/tickets/ticketsType/quintuple.component';
-import { QuinielaComponent } from './components/tickets/ticketsType/quiniela.component';
-import { QuinigolComponent } from './components/tickets/ticketsType/quinigol.component';
+import { BonolotoComponent } from './components/tickets/bonoloto.component';
+import { EurodreamsComponent } from './components/tickets/eurodreams.component';
+import { EuromillonesComponent } from './components/tickets/euromillones.component';
+import { GordoComponent } from './components/tickets/gordo.component';
+import { LoteriaComponent } from './components/tickets/loteria.component';
+import { LototurfComponent } from './components/tickets/lototurf.component';
+import { PrimitivaComponent } from './components/tickets/primitiva.component';
+import { QuintupleComponent } from './components/tickets/quintuple.component';
+import { QuinielaComponent } from './components/tickets/quiniela.component';
+import { QuinigolComponent } from './components/tickets/quinigol.component';
 import { TicketTypeService } from './services/ticketType.service';
-import { NewCardTicketsTeamsComponent } from './components/tickets/newCardTicketsTeams.component';
+import { NewCardTicketsTeamsComponent } from './components/teams/newCardTicketsTeams.component';
+import { EditTeamComponent } from './components/teams/editTeam.component';
+import { CardTicketsPersonalComponent } from './components/personal/cardTicketsPersonal.component';
+import { CardPersonalComponent } from './components/personal/cardPersonal.component';
+import { NewCardTicketsPersonal } from './components/personal/newCardTicketsPersonal.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +72,10 @@ import { NewCardTicketsTeamsComponent } from './components/tickets/newCardTicket
     QuinielaComponent,
     QuinigolComponent,
     NewCardTicketsTeamsComponent,
+    EditTeamComponent,
+    CardTicketsPersonalComponent,
+    CardPersonalComponent,
+    NewCardTicketsPersonal,
 
   ], 
   imports: [

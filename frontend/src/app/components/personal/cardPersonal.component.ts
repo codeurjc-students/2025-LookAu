@@ -6,14 +6,13 @@ import { TeamService } from '../../services/team.service';
 
 
 @Component({
-  selector: 'app-cardteams',
-  templateUrl: './cardTeams.component.html',
+  selector: 'app-cardpersonal',
+  templateUrl: './cardPersonal.component.html',
   standalone: false,
 })
 
-export class CardTeamsComponent {
+export class CardPersonalComponent {
 
-  public idTeam: number = 0;
   public show: boolean = false;
   
   //search bar
@@ -35,17 +34,13 @@ export class CardTeamsComponent {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.idTeam = params['id']; 
-    });
-    
     this.getTickets();  
   }
   
 
   /** New Ticket **/
   newTicket(){
-    this.router.navigate(['/teams/',this.idTeam,'tickets','new']);
+    this.router.navigate(['/personal/','tickets','new']);
   }
 
 
@@ -69,7 +64,7 @@ export class CardTeamsComponent {
 
   /** Get Team Tickets **/
   getTickets() {
-    this.teamService.getTeamTickets(0, this.idTeam, this.selectedDate, this.selectedTicketType).subscribe(
+    this.accountService.getAccountTickets(0, this.selectedDate, this.selectedTicketType).subscribe(
       (response) => {
         this.tickets = response.content;
         this.isLastTicketsRequest = response.last;
@@ -82,7 +77,7 @@ export class CardTeamsComponent {
 
   getMoreTickets() {
     this.loadingTickets = true; //show the spinner
-    this.teamService.getTeamTickets(this.indexTickets, this.idTeam, this.selectedDate, this.selectedTicketType).subscribe(
+    this.accountService.getAccountTickets(this.indexTickets, this.selectedDate, this.selectedTicketType).subscribe(
       (response) => {
         this.tickets = this.tickets.concat(response.content);
         this.moreTickets = !response.last;

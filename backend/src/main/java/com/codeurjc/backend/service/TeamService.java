@@ -45,6 +45,10 @@ public class TeamService {
         teamRepository.save(team);
     }
 
+    public void deleteTeam(Team team){
+        teamRepository.delete(team);
+    }
+
     public List<String> getAccountsTeam(Long id){
         Optional<Team> teamOpp = this.getById(id);
 
@@ -71,14 +75,22 @@ public class TeamService {
         }
     }
 
+    
+    public List<TicketTeamDTO> getAllTicketTeams(List<Ticket> lTeams) {
+
+        if(!lTeams.isEmpty()){
+            return lTeams.stream().map(this::convertToTicketTeamDTO).collect(Collectors.toList());
+        }else{
+            return new ArrayList<TicketTeamDTO>();
+        }
+    }
+
 
     /***********************/
     /******* TICKETS *******/
     /***********************/
     public Page<TicketTeamDTO> getTeamTicketsPaged(String teamId, Pageable pageable) {
         Long idTeamLong = Long.valueOf(teamId);
-
-        Optional<Team> test = getById(idTeamLong);
     
         return getById(idTeamLong)
             .map(team -> {
@@ -91,20 +103,17 @@ public class TeamService {
                     .limit(pageable.getPageSize())
                     .collect(Collectors.toList());
     
-                    List<TicketTeamDTO> dtoList = new ArrayList<>();
+                List<TicketTeamDTO> dtoList = new ArrayList<>();
 
-                    for (Ticket ticket : pagedTickets) {
-                        try {
-                            // Intentamos convertir el ticket a DTO
-
-                            TicketTeamDTO ticketTeamDTO = this.convertToTicketTeamDTO(ticket);
-                            dtoList.add(ticketTeamDTO);  // Si la conversión es exitosa, lo añadimos a la lista
-                        } catch (Exception e) {
-                            // En caso de error en la conversión, logueamos el error para saber qué ha fallado
-                            System.err.println("Error al convertir el ticket: " + ticket);
-                            e.printStackTrace(); // Imprimimos la excepción para obtener más detalles
-                        }
+                for (Ticket ticket : pagedTickets) {
+                    try {
+                        TicketTeamDTO ticketTeamDTO = this.convertToTicketTeamDTO(ticket);
+                        dtoList.add(ticketTeamDTO);  
+                    } catch (Exception e) {
+                        System.err.println("Error al convertir el ticket: " + ticket);
+                        e.printStackTrace();
                     }
+                }
     
                 return new PageImpl<>(dtoList, pageable, tickets.size());
             })
