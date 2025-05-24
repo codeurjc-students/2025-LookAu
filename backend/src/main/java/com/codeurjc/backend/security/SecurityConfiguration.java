@@ -106,6 +106,9 @@ public class SecurityConfiguration {
 				.requestMatchers(HttpMethod.GET,"/api/ticketTypes/**").permitAll()
 				.requestMatchers(HttpMethod.PUT,"/api/ticketTypes/**").permitAll()
 				.requestMatchers(HttpMethod.POST,"/api/ticketTypes/**").permitAll()
+
+				//API LOTERIAS
+				.requestMatchers(HttpMethod.POST,"/api/loteria/**").permitAll()
 				
 
 

@@ -54,7 +54,7 @@ export class LoginComponent {
           }
         });
 
-        this.authService.getCurrentUser();
+        //this.authService.getCurrentUser();
       },
       error: (err: HttpErrorResponse) => {
 

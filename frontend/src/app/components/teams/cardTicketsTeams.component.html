@@ -202,8 +202,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="card-ticket justify-content-center align-items-center">
-                                                    <p class="card-status ml-3">+ {{ this.ticket.statusPrice |
-                                                        number:'1.2-2' }} €</p>
+                                                    <p class="card-status ml-3">{{ formatSignedAmountString(ticket.statusPrice)}} €</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,7 +268,7 @@
                                                     </div>
 
                                                     <div class="col-4 p-0">
-                                                        <p class="card-status m-0 ml-4">- {{ this.ticket.paidByPice | number:'1.2-2' }} €</p>
+                                                        <p class="card-status m-0 ml-4">{{ formatSignedAmountStringNegative(this.ticket.paidByPice)}} €</p>
                                                     </div>
                                                 </div>
                                             </ng-container>
@@ -328,8 +327,11 @@
 
                                                     <ng-container *ngIf="!isEditing; else editPaidByTemplate">
                                                         <div class="row">
-                                                            <div class="col-12 barra-lateral-clarita ">
+                                                            <div class="col-12 barra-lateral-clarita " *ngIf="this.ticket.claimedBy">
                                                                 <p class="card-status m-0 ml-3">{{this.ticket.claimedBy}}</p>
+                                                            </div>
+                                                            <div class="col-12 barra-lateral-clarita " *ngIf="!this.ticket.claimedBy">
+                                                                <p class="card-status m-0 ml-3">Edit to choose a friend!</p>
                                                             </div>
                                                         </div>
                                                     </ng-container>
@@ -405,7 +407,7 @@
                                                 <div class="card-ticket">
 
                                                     
-                                                    <p class="card-status m-0 ml-3">{{ tx.amount | number:'1.2-2' }} €</p>
+                                                    <p class="card-status m-0 ml-3">{{ formatSignedAmountNoSign(tx.amount) }} €</p>
                                                         
                                                     
                                                     <!--div class="row "> Poner el col de arriba a 12

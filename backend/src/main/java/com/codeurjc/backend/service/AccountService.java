@@ -1,5 +1,5 @@
 package com.codeurjc.backend.service;
-import com.codeurjc.backend.security.CSRFHandlerConfiguration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -9,13 +9,11 @@ import org.springframework.stereotype.Service;
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.model.Team;
 import com.codeurjc.backend.model.Ticket;
-import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.TeamDTO;
 import com.codeurjc.backend.model.DTO.TicketTeamDTO;
 import com.codeurjc.backend.repository.AccountRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -24,14 +22,9 @@ import java.util.stream.Collectors;
 @Service
 public class AccountService {
 
-    private final CSRFHandlerConfiguration CSRFHandlerConfiguration;
-
     @Autowired
     private AccountRepository accountRepository;
 
-    AccountService(CSRFHandlerConfiguration CSRFHandlerConfiguration) {
-        this.CSRFHandlerConfiguration = CSRFHandlerConfiguration;
-    } 
 
     public Optional<Account> getByEmail(String email){
         return accountRepository.findByEmail(email);

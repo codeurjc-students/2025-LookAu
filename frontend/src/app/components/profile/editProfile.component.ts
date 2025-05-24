@@ -96,6 +96,7 @@ export class EditProfileComponent {
 
   deleteMyFriends(nickName: string) {
     this.popUpService.openPopUpTwoDeletefriend("Are you sure to delete " + nickName + " from friends?", nickName);
+    this.router.navigate(['/editProfile']);
   }
 
   saveData() {

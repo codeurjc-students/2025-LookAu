@@ -1,5 +1,6 @@
 package com.codeurjc.backend.model.types;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -187,5 +188,28 @@ public class Quiniela extends TicketType {
 
     public void setBet8List(List<String> bett) {
         this.bet8 = bett.toArray(new String[0]);
+    }
+
+    public List<List<String>> getAllCombinateBet() {
+        List<List<String>> lAllBets = new ArrayList<>();
+
+        lAllBets.add(combinateLastsListString(getBet1List()));
+        lAllBets.add(combinateLastsListString(getBet2List()));
+        lAllBets.add(combinateLastsListString(getBet3List()));
+        lAllBets.add(combinateLastsListString(getBet4List()));
+        lAllBets.add(combinateLastsListString(getBet5List()));
+        lAllBets.add(combinateLastsListString(getBet6List()));
+        lAllBets.add(combinateLastsListString(getBet7List()));
+        lAllBets.add(combinateLastsListString(getBet8List()));
+
+        return lAllBets;
+    }
+
+    private List<String> combinateLastsListString(List<String> lBet){
+        List<String> auxList = new ArrayList<>(lBet);
+        String combiate = auxList.get(auxList.size() - 2) + auxList.get(auxList.size() - 1);
+        auxList.remove(auxList.size() - 1);
+        auxList.set(auxList.size() - 1, combiate);
+        return auxList;
     }
 }

@@ -76,177 +76,192 @@
           
         <br>
 
-        <!--------------------->
-        <!------- GRUOPS ------>
-        <!--------------------->
+        <!-------------------->
+        <!------- TEAMS ------>
+        <!-------------------->
 
         <div class="container">
 
             <!-- My friends -->
             <div class="row">
                 <div class="col-12">
-                    
-
-                    <div id="moreTickets" *ngIf="!this.isTicketsEmpty()">
-
-                        <div class="row" *ngFor="let ticket of tickets">
-                            <div class="col-12">
-
-                                <!------ REIMBURSEMENT TICKET ------>
-                                <div class="row" *ngIf="ticket.statusName=='Reimbursement'; else elseStatusName">
-
-                                    <div *ngIf="show">
-
-                                        <div class="col-2"></div>
-
-                                        <div class="col-8">
-                                            <div class="card">
-                                                <div class="row">
-                                                    <div class="col-10 d-flex justify-content-center align-items-center">
-                                                        <div class="col-1"></div>
-                                                        <div class="col-1">
-                                                            <i class="fa-solid fa-money-bill-transfer"
-                                                                style="color: rgb(92, 159, 99);"></i>
-                                                        </div>
-
-                                                        <div
-                                                            class="col-10 d-flex justify-content-center align-items-center my-3">
-                                                            <p class="m-0"
-                                                                style="color: rgb(170, 170, 170); font-size: 15px;">
-                                                                {{ticket.paidByName}} has made a reimbursement to
-                                                                {{ticket.claimedBy}} of {{formatSignedAmountReimbursement(ticket.statusPrice)}} € </p>
-                                                        </div>
-
-                                                    </div>
-
-                                                    
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
 
 
+                    <!-- SPINNER LOADIN-->
+                    <div *ngIf="isLoding; else name">
+                        <div class="row" >
+                            <div class="col-12 d-flex justify-content-center align-items-center my-5">
+                                <div class="spinner-border text-light" role="status">
+                                    <img src="assets/others/loading_duckzoro.gif" alt="Loading..." style="width: 150px; height: 90px;" />
+                                    <!--img src="assets/others/loading_dance.gif" alt="Loading..." style="width: 280px; height: 290px;" /-->
                                 </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                <div class="mb-1">
-                                    <br>
-                                </div>
 
-                                <!------ STANDART TICKET ------>
-                                <ng-template #elseStatusName>
+                    <!-- DATA -->
+                    <ng-template #name>
+                        <div id="moreTickets" *ngIf="!this.isTicketsEmpty()">
 
-                                    <div class="row">
-                                        <div class="col-1"></div>
+                            <div class="row" *ngFor="let ticket of tickets">
+                                <div class="col-12">
 
-                                        <!-- Gruop -->
-                                        <div class="col-10">
-                                            <a class="card"
-                                                [routerLink]="['/teams', this.idTeam, 'tickets', ticket.id]">
-                                                <div class="row">
+                                    <!------ REIMBURSEMENT TICKET ------>
+                                    <div class="row" *ngIf="ticket.statusName=='Reimbursement'; else elseStatusName">
 
-                                                    <div
-                                                        class="col-1 d-flex align-items-center justify-content-center p-0 m-0">
-                                                        <i class="fa-solid fa-ticket m-0 p-0 ml-4"
-                                                            style="color: rgb(92, 140, 159);"></i>
-                                                    </div>
+                                        <div *ngIf="show">
 
-                                                    <!-- Photo -->
-                                                    <div
-                                                        class="col-2 d-flex align-items-center justify-content-center barra-lateral p-0 m-0">
-                                                        <h5 class="name-groups m-0 p-0 mr-4">{{ticket.date}}</h5>
-                                                    </div>
+                                            <div class="col-2"></div>
 
-                                                    <!-- Information -->
-                                                    <div class="col-9 m-0">
-                                                        <div class="row">
-
+                                            <div class="col-8">
+                                                <div class="card">
+                                                    <div class="row">
+                                                        <div class="col-10 d-flex justify-content-center align-items-center">
+                                                            <div class="col-1"></div>
+                                                            <div class="col-1">
+                                                                <i class="fa-solid fa-money-bill-transfer"
+                                                                    style="color: rgb(92, 159, 99);"></i>
+                                                            </div>
 
                                                             <div
-                                                                class="col-3 d-flex align-items-center justify-content-center">
-                                                                <h5 class="name-groups m-0">{{ticket.type}}</h5>
-                                                            </div>
-
-                                                            <div class="col-3 my-3">
-                                                                <div class="row">
-                                                                    <div
-                                                                        class="col-12 d-flex align-items-center justify-content-center">
-                                                                        <p class="m-0"
-                                                                            style="color: rgb(112, 112, 112); font-size: 13.5px;">
-                                                                            Status:</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div
-                                                                        class="col-12 d-flex align-items-center justify-content-center">
-                                                                        <h5 class="name-groups m-0">
-                                                                            {{formatSignedAmount(ticket.statusPrice)}}</h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-1"></div>
-
-                                                            <!-- Group price -->
-                                                            <div class="col-5 ">
-                                                                <div class="card card-price m-4">
-
-                                                                    <div
-                                                                        class="row d-flex align-items-center justify-content-center m-2">
-                                                                        <div class="col-3"
-                                                                            *ngIf="ticket?.statusName==='Winning'">
-                                                                            <i
-                                                                                class="login-icon-color fas fa-trophy"></i>
-                                                                        </div>
-                                                                        <div class="col-3"
-                                                                            *ngIf="ticket?.statusName==='Not Winning'">
-                                                                            <i class="login-icon-color fa-solid fa-ban"
-                                                                                style="color: rgb(112, 112, 112); font-size: 13.5px;"></i>
-                                                                        </div>
-                                                                        <div class="col-3"
-                                                                            *ngIf="ticket?.statusName==='Pending'">
-                                                                            <i class="login-icon-color fa-solid fa-hourglass-half"
-                                                                                style="color: rgb(112, 112, 112); font-size: 13.5px;"></i>
-                                                                        </div>
-                                                                        <div class="col-9">
-                                                                            <p class="caddprice mb-0">
-                                                                                {{ticket.statusName}}</p>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
+                                                                class="col-10 d-flex justify-content-center align-items-center my-3">
+                                                                <p class="m-0"
+                                                                    style="color: rgb(170, 170, 170); font-size: 15px;">
+                                                                    {{ticket.paidByName}} has made a reimbursement to
+                                                                    {{ticket.claimedBy}} of {{formatSignedAmountReimbursement(ticket.statusPrice)}} € </p>
                                                             </div>
 
                                                         </div>
-                                                    </div>
 
+                                                        
+
+                                                    </div>
                                                 </div>
-                                            </a>
+                                            </div>
 
                                         </div>
 
+
                                     </div>
-                                </ng-template>
 
+                                    <div class="mb-1">
+                                        <br>
+                                    </div>
+
+                                    <!------ STANDART TICKET ------>
+                                    <ng-template #elseStatusName>
+
+                                        <div class="row">
+                                            <div class="col-1"></div>
+
+                                            <!-- Gruop -->
+                                            <div class="col-10">
+                                                <a class="card"
+                                                    [routerLink]="['/teams', this.teamId, 'tickets', ticket.id]">
+                                                    <div class="row">
+
+                                                        <div
+                                                            class="col-1 d-flex align-items-center justify-content-center p-0 m-0">
+                                                            <i class="fa-solid fa-ticket m-0 p-0 ml-4"
+                                                                style="color: rgb(92, 140, 159);"></i>
+                                                        </div>
+
+                                                        <!-- Photo -->
+                                                        <div
+                                                            class="col-2 d-flex align-items-center justify-content-center barra-lateral p-0 m-0">
+                                                            <h5 class="name-groups m-0 p-0 mr-4">{{ticket.date}}</h5>
+                                                        </div>
+
+                                                        <!-- Information -->
+                                                        <div class="col-9 m-0">
+                                                            <div class="row">
+
+
+                                                                <div
+                                                                    class="col-3 d-flex align-items-center justify-content-center">
+                                                                    <h5 class="name-groups m-0">{{ticket.type}}</h5>
+                                                                </div>
+
+                                                                <div class="col-3 my-3">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-12 d-flex align-items-center justify-content-center">
+                                                                            <p class="m-0"
+                                                                                style="color: rgb(112, 112, 112); font-size: 13.5px;">
+                                                                                Status:</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-12 d-flex align-items-center justify-content-center">
+                                                                            <h5 class="name-groups m-0" *ngIf="ticket.statusName==='Winning'">{{formatSignedAmount(ticket.statusPrice)}}</h5>
+                                                                            <h5 class="name-groups m-0" *ngIf="ticket.statusName==='Not Winning'">{{formatSignedAmount(ticket.statusPrice)}}</h5>
+                                                                            <h5 class="name-groups m-0" *ngIf="ticket.statusName!='Winning' && ticket.statusName!='Not Winning'">{{formatSignedAmount(ticket.statusPrice)}}</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-1"></div>
+
+                                                                <!-- Group price -->
+                                                                <div class="col-5 ">
+                                                                    <div class="card card-price m-4">
+
+                                                                        <div
+                                                                            class="row d-flex align-items-center justify-content-center m-2">
+                                                                            <div class="col-3"
+                                                                                *ngIf="ticket?.statusName==='Winning'">
+                                                                                <i
+                                                                                    class="login-icon-color fas fa-trophy"></i>
+                                                                            </div>
+                                                                            <div class="col-3"
+                                                                                *ngIf="ticket?.statusName==='Not Winning'">
+                                                                                <i class="login-icon-color fa-solid fa-ban"
+                                                                                    style="color: rgb(112, 112, 112); font-size: 13.5px;"></i>
+                                                                            </div>
+                                                                            <div class="col-3"
+                                                                                *ngIf="ticket?.statusName==='Pending'">
+                                                                                <i class="login-icon-color fa-solid fa-hourglass-half"
+                                                                                    style="color: rgb(112, 112, 112); font-size: 13.5px;"></i>
+                                                                            </div>
+                                                                            <div class="col-9">
+                                                                                <p class="caddprice mb-0">
+                                                                                    {{ticket.statusName}}</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </a>
+
+                                            </div>
+
+                                        </div>
+                                    </ng-template>
+
+                                </div>
+                            </div>
+
+                            <div class="row d-flex justify-content-center align-items-center"
+                                *ngIf="!this.isLastTicketsRequest">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <a class="btnnnn btn-dark" (click)="getMoreTickets()">More</a>
+                                </div>
                             </div>
                         </div>
+                
 
-                        <div class="row d-flex justify-content-center align-items-center"
-                            *ngIf="!this.isLastTicketsRequest">
+                        <div class="row" *ngIf="this.isTicketsEmpty()">
                             <div class="col-12 d-flex justify-content-center align-items-center">
-                                <a class="btnnnn btn-dark" (click)="getMoreTickets()">More</a>
+                                <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No tickets yet!</p>
                             </div>
                         </div>
-                    </div>
-
-
-
-                    <div class="row" *ngIf="this.isTicketsEmpty()">
-                        <div class="col-12 d-flex justify-content-center align-items-center">
-                            <p style="color: rgb(112, 112, 112); font-size: 13.5px;">No tickets yet!</p>
-                        </div>
-                    </div>
+                    </ng-template>
 
                 </div>
             </div>

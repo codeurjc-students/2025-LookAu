@@ -62,6 +62,8 @@ export class CardTicketsTeamsComponent {
 
   saveTicket(){
 
+    this.ticket.statusName = "Pending";
+
     this.ticketService.saveTicket(this.ticketId, this.ticket).subscribe(
       (response) => {
 
@@ -255,8 +257,6 @@ export class CardTicketsTeamsComponent {
       (response) => {
         this.ticket = response;
         this.getTeamAccounts();
-        this.calculateDebts();
-        console.log(this.transactions);
         this.save = false;
       },
       (error) => {
@@ -271,6 +271,8 @@ export class CardTicketsTeamsComponent {
     this.teamService.getAccountsTeam(String(this.teamId)).subscribe(
       (response) => {
         this.accounts = response;
+        this.calculateDebts();
+
       },
       (error) => {
         this.router.navigate(['/error']);
@@ -291,17 +293,22 @@ export class CardTicketsTeamsComponent {
   }
 
   genereteNotWinningTransactions(participants: string[], buyer: string, ticketPrice: number){
+
+    let num = participants.length;
+
     participants.forEach(participant => {
 
       if(participant!=buyer){
         this.transactions.push({
           from: participant,
           to: buyer,
-          amount: Math.round(ticketPrice) / participants.length,
+          amount: ticketPrice / num,
         });
       }
       
     });
+
+    console.log(this.transactions);
     
   }
 
@@ -339,7 +346,7 @@ export class CardTicketsTeamsComponent {
       rawTransactions.push({
         from: debtors[i].person,
         to: creditors[j].person,
-        amount: Math.round(debtAmount * 100) / 100,
+        amount: (debtAmount * 100) / 100,
       });
   
       debtors[i].amount -= debtAmount;
@@ -364,7 +371,7 @@ export class CardTicketsTeamsComponent {
     this.transactions = Object.values(grouped)
       .map(t => ({
         ...t,
-        amount: Math.round(t.amount * 100) / 100,
+        amount: (t.amount * 100) / 100,
       }))
       .filter(t => t.amount > 0);
   }
@@ -373,9 +380,44 @@ export class CardTicketsTeamsComponent {
 
   /** Helper **/
   formatSignedAmount(amount: number): string {
-    let formatted = amount.toFixed(2);
+    const formatted = amount
+      .toFixed(2) 
+      .replace('.', ',') 
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+
     return amount > 0 ? `+ ${formatted}` : formatted;
   }
+
+  formatSignedAmountString(amountString: string): string {
+    let amount = Number(amountString);
+    const formatted = amount
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+
+    return amount > 0 ? `+ ${formatted}` : formatted;
+  }
+
+  formatSignedAmountStringNegative(amountString: string): string {
+    let amount = Number(amountString);
+    const formatted = amount 
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    return `- ${formatted}`; 
+  }
+
+
+  formatSignedAmountNoSign(amount: number): string {
+    const formatted = amount 
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    return `${formatted}`; 
+  }
+
   
 }
 

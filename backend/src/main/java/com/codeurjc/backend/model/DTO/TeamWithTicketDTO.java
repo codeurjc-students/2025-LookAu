@@ -1,7 +1,5 @@
 package com.codeurjc.backend.model.DTO;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -10,10 +8,7 @@ import java.util.stream.Collectors;
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.model.Team;
 import com.codeurjc.backend.model.Ticket;
-import com.codeurjc.backend.model.TicketType;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 public class TeamWithTicketDTO {
 

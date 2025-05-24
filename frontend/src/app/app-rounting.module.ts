@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'teams/:teamId/tickets/new', component: NewCardTicketsTeamsComponent},
   {path: 'teams/:teamId/tickets/:ticketId', component: CardTicketsTeamsComponent},
   {path: 'teams/:teamId/edit', component: EditTeamComponent},
-  {path: 'teams/:id/tickets', component: CardTeamsComponent}, 
+  {path: 'teams/:teamId/tickets', component: CardTeamsComponent}, 
 
   {path: 'personal/tickets', component: CardPersonalComponent},
   {path: 'personal/tickets/new', component: NewCardTicketsPersonal},

@@ -1,5 +1,4 @@
 package com.codeurjc.backend.service;
-import com.codeurjc.backend.security.CSRFHandlerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -9,10 +8,8 @@ import org.springframework.stereotype.Service;
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.model.Team;
 import com.codeurjc.backend.model.Ticket;
-import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.TeamDTO;
 import com.codeurjc.backend.model.DTO.TicketTeamDTO;
-import com.codeurjc.backend.repository.AccountRepository;
 import com.codeurjc.backend.repository.TeamRepository;
 
 
@@ -26,16 +23,10 @@ import java.util.stream.Collectors;
 @Service
 public class TeamService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+
     @Autowired
     private TeamRepository teamRepository;
 
-
-    private AccountService accountService;
-
-    TeamService(CSRFHandlerConfiguration CSRFHandlerConfiguration) {
-    } 
 
     public Optional<Team> getById(Long id){
         return teamRepository.findById(id);

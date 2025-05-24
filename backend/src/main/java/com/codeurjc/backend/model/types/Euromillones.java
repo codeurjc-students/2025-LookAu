@@ -51,6 +51,10 @@ public class Euromillones extends TicketType {
     public List<Integer> getNumList(){
         return Arrays.asList(this.num1, this.num2, this.num3, this.num4, this.num5);
     }
+    public List<Integer> getStarList(){
+        return Arrays.asList(this.star1, this.star2);
+    }
+
     public void setNumList(List<Integer> numbers){
         this.num1 = numbers.get(0);
         this.num2 = numbers.get(1);

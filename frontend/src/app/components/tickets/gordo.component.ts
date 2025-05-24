@@ -51,7 +51,7 @@ export class GordoComponent {
       this.ticketType.num3 = this.num3;
       this.ticketType.num4 = this.num4;
       this.ticketType.num5 = this.num5;
-      this.ticketType.num6 = this.key;
+      this.ticketType.key = this.key;
       
       this.dataEmitter.emit(this.ticketType);
     }else{

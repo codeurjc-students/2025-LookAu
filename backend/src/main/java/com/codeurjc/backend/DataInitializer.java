@@ -14,22 +14,17 @@ import com.codeurjc.backend.model.*;
 import com.codeurjc.backend.model.types.*;
 import com.codeurjc.backend.repository.*;
 import com.codeurjc.backend.repository.types.*;
-import com.codeurjc.backend.service.AccountService;
 
 import jakarta.annotation.PostConstruct;
+
 
 @Service
 public class DataInitializer {
 
     @Autowired
-    private AccountService accountService;
-
-    @Autowired
     private AccountRepository accountRepository;
     @Autowired
     private TeamRepository teamRepository;
-    @Autowired
-    private TicketTypeRepository ticketTypeRepository;
     @Autowired
     private TicketRepository ticketRepository;
 
@@ -59,6 +54,7 @@ public class DataInitializer {
     @PostConstruct
     public void init() throws Exception {
 
+
         /****************************/
         /****************************/ 
         /********** CREATE **********/
@@ -70,7 +66,7 @@ public class DataInitializer {
         /*********************/
 
         Bonoloto b1 = new Bonoloto(new ArrayList<>(Arrays.asList(1, 14, 34, 22, 23, 33)));
-        Bonoloto b2 = new Bonoloto(new ArrayList<>(Arrays.asList(5, 12, 25, 30, 35, 40)));
+            Bonoloto b2 = new Bonoloto(new ArrayList<>(Arrays.asList(2, 3, 18, 20, 37, 31)));
         Bonoloto b3 = new Bonoloto(new ArrayList<>(Arrays.asList(10, 15, 20, 25, 30, 35)));
 
         Eurodreams ed1 = new Eurodreams(new ArrayList<>(Arrays.asList(44, 7, 23, 14, 6, 19, 10)));
@@ -103,34 +99,34 @@ public class DataInitializer {
         Quintuple qt3 = new Quintuple(new ArrayList<>(Arrays.asList(7, 8, 9, 10, 11, 12)));
 
         Quiniela q1 = new Quiniela(
-            new ArrayList<>(Arrays.asList("1", "X", "2", "2", "X", "1", "2", "1", "X", "2", "1", "X", "1", "2", "M")),
-            new ArrayList<>(Arrays.asList("X", "2", "1", "1", "X", "2", "1", "2", "X", "1", "2", "1", "X", "2", "1")),
-            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "1", "X", "2", "X", "1", "X", "1", "2", "1", "X", "2")),
-            new ArrayList<>(Arrays.asList("1", "X", "2", "X", "1", "2", "2", "1", "X", "2", "X", "1", "2", "1", "0")),
-            new ArrayList<>(Arrays.asList("X", "2", "1", "2", "X", "1", "1", "2", "X", "1", "2", "X", "1", "2", "M")),
-            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "2")),
-            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "0")),
-            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "1"))
+            new ArrayList<>(Arrays.asList("1", "2", "2", "2", "2", "1", "2", "2", "1", "1", "2", "1", "1", "1", "0", "2")),
+            new ArrayList<>(Arrays.asList("X", "2", "1", "1", "X", "2", "1", "2", "X", "1", "2", "1", "X", "2", "1", "1")),
+            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "1", "X", "2", "X", "1", "X", "1", "2", "1", "X", "2", "2")),
+            new ArrayList<>(Arrays.asList("1", "X", "2", "X", "1", "2", "2", "1", "X", "2", "X", "1", "2", "1", "0", "M")),
+            new ArrayList<>(Arrays.asList("X", "2", "1", "2", "X", "1", "1", "2", "X", "1", "2", "X", "1", "2", "M", "2")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "2", "1")),
+            new ArrayList<>(Arrays.asList("2", "1", "X", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "0", "0")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "1", "M"))
         );
         Quiniela q2 = new Quiniela(
-            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "M")),
-            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "1")),
-            new ArrayList<>(Arrays.asList("1", "2", "X", "2", "X", "1", "1", "2", "X", "1", "X", "2", "1", "X", "0")),
-            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "2")),
-            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "0")),
-            new ArrayList<>(Arrays.asList("1", "2", "X", "2", "X", "1", "1", "2", "X", "1", "X", "2", "1", "X", "M")),
-            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "1")),
-            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "2"))
+            new ArrayList<>(Arrays.asList("1", "2", "2", "2", "2", "1", "2", "2", "1", "1", "2", "1", "1", "1", "0", "2")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "1", "1")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "2", "X", "1", "1", "2", "X", "1", "X", "2", "1", "X", "0", "0")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "2", "2")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "0", "M")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "2", "X", "1", "1", "2", "X", "1", "X", "2", "1", "X", "M", "0")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "1", "2", "X", "1", "2", "X", "1", "2", "X", "1", "2", "1", "2")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "X", "1", "2", "X", "2", "1", "2", "X", "1", "2", "X", "2", "0"))
         );
         Quiniela q3 = new Quiniela(
-            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "2")),
-            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "M")),
-            new ArrayList<>(Arrays.asList("2", "X", "1", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "0")),
-            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "M")),
-            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "1")),
-            new ArrayList<>(Arrays.asList("2", "X", "1", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "2")),
-            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "0")),
-            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "M"))
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "2", "0")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "M", "1")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "0", "2")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "M", "M")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "1", "0")),
+            new ArrayList<>(Arrays.asList("2", "X", "1", "2", "X", "1", "1", "X", "2", "1", "2", "X", "1", "2", "2", "1")),
+            new ArrayList<>(Arrays.asList("1", "2", "X", "1", "X", "2", "2", "X", "1", "2", "X", "1", "2", "1", "0", "2")),
+            new ArrayList<>(Arrays.asList("X", "1", "2", "X", "1", "2", "1", "2", "X", "1", "X", "2", "1", "X", "M", "M"))
         );
 
 
@@ -241,7 +237,7 @@ public class DataInitializer {
         ticket10.setTicketType(qg1);
 
         //team1
-        Ticket ticket11 = new Ticket("Winning", "LaTinyLoco", 1.50, "LaTinyLoco", LocalDate.of(2021, 3, 27));
+        Ticket ticket11 = new Ticket("Pending", "LaTinyLoco", 1.50, "", LocalDate.of(2025, 5, 22));
         ticket11.setBalancedTicket(true);
         ticket11.setIdAccountsAreBeingPaid(new ArrayList<>(Arrays.asList(account2.getId(), account3.getId())));
         ticket11.setTeam(team1);

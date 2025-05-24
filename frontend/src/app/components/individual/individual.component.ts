@@ -119,9 +119,13 @@ export class IndividualComponent {
     });
   }
 
+
   /** Helper **/
   formatSignedAmount(amount: number): string {
-    let formatted = amount.toFixed(2);
+    let formatted = amount
+      .toFixed(2) 
+      .replace('.', ',') 
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
     return amount > 0 ? `+ ${formatted}` : formatted;
   }
 

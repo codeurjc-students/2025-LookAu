@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codeurjc.backend.model.Account;
-import com.codeurjc.backend.model.Team;
 import com.codeurjc.backend.model.Ticket;
 import com.codeurjc.backend.model.DTO.AccountDTO;
 import com.codeurjc.backend.model.DTO.RegisterAccountDTO;

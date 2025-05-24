@@ -36,7 +36,8 @@ export class PopUpService {
       if (result === 'confirm') {        
         this.accountService.deleteFriend(nickName).subscribe(
           (response) => {
-            
+            this.router.navigate(['/profile']);
+            this.openPopUp(nickName+' is no longer your friend :(')
           },
           (error) => {
             this.router.navigate(['/error']);

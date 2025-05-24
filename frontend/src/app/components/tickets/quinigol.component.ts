@@ -62,7 +62,7 @@ export class QuinigolComponent {
           }
         }
 
-        this.ticketType['bet' + i] = bet;      
+        this.ticketType['bet' + (i+1)] = bet;      
       }
       this.dataEmitter.emit(this.ticketType);
     }else{

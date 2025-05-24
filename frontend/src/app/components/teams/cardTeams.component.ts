@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { TeamService } from '../../services/team.service';
+import { LoteriaService } from '../../services/loteria.service';
 
 
 @Component({
@@ -13,8 +14,9 @@ import { TeamService } from '../../services/team.service';
 
 export class CardTeamsComponent {
 
-  public idTeam: number = 0;
+  public teamId: number = 0;
   public show: boolean = false;
+  public isLoding = false;
   
   //search bar
   selectedDate: Date = new Date(NaN);
@@ -30,22 +32,30 @@ export class CardTeamsComponent {
   public moreTickets: boolean = false; //ajax
 
 
-  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, private router: Router, private route:ActivatedRoute) {
+  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, private router: Router, private route:ActivatedRoute, private loteriaService: LoteriaService) {
+    this.teamId = Number(this.route.snapshot.paramMap.get('teamId') || 0);
+
     this.authService.getCurrentUser();
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.idTeam = params['id']; 
-    });
-    
-    this.getTickets();  
+
+    this.isLoding = true;
+
+    this.loteriaService.checkAndUpdateTickets(this.teamId).subscribe(
+      (response) => {
+        this.getTickets();  
+      },
+      (error) => {
+        this.router.navigate(['/error']);
+      }
+    );
   }
   
 
   /** New Ticket **/
   newTicket(){
-    this.router.navigate(['/teams/',this.idTeam,'tickets','new']);
+    this.router.navigate(['/teams/',this.teamId,'tickets','new']);
   }
 
 
@@ -69,10 +79,11 @@ export class CardTeamsComponent {
 
   /** Get Team Tickets **/
   getTickets() {
-    this.teamService.getTeamTickets(0, this.idTeam, this.selectedDate, this.selectedTicketType).subscribe(
+    this.teamService.getTeamTickets(0, this.teamId, this.selectedDate, this.selectedTicketType).subscribe(
       (response) => {
         this.tickets = response.content;
         this.isLastTicketsRequest = response.last;
+        this.isLoding = false;
       },
       (error) => {
         this.router.navigate(['/error']);
@@ -82,7 +93,7 @@ export class CardTeamsComponent {
 
   getMoreTickets() {
     this.loadingTickets = true; //show the spinner
-    this.teamService.getTeamTickets(this.indexTickets, this.idTeam, this.selectedDate, this.selectedTicketType).subscribe(
+    this.teamService.getTeamTickets(this.indexTickets, this.teamId, this.selectedDate, this.selectedTicketType).subscribe(
       (response) => {
         this.tickets = this.tickets.concat(response.content);
         this.moreTickets = !response.last;
@@ -108,10 +119,15 @@ export class CardTeamsComponent {
     return amount > 0 ? `+ ${formatted}` : formatted;
   }
 
-  formatSignedAmount(amountSring: string): string {
-    let amount = Number(amountSring);
-    const formatted = amount.toFixed(2);
+  formatSignedAmount(amountString: string): string {
+    let amount = Number(amountString);
+    const formatted = amount
+      .toFixed(2) // dos decimales
+      .replace('.', ',') // cambia el punto decimal por coma
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // añade puntos como separadores de miles
+
     return amount > 0 ? `+ ${formatted}` : formatted;
   }
+
 
 }

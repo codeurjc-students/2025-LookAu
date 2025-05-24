@@ -46,7 +46,7 @@ public class Quintuple extends TicketType {
     }
 
     public List<Integer> getNumList(){
-        return Arrays.asList(this.num1, this.num2, this.num3, this.num4, this.num5, this.num6);
+        return Arrays.asList(this.num1, this.num2, this.num3, this.num4, this.num5);
     }
     public void setNumList(List<Integer> numbers){
         this.num1 = numbers.get(0);

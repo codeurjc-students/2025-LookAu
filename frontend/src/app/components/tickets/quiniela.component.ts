@@ -45,7 +45,7 @@ export class QuinielaComponent {
     }
 
     //inicialize bet matrix
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 16; i++) {
       this.buttonMatrix[i] = [];
       for (let j = 0; j < 9; j++) {
         this.buttonMatrix[i][j] = [false, false, false, false]; // 
@@ -63,7 +63,7 @@ export class QuinielaComponent {
       for (let i = 1; i < 9; i++) {
         let bet: string[] = [];
 
-        for (let j = 0; j < 15; j++) {
+        for (let j = 0; j < 16; j++) {
           buttonIndex = this.buttonMatrix[j][i].findIndex(val => val === true);
 
           if (buttonIndex !== -1) {
@@ -84,7 +84,7 @@ export class QuinielaComponent {
     let eachBetWellFilled: boolean[] = new Array(8).fill(true);  //comprueba si todas están rellenadas
 
     for (let i = 1; i < 9; i++) {
-      for (let j = 0; j < 15; j++) {
+      for (let j = 0; j < 16; j++) {
         if(!this.buttonMatrix[j][i].some(val => val)){  //if the bet has any box no filled 
           eachBetWellFilled[i-1] = false;     
         }
@@ -113,7 +113,7 @@ export class QuinielaComponent {
           bet = this.ticketType['bet'+i];
           if(bet){
             
-            for(let j=0; j<15; j++){
+            for(let j=0; j<16; j++){
 
               buttonIndex = (j < 14) ? ['1', 'X', '2'].indexOf(bet[j]) : ['0', '1', '2', 'M'].indexOf(bet[j]);
               if (buttonIndex !== -1) {
@@ -140,7 +140,7 @@ export class QuinielaComponent {
 
   deleteRow(j: number){
     this.isApply = false;
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 16; i++) {
       this.buttonMatrix[i][j] = [false, false, false, false];
     }
   }

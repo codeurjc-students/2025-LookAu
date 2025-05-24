@@ -60,6 +60,8 @@ export class CardTicketsPersonalComponent {
 
   saveTicket(){
 
+    this.ticket.statusName = "Pending";
+
     this.ticketService.saveTicket(this.ticketId, this.ticket).subscribe(
       (response) => {
 
@@ -272,6 +274,53 @@ export class CardTicketsPersonalComponent {
         this.router.navigate(['/error']);
       }
     );
+  }
+
+
+  /** Helper **/
+  formatSignedAmount(amount: number): string {
+    const formatted = amount
+      .toFixed(2) 
+      .replace('.', ',') 
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+
+    return amount > 0 ? `+ ${formatted}` : formatted;
+  }
+
+  formatSignedAmountString(amountString: string): string {
+    let amount = Number(amountString);
+    const formatted = amount
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+
+    return amount > 0 ? `+ ${formatted}` : formatted;
+  }
+
+  formatSignedAmountStringNegative(amountString: string): string {
+    let amount = Number(amountString);
+    const formatted = amount 
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    return `- ${formatted}`; 
+  }
+
+
+  formatSignedAmountStringRest(amount1String: string, amount2String:string): string {
+
+    let amount1 = Number(amount1String);
+    let amount2 = Number(amount2String);
+
+    let amouont = amount1 - amount2;
+
+    const formatted = amouont 
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    return `+ ${formatted}`; 
   }
   
 }

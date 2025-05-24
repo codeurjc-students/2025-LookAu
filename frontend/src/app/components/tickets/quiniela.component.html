@@ -49,14 +49,16 @@
                         <tr *ngFor="let row of buttonMatrix; let i = index">
                             <td *ngFor="let cell of row; let j = index">
                                 <ng-container *ngIf="j === 0; else buttonsTemplate">
-                                    <div class="d-flex justify-content-center align-items-center"  style="color: #a1a0a0">
+                                    <div class="d-flex justify-content-center align-items-center"  style="color: #a1a0a0" *ngIf="i<=14">
                                         <strong>Match {{ i + 1 }}</strong>
                                     </div>
                                 </ng-container>
+
+                                <br *ngIf="i==13">
                                 
                                 <ng-template #buttonsTemplate>
                                     <div class="d-flex justify-content-center" style="color: #a1a0a0">
-                                        <button *ngFor="let label of (i === 14 ? ['0', '1', '2', 'M'] : ['1', 'X', '2']); let k = index" 
+                                        <button *ngFor="let label of (i >= 14 ? ['0', '1', '2', 'M'] : ['1', 'X', '2']); let k = index" 
                                                 class="btn btn-sm mx-1" 
                                                 [ngClass]="{'btn-outline-dark': !buttonMatrix[i][j][k], 'btn-dark': buttonMatrix[i][j][k]}" 
                                                 (click)="toggleButton(i, j, k)"

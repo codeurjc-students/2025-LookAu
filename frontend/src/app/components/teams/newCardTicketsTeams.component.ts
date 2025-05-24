@@ -75,7 +75,7 @@ export class NewCardTicketsTeamsComponent {
     this.ticket.date = this.date;
     this.ticket.type = this.selectedTicketType;
 
-    if(this.paidByName && this.paidByPice && this.selectedTicketType && this.date){
+    if(this.paidByName && this.paidByPice && this.selectedTicketType && this.date && this.ticketType){
      
       switch (this.ticket.type) {
         case 'Bonoloto':
@@ -113,7 +113,7 @@ export class NewCardTicketsTeamsComponent {
       }
         
     }else{
-      this.popupService.openPopUp('Fill all the boxes.');
+      this.popupService.openPopUp('Fill all the boxes or apply the bet ticket.');
     }
   }
 

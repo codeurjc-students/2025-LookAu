@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { TeamService } from '../../services/team.service';
+import { LoteriaService } from '../../services/loteria.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { TeamService } from '../../services/team.service';
 export class CardPersonalComponent {
 
   public show: boolean = false;
+  public isLoding: boolean = false;
   
   //search bar
   selectedDate: Date = new Date(NaN);
@@ -29,12 +31,22 @@ export class CardPersonalComponent {
   public moreTickets: boolean = false; //ajax
 
 
-  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, private router: Router, private route:ActivatedRoute) {
+  constructor(public authService: AuthService, public accountService: AccountService,public teamService: TeamService, private router: Router, private route:ActivatedRoute, private loteriaService:LoteriaService) {
     this.authService.getCurrentUser();
   }
 
   ngOnInit() {
-    this.getTickets();  
+
+    this.isLoding = true;
+
+    this.loteriaService.checkAndUpdateTicketsPersonal().subscribe(
+      (response) => {
+        this.getTickets();
+      },
+      (error) => {
+        this.router.navigate(['/error']);
+      }
+    );
   }
   
 
@@ -68,6 +80,7 @@ export class CardPersonalComponent {
       (response) => {
         this.tickets = response.content;
         this.isLastTicketsRequest = response.last;
+        this.isLoding = false;
       },
       (error) => {
         this.router.navigate(['/error']);
@@ -100,13 +113,13 @@ export class CardPersonalComponent {
   formatSignedAmountReimbursement(amountSring: string): string {
     let amount = Number(amountSring);
     const formatted = Math.abs(amount).toFixed(2);
-    return amount > 0 ? `+ ${formatted}` : formatted;
+    return amount > 0 ? `${formatted}` : formatted;
   }
 
   formatSignedAmount(amountSring: string): string {
     let amount = Number(amountSring);
     const formatted = amount.toFixed(2);
-    return amount > 0 ? `+ ${formatted}` : formatted;
+    return ` ${formatted}` ;
   }
 
 }

@@ -1,5 +1,6 @@
 package com.codeurjc.backend.model.types;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -150,5 +151,18 @@ public class Quinigol extends TicketType {
 
     public void setBet6List(List<String> bett) {
         this.bet6 = bett.toArray(new String[0]);
+    }
+
+    public List<String> getCombinatedBet(){
+
+        List<String> lAux = new ArrayList<>();
+        lAux.add(getBet1()[0]+getBet1()[1]);
+        lAux.add(getBet2()[0]+getBet2()[1]);
+        lAux.add(getBet3()[0]+getBet3()[1]);
+        lAux.add(getBet4()[0]+getBet4()[1]);
+        lAux.add(getBet5()[0]+getBet5()[1]);
+        lAux.add(getBet6()[0]+getBet6()[1]);
+
+        return lAux;
     }
 }
