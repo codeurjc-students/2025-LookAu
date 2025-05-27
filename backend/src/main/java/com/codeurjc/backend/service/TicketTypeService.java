@@ -2,7 +2,7 @@ package com.codeurjc.backend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.codeurjc.backend.model.Ticket;
 import com.codeurjc.backend.model.TicketType;
 import com.codeurjc.backend.repository.TicketTypeRepository;
 
@@ -30,5 +30,9 @@ public class TicketTypeService {
 
     public void deleteTicketType(TicketType ticketType){
         tickectTypeRepository.delete(ticketType);
+    }
+
+    public TicketType getOne(){
+        return tickectTypeRepository.findAll().get(0);
     }
 }

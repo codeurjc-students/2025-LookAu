@@ -31,4 +31,9 @@ public class TicketService {
     public void deleteTicket(Ticket ticket){
         tickectRepository.delete(ticket);
     }
+
+    public Ticket getOne(){
+        return tickectRepository.findAll().get(0);
+    }
+    
 }

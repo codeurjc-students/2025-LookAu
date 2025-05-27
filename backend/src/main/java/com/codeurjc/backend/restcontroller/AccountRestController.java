@@ -2,11 +2,9 @@ package com.codeurjc.backend.restcontroller;
 
 import java.io.IOException;
 import java.net.URI;
-import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,20 +56,21 @@ public class AccountRestController {
 	/******** PROFILES DETAILS ********/
 	/**********************************/
 
-	@GetMapping("/currentAccount")
-	public ResponseEntity<Optional<Account>> currentAccount(HttpServletRequest request) {
-		Principal principal = request.getUserPrincipal();
-		if (principal == null) {
-			return ResponseEntity.notFound().build();
-		}
+	// @GetMapping("/currentAccount")
+	// public ResponseEntity<Optional<Account>> currentAccount(HttpServletRequest request) {
+	// 	Principal principal = request.getUserPrincipal();
+		
+	// 	if (principal == null) {
+	// 		return ResponseEntity.notFound().build();
+	// 	}
 
-		try {
-			Optional<Account> currentAccount = accountService.getByEmail(request.getUserPrincipal().getName());
-			return ResponseEntity.ok(currentAccount);
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
+	// 	try {
+	// 		Optional<Account> currentAccount = accountService.getByEmail(request.getUserPrincipal().getName());
+	// 		return ResponseEntity.ok(currentAccount);
+	// 	} catch (NoSuchElementException e) {
+	// 		return ResponseEntity.notFound().build();
+	// 	}
+	// }
 
 
 	@Operation(summary = "Get account information")

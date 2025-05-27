@@ -36,7 +36,7 @@ public class LoginRestController {
 			@CookieValue(name = "accessToken", required = false) String accessToken,
 			@CookieValue(name = "refreshToken", required = false) String refreshToken,
 			@RequestBody LoginRequest loginRequest) {
-		
+		System.out.println("LoginRequest recibido: " + loginRequest);
 		return userService.login(loginRequest, accessToken, refreshToken);
 	}
 

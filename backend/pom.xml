@@ -44,6 +44,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+			<exclusion>
+				<groupId>org.junit.vintage</groupId>
+				<artifactId>junit-vintage-engine</artifactId>
+			</exclusion>
+		</exclusions>
 		</dependency>
 
 		<!-- DB -->
@@ -150,7 +156,7 @@
 		</dependency>
 
 
-		<!-- WebDriverManager (para auto-configurar el driver) -->
+		<!-- WebDriverManager -->
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
@@ -158,13 +164,30 @@
 		</dependency>
 
 
-
-		<!--MAIL>
+		<!-- Testing -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-			<version>3.2.3</version>
-		</dependency-->
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.11.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>5.4.0</version> 
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>5.4.0</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
 
 	</dependencies>
 
@@ -173,6 +196,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.5.2</version>
 			</plugin>
 		</plugins>
 	</build>

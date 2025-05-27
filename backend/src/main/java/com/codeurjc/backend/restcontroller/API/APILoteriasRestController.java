@@ -363,16 +363,4 @@ public class APILoteriasRestController {
 				return null;
 		}
 	}
-
-
-	//get tstring date for the api search
-	private String getStringBetDate(Ticket tickets){
-
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-		String fechaFormateada = tickets.getDate().format(formatter);
-		return fechaFormateada;
-	}
-
-
-	
 }

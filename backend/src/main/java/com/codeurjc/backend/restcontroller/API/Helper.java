@@ -904,7 +904,6 @@ public class Helper {
 				
 				
 				/** CHECK THE RESULTS **/
-				Double totalPrice = 0.0;
 				int coincidences = 0;
 				boolean isPleno15 = false;
 				
