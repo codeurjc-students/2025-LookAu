@@ -248,7 +248,7 @@
                                                                     </div>
 
                                                                     <div class="col-1 d-flex align-items-center">
-                                                                        <a (click)="this.sendRequestFriend(account)">
+                                                                        <a name="sendFriendRequest" (click)="this.sendRequestFriend(account)">
                                                                             <i class="header-profilek login-icon-color fas fa-check"></i>
                                                                         </a>
                                                                     </div>
@@ -426,7 +426,7 @@
 
                                                 <div
                                                     class="col-8 d-flex justify-content-center align-items-center mt-3">
-                                                    <p class="card-status">{{requestFriend}}</p>
+                                                    <p id="friendRequestsList" class="card-status">{{requestFriend}}</p>
                                                 </div>
                                             </div>
 

@@ -164,7 +164,7 @@ public class TeamService {
         return new TeamDTO(team.getId(), team.getName());
     }
 
-    private TicketTeamDTO convertToTicketTeamDTO(Ticket ticket) {
+    public TicketTeamDTO convertToTicketTeamDTO(Ticket ticket) {
         return new TicketTeamDTO(ticket);
     }
 

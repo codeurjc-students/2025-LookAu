@@ -55,7 +55,7 @@
                                     <div class="row">
                                         <div class="col-10">
                                             <div class="card-ticket justify-content-center align-items-center">
-                                                <input type="text" class="form-control ml-3" [(ngModel)]="name"/>
+                                                <input id="teamNameInput" type="text" class="form-control ml-3" [(ngModel)]="name"/>
                                             </div>
                                         </div>
                                         <div class="col-2"></div>
@@ -218,8 +218,8 @@
                                                                         <p class="card-status ml-3 mb-0 my-2">{{account}}</p>
                                                                     </div>
 
-                                                                    <div class="col-1 d-flex align-items-center">
-                                                                        <a (click)="this.addFriendToTeam(account)">
+                                                                    <div name="addFriendToTeam" class="col-1 d-flex align-items-center">
+                                                                        <a id="add-friend" (click)="this.addFriendToTeam(account)">
                                                                             <i class="header-profilek login-icon-color fas fa-user-plus"></i>
                                                                         </a>
                                                                     </div>

@@ -1,34 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, filter, map, of } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { Account } from '../models/account.model';
 import { Router } from '@angular/router';
 
-const BASE_URL = '/api/auth/';
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  
+
   private currentUser: Account = {} as Account;
   public logged: boolean = false;
   public notification: boolean = false;
   private userLoadedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private isLoaded = false;
 
-  constructor(private http: HttpClient, public router: Router, /*private accountService: AccountService*/){
-    this.getCurrentUser();
+  constructor(private http: HttpClient, public router: Router) {
+    // Ya no llamamos getCurrentUser aquí
   }
 
-  login(username: string, password: string): Observable<String> {
+  login(username: string, password: string): Observable<string> {
     return this.http.post<string>(
       '/api/auth/login',
       { username, password },
       { withCredentials: true }
     ).pipe(
-      map((response) => {
-        this.getCurrentUser();
-        return response;
-      }),
       catchError((err) => {
         throw err;
       })
@@ -45,80 +38,62 @@ export class AuthService {
       });
   }
 
-  getCurrentUser(): Account {
-    this.http
+  getCurrentUser(): Observable<Account> {
+    return this.http
       .get<ApiResponse>('/api/accounts/me', { withCredentials: true })
-      .subscribe({
-        next: (response: ApiResponse) => {
+      .pipe(
+        map((response: ApiResponse) => {
           this.currentUser = response.account;
           this.logged = true;
           this.notification = this.currentUser.pendingFriends?.length > 0 || false;
-          this.userLoadedSubject.next(true); 
-        },
-        error: (err) => {
+          this.userLoadedSubject.next(true);
+          return this.currentUser;
+        }),
+        catchError((err) => {
           this.userLoadedSubject.next(false);
-          const currentUrl = this.router.url;
-
-          if (!['/', '/login', '/register'].includes(currentUrl)) {
-            this.router.navigate(['/error']);
-          }
-        }
-      });
-
-    return this.currentUser;
+          return of({} as Account);
+        })
+      );
   }
 
-
-  
   createUser(nickName: string, firstName: string, lastName: string, email: string, password: string): Observable<any> {
-
     return this.http.post<string>(
       '/api/accounts/',
-      {
-        nickName,
-        firstName,
-        lastName,
-        email,
-        password
-      }
+      { nickName, firstName, lastName, email, password }
     );
   }
-
 
   getUser(): Account {
     return this.currentUser;
   }
 
-  /////////////
-  // PROFILE //
-  /////////////
-
-  getUserFirstName(): string{
+  // PROFILE accessors
+  getUserFirstName(): string {
     return this.currentUser.firstName;
   }
-  getUserLastName(): string{
+  getUserLastName(): string {
     return this.currentUser.lastName;
   }
-  getUserNickName(): string{
+  getUserNickName(): string {
     return this.currentUser.nickName;
   }
-  getUserEmail(): string{
+  getUserEmail(): string {
     return this.currentUser.email;
   }
-  getUserPassword(): string{
+  getUserPassword(): string {
     return this.currentUser.password;
   }
-  getUserProfilePicture(): number[]{
+  getUserProfilePicture(): number[] {
     return this.currentUser.profilePicture;
   }
 
-  getUserMyFriends(): string[]{
+  getUserMyFriends(): string[] {
     return this.currentUser.myFriends;
   }
-  getUserPendingFriends(): string[]{
+  getUserPendingFriends(): string[] {
     return this.currentUser.pendingFriends;
   }
-  getUserRequestFriends(): string[]{
+  getUserRequestFriends(): string[] {
     return this.currentUser.requestFriends;
   }
 
@@ -132,24 +107,18 @@ export class AuthService {
     return !this.currentUser?.requestFriends?.length;
   }
 
-
-  ////////////
-  // HEADER //
-  ////////////
-
+  // HEADER
   isLogged(): boolean {
     return this.logged;
   }
 
-  hasNotification(): boolean{
+  hasNotification(): boolean {
     return this.notification;
   }
 
   userLoaded(): Observable<boolean> {
     return this.userLoadedSubject.asObservable();
   }
-
- 
 }
 
 export interface ApiResponse {

@@ -2,10 +2,6 @@ package com.rest;
 
 import io.restassured.RestAssured;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +20,6 @@ import com.codeurjc.backend.service.TicketTypeService;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.isNull;
 
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RESTTicketTest {

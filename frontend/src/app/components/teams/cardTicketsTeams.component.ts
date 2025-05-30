@@ -294,6 +294,7 @@ export class CardTicketsTeamsComponent {
 
   genereteNotWinningTransactions(participants: string[], buyer: string, ticketPrice: number){
 
+    this.transactions = [];
     let num = participants.length;
 
     participants.forEach(participant => {
@@ -313,6 +314,7 @@ export class CardTicketsTeamsComponent {
   }
 
   genereteWinningTransactions(participants: string[], buyer: string, ticketPrice: number, prizeAmount: number, claimer: string) {
+    
     let n = participants.length;
     let perPersonCost = ticketPrice / n;
     let perPersonPrize = prizeAmount / n;

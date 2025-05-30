@@ -80,19 +80,43 @@ export class QuinielaComponent {
     
   }
 
-  isApplicable(): boolean{
-    let eachBetWellFilled: boolean[] = new Array(8).fill(true);  //comprueba si todas están rellenadas
+  isApplicable(): boolean {
 
+    //run all the bets
     for (let i = 1; i < 9; i++) {
+      let filledCount = 0;
+
+      //run all the box bet
       for (let j = 0; j < 16; j++) {
-        if(!this.buttonMatrix[j][i].some(val => val)){  //if the bet has any box no filled 
-          eachBetWellFilled[i-1] = false;     
+        if (this.buttonMatrix[j][i].some(val => val)) {
+          filledCount++;
         }
+      }
+
+      //the bet is incomplete if it had been filled
+      if (filledCount > 0 && filledCount < 16) {
+        return false;
       }
     }
 
-    return eachBetWellFilled.some(val => val);  //if any bet is well fille = true, if all bet are empty = false
+    //al the bets are complete if they are fill
+    for (let i = 1; i < 9; i++) {
+      let isComplete = true;
+      for (let j = 0; j < 16; j++) {
+        if (!this.buttonMatrix[j][i].some(val => val)) {
+          isComplete = false;
+          break;
+        }
+      }
+
+      //if almost one bet is complete 
+      if (isComplete) return true;
+    }
+
+    //no one is complete
+    return false;
   }
+
 
   sendToParent() {
     this.dataEmitter.emit(this.ticketType);

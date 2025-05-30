@@ -301,7 +301,7 @@ public class AccountService {
     /******* HELP *******/
     /********************/
 
-    private String convertToString(Account account) {
+    public String convertToString(Account account) {
         return account.getNickName();
     }
 
@@ -318,7 +318,7 @@ public class AccountService {
         return false;
     }
 
-    private TicketTeamDTO convertToTicketTeamDTO(Ticket ticket) {
+    public TicketTeamDTO convertToTicketTeamDTO(Ticket ticket) {
         return new TicketTeamDTO(ticket);
     }
 }
