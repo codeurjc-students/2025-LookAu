@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -88,4 +89,72 @@ public class LoginSeleniumTest {
         wait.until(ExpectedConditions.urlContains("/login"));
         assertTrue(driver.getCurrentUrl().contains("/login"));
     }
+
+    @Test
+    void testSignupValid() {
+        driver.get("http://localhost:4200/signup");
+
+        driver.findElement(By.name("firstName")).sendKeys("Test");
+        driver.findElement(By.name("lastName")).sendKeys("Test");
+        driver.findElement(By.name("nickName")).sendKeys("test");
+        driver.findElement(By.name("mail")).sendKeys("test@gmail.com");
+        driver.findElement(By.name("password")).sendKeys("test");
+        driver.findElement(By.name("repeatPassword")).sendKeys("test");
+
+        WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
+        submitButton.click();
+
+        wait.until(ExpectedConditions.or(
+            ExpectedConditions.urlContains("/login") 
+        ));
+
+        String currentUrl = driver.getCurrentUrl();
+        assertTrue(currentUrl.contains("/login") || currentUrl.contains("success"), "Wrong process.");
+    }
+
+    @Test
+    void testSignupRepear() {
+
+        //nick name repeat
+        driver.get("http://localhost:4200/signup");
+
+        driver.findElement(By.name("firstName")).sendKeys("Test");
+        driver.findElement(By.name("lastName")).sendKeys("Test");
+        driver.findElement(By.name("nickName")).sendKeys("LaTinyLoco");
+        driver.findElement(By.name("mail")).sendKeys("test@gmail.com");
+        driver.findElement(By.name("password")).sendKeys("test");
+        driver.findElement(By.name("repeatPassword")).sendKeys("test");
+
+        WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
+        submitButton.click();
+
+        wait.until(ExpectedConditions.or(
+            ExpectedConditions.urlContains("/signup") 
+        ));
+
+        String currentUrl = driver.getCurrentUrl();
+        assertTrue(currentUrl.contains("/signup"), "Wrong process.");
+
+        //gmail repeat
+        driver.get("http://localhost:4200/signup");
+
+        driver.findElement(By.name("firstName")).sendKeys("Test");
+        driver.findElement(By.name("lastName")).sendKeys("Test");
+        driver.findElement(By.name("nickName")).sendKeys("test");
+        driver.findElement(By.name("mail")).sendKeys("amanda.cl@gmail.com");
+        driver.findElement(By.name("password")).sendKeys("test");
+        driver.findElement(By.name("repeatPassword")).sendKeys("test");
+
+        submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
+        submitButton.click();
+
+        wait.until(ExpectedConditions.or(
+            ExpectedConditions.urlContains("/signup") 
+        ));
+
+        currentUrl = driver.getCurrentUrl();
+        assertTrue(currentUrl.contains("/signup"), "Wrong process.");
+    }
+
+
 }

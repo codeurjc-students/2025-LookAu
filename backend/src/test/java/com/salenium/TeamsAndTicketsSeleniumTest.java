@@ -4,18 +4,25 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +32,9 @@ import com.codeurjc.backend.LookAu;
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.repository.AccountRepository;
 
+import dev.failsafe.internal.util.Assert;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import jakarta.validation.constraints.AssertTrue;
 
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TeamsAndTicketsSeleniumTest {
@@ -257,4 +266,192 @@ public class TeamsAndTicketsSeleniumTest {
     }
 
 
+    @Test
+    void testCreateTicketTeamBonolotoAndFilters() {
+
+        //login
+        driver.get("http://localhost:4200/login");
+
+        driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
+        driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
+        driver.findElement(By.cssSelector("input[type=submit]")).click();
+
+        //open group
+        wait.until(ExpectedConditions.urlContains("/teams"));
+
+        String xpathTeamLink = String.format("//h3[contains(@class,'name-groups') and text()='%s']/ancestor::a", "Decramados Team");
+        WebElement teamLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathTeamLink)));
+        teamLink.click();
+
+        //open new ticket
+        wait.until(ExpectedConditions.urlContains("/tickets"));
+        
+        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//button[.//i[contains(@class,'fa-ticket')]]")
+        ));
+        addButton.click();
+
+        //fill the new ticket
+        wait.until(ExpectedConditions.urlMatches(".*/tickets/new"));
+
+            //type = bonoloto
+        WebElement ticketTypeSelect = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("select[name='ticketType']")
+        ));
+        Select ticketTypeDropdown = new Select(ticketTypeSelect);
+        ticketTypeDropdown.selectByVisibleText("Bonoloto");
+
+
+            //date
+        WebElement dateInput = driver.findElement(By.cssSelector("input[type='date']"));
+        LocalDate today = LocalDate.now();
+        dateInput.sendKeys(today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+            //friend
+        WebElement friendSelect = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("select[name='ticketPaidBy']")
+        ));
+        Select friendDropdown = new Select(friendSelect);
+        friendDropdown.selectByIndex(1);
+
+            //priece
+        WebElement moneyInput = driver.findElement(By.cssSelector("input[placeholder='€€€€€']"));
+        moneyInput.sendKeys("1");
+
+        //fill the bonoloto bet
+        WebElement bonolotoComponent = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.tagName("app-bonoloto")
+        ));
+
+        List<WebElement> bonolotoInputs = bonolotoComponent.findElements(By.cssSelector("input[type='text']"));
+
+        if (bonolotoInputs.size() >= 6) {
+            bonolotoInputs.get(0).sendKeys("5");
+            bonolotoInputs.get(1).sendKeys("12");
+            bonolotoInputs.get(2).sendKeys("19");
+            bonolotoInputs.get(3).sendKeys("25");
+            bonolotoInputs.get(4).sendKeys("33");
+            bonolotoInputs.get(5).sendKeys("42");
+        } else {
+            throw new RuntimeException("No se encontraron los 6 inputs del Bonoloto.");
+        }
+
+        WebElement applyButton = bonolotoComponent.findElement(By.xpath("//button[contains(., 'Apply')]"));
+        applyButton.click();
+
+        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//button[contains(., 'Save New')]")
+        ));
+        saveButton.click();
+    }
+
+
+    @Test
+    void testFilter(){
+
+        //login
+        driver.get("http://localhost:4200/login");
+
+        driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
+        driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
+        driver.findElement(By.cssSelector("input[type=submit]")).click();
+
+        //open group
+        wait.until(ExpectedConditions.urlContains("/teams"));
+
+        String xpathTeamLink = String.format("//h3[contains(@class,'name-groups') and text()='%s']/ancestor::a", "Decramados Team");
+        WebElement teamLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathTeamLink)));
+        teamLink.click();
+        
+        //find the new ticket with filters
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement filterButton = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.cssSelector("button.btn-dark i.fa-filter")
+        )).findElement(By.xpath("./.."));
+        filterButton.click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='date']")));
+
+            //date filter
+        LocalDate today = LocalDate.of(2025,12,3);
+        WebElement dateInputFilter = driver.findElement(By.name("selectedDate"));
+        dateInputFilter.clear();
+        dateInputFilter.sendKeys(today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        dateInputFilter.sendKeys(Keys.RETURN);
+
+            //type filter
+        Select ticketTypeSelectFilter = new Select(driver.findElement(By.name("ticketType")));
+        ticketTypeSelectFilter.selectByVisibleText("Bonoloto");
+
+            //find ticket after tickets
+        List<WebElement> ticketCards = driver.findElements(By.cssSelector("a.card"));
+        boolean found = ticketCards.stream().anyMatch(card ->
+            card.getText().toLowerCase().contains("bonoloto") &&
+            card.getText().contains(today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        );
+
+        assertFalse(found, "The ticket isnt exist");
+    }
+
+    @Test
+    void testLeaveTeam(){
+
+        //login
+        driver.get("http://localhost:4200/login");
+
+        driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
+        driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
+        driver.findElement(By.cssSelector("input[type=submit]")).click();
+
+        //open group
+        wait.until(ExpectedConditions.urlContains("/teams"));
+
+        String xpathTeamLink = String.format("//h3[contains(@class,'name-groups') and text()='%s']/ancestor::a", "Motogoat");
+        WebElement teamLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathTeamLink)));
+        teamLink.click();
+
+        //open edit group
+        wait.until(ExpectedConditions.urlContains("/tickets"));
+
+            //get team id
+        String currentUrl = driver.getCurrentUrl();
+        String[] parts = currentUrl.split("/");
+
+        int teamsIndex = -1;
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].equals("teams")) {
+                teamsIndex = i;
+                break;
+            }
+        }
+
+        String teamId = null;
+        if (teamsIndex != -1 && teamsIndex + 1 < parts.length) {
+            teamId = parts[teamsIndex + 1];
+        } 
+
+            //click button
+        String xpathEditButton = String.format("//a[contains(@href, '/teams/%s/edit')]", teamId);
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathEditButton)));
+        editButton.click();
+
+        //click button leave and confirm popup
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        WebElement leaveTeamButton = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.xpath("//button[text()='Leave Team']")
+        ));
+        leaveTeamButton.click();
+
+            //click confirm popup
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(), 'Confirm')]")));
+        WebElement confirmBtn = driver.findElement(By.xpath("//button[contains(text(), 'Confirm')]"));
+        confirmBtn.click();
+
+        wait.until(ExpectedConditions.urlContains("/teams"));
+
+        //asset group is delete
+        boolean isNotVisible = wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpathTeamLink)));
+        assertTrue(isNotVisible, "El grupo 'Motogoat' sigue visible, no se eliminó correctamente.");
+    }
 }
