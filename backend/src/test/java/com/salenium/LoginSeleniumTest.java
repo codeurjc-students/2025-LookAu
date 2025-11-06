@@ -18,6 +18,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Primary;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.codeurjc.backend.LookAu;
 import com.codeurjc.backend.model.Account;
@@ -26,10 +29,15 @@ import com.codeurjc.backend.repository.AccountRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class LoginSeleniumTest {
 
+    private String baseUrl;
     private WebDriver driver;
     private WebDriverWait wait;
+
+    @LocalServerPort
+    private int port;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -39,17 +47,30 @@ public class LoginSeleniumTest {
     @BeforeEach
     void setUp() {
         
-        //selenium with webdriver
         WebDriverManager.chromedriver().setup();
-
+        
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--headless=new"); 
+        
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--ignore-ssl-errors=yes");
+        options.addArguments("--allow-insecure-localhost");
+        options.addArguments("--accept-insecure-certs=true");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--allow-running-insecure-content");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        
+        options.addArguments("--headless=new");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        driver.manage().deleteAllCookies();
+        
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        baseUrl = "http://lookau-app:8443";
     }
 
     @AfterEach
@@ -66,7 +87,11 @@ public class LoginSeleniumTest {
 
     @Test
     void testLoginValid() {
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl+"/login");
+
+        System.out.println("Current URL: " + driver.getCurrentUrl());
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".input-login-1")));
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
@@ -80,7 +105,7 @@ public class LoginSeleniumTest {
 
     @Test
     void testLoginInvalid() {
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl+"/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("wrong@nope.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("badpass");
@@ -92,7 +117,7 @@ public class LoginSeleniumTest {
 
     @Test
     void testSignupValid() {
-        driver.get("http://localhost:4200/signup");
+        driver.get(baseUrl+"/signup");
 
         driver.findElement(By.name("firstName")).sendKeys("Test");
         driver.findElement(By.name("lastName")).sendKeys("Test");
@@ -116,7 +141,7 @@ public class LoginSeleniumTest {
     void testSignupRepear() {
 
         //nick name repeat
-        driver.get("http://localhost:4200/signup");
+        driver.get(baseUrl+"/signup");
 
         driver.findElement(By.name("firstName")).sendKeys("Test");
         driver.findElement(By.name("lastName")).sendKeys("Test");
@@ -136,7 +161,7 @@ public class LoginSeleniumTest {
         assertTrue(currentUrl.contains("/signup"), "Wrong process.");
 
         //gmail repeat
-        driver.get("http://localhost:4200/signup");
+        driver.get(baseUrl+"/signup");
 
         driver.findElement(By.name("firstName")).sendKeys("Test");
         driver.findElement(By.name("lastName")).sendKeys("Test");

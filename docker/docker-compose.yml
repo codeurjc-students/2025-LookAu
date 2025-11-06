@@ -1,0 +1,51 @@
+# In project root:
+# docker pull etheko/bookmarks-forums
+# cd docker
+# docker-compose -p bookmarks-forums up --build
+services:
+
+  lookau-app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: amand/lookau
+    ports:
+      - "8443:8443"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lookau-DB:3306/lookaudb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SELENIUM_URL=http://selenium:4444/wd/hub    #for selenium
+      - SPRING_PROFILES_ACTIVE=docker               #profiles for docker
+    depends_on:
+      lookau-DB:
+        condition: service_healthy
+      selenium:
+        condition: service_started                 
+
+  lookau-DB:
+    image: mysql:8.3.0
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_DATABASE=lookaudb
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+
+  #SELEIUM
+  selenium:
+    image: selenium/standalone-chrome:4.23.0     
+    shm_size: "2gb"
+    ports:
+      - "4444:4444"                               
+
+
+volumes:
+  mysql_data:

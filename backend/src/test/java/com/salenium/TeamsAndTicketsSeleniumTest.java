@@ -8,9 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,18 +24,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.codeurjc.backend.LookAu;
 import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.repository.AccountRepository;
 
-import dev.failsafe.internal.util.Assert;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import jakarta.validation.constraints.AssertTrue;
 
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class TeamsAndTicketsSeleniumTest {
 
+    private String baseUrl;
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -50,17 +48,28 @@ public class TeamsAndTicketsSeleniumTest {
     @BeforeEach
     void setUp() {
         
-        //selenium with webdriver
         WebDriverManager.chromedriver().setup();
-
+        
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--headless=new"); 
+        
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--ignore-ssl-errors=yes");
+        options.addArguments("--allow-insecure-localhost");
+        options.addArguments("--accept-insecure-certs=true");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--allow-running-insecure-content");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        
+        options.addArguments("--headless=new");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        baseUrl = "https://localhost:8443";
     }
 
     @AfterEach
@@ -78,14 +87,14 @@ public class TeamsAndTicketsSeleniumTest {
 
     @Test
     void testCreateNewTeam() throws InterruptedException {
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
 
         // Login
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
         driver.findElement(By.cssSelector("input[type=submit]")).click();
 
-        driver.get("http://localhost:4200/teams/newteam");
+        driver.get(baseUrl + "/teams/newteam");
 
         //create new team
         wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -108,7 +117,7 @@ public class TeamsAndTicketsSeleniumTest {
     void testEditTicketTeamDiscard() {
 
         //login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
@@ -157,7 +166,7 @@ public class TeamsAndTicketsSeleniumTest {
     void testEditTicketTeamSave() {
 
         //login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
@@ -207,7 +216,7 @@ public class TeamsAndTicketsSeleniumTest {
     void testEditTicketTeamQuinielaSave() {
 
         //login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
@@ -270,7 +279,7 @@ public class TeamsAndTicketsSeleniumTest {
     void testCreateTicketTeamBonolotoAndFilters() {
 
         //login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
@@ -350,7 +359,7 @@ public class TeamsAndTicketsSeleniumTest {
     void testFilter(){
 
         //login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
@@ -397,7 +406,7 @@ public class TeamsAndTicketsSeleniumTest {
     void testLeaveTeam(){
 
         //login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");

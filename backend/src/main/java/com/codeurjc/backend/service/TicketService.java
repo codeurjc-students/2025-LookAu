@@ -35,5 +35,9 @@ public class TicketService {
     public Ticket getOne(){
         return tickectRepository.findAll().get(0);
     }
+
+    public List<Ticket> getAllPendingTicket(){
+        return tickectRepository.findAllByStatusName("Pending");
+    }
     
 }

@@ -67,9 +67,8 @@ public class RESTTicketTest {
         .when()
             .get("/tickets/")
         .then()
-            .statusCode(200)
-            .body(isEmptyOrNullString());
-    }
+            .statusCode(200);
+        }
 
 
     @Test

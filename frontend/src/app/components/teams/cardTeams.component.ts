@@ -41,15 +41,16 @@ export class CardTeamsComponent {
   ngOnInit() {
 
     this.isLoding = true;
+    this.getTickets();
 
-    this.loteriaService.checkAndUpdateTickets(this.teamId).subscribe(
+    /*this.loteriaService.checkAndUpdateTickets(this.teamId).subscribe(
       (response) => {
         this.getTickets();  
       },
       (error) => {
         this.router.navigate(['/error']);
       }
-    );
+    );*/
   }
   
 

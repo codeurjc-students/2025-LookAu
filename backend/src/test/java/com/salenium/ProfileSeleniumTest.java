@@ -22,6 +22,7 @@ import org.openqa.selenium.TimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.codeurjc.backend.LookAu;
 import com.codeurjc.backend.model.Account;
@@ -30,10 +31,12 @@ import com.codeurjc.backend.repository.AccountRepository;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class ProfileSeleniumTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
+    private String baseUrl;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -43,17 +46,29 @@ public class ProfileSeleniumTest {
     @BeforeEach
     void setUp() {
         
-        //selenium with webdriver
         WebDriverManager.chromedriver().setup();
-
+        
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--headless=new"); 
+        
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--ignore-ssl-errors=yes");
+        options.addArguments("--allow-insecure-localhost");
+        options.addArguments("--accept-insecure-certs=true");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--allow-running-insecure-content");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        
+        // Headless configuration
+        options.addArguments("--headless=new");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        baseUrl = "https://localhost:8443";
     }
 
     @AfterEach
@@ -72,7 +87,7 @@ public class ProfileSeleniumTest {
     void testAddFriend() {
 
         //loggin
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com"); 
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");            
         driver.findElement(By.cssSelector("input[type=submit]")).click();
@@ -80,7 +95,7 @@ public class ProfileSeleniumTest {
         wait.until(ExpectedConditions.urlContains("/teams"));
 
         //check profile add a friend
-        driver.get("http://localhost:4200/profile"); 
+        driver.get(baseUrl + "/profile");
 
         WebElement inputBuscar = wait.until(ExpectedConditions.elementToBeClickable(By.id("stringToFind")));
         inputBuscar.clear();
@@ -113,15 +128,15 @@ public class ProfileSeleniumTest {
     void testAceptPendingFriendAndAjaxMyFriends() {
 
         // login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("eduardo.db@gmail.com");  
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password7");            
         driver.findElement(By.cssSelector("input[type=submit]")).click();
 
         wait.until(ExpectedConditions.urlContains("/teams"));
 
-        //acep pending requets
-        driver.get("http://localhost:4200/profile");
+        //acept pending requets
+        driver.get(baseUrl + "/profile");
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -177,7 +192,7 @@ public class ProfileSeleniumTest {
     void testDenyPendingFriendAndAjaxMyFriends() {
 
         //login
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("eduardo.db@gmail.com");  
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password7");            
         driver.findElement(By.cssSelector("input[type=submit]")).click();
@@ -185,23 +200,23 @@ public class ProfileSeleniumTest {
         wait.until(ExpectedConditions.urlContains("/teams"));
 
         //deny pending request (like the other but with dufferent buttons9)
-        driver.get("http://localhost:4200/profile");
+        driver.get(baseUrl + "/profile");
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(
-            By.xpath("//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='Akalpaca']")
+            By.xpath("//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='DaniDu']")
         ));
         WebElement denyIcon = driver.findElement(By.xpath(
-            "//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='Akalpaca']/ancestor::div[contains(@class,'card-ticket')]//i[contains(@class, 'fa-times')]"
+            "//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='DaniDu']/ancestor::div[contains(@class,'card-ticket')]//i[contains(@class, 'fa-times')]"
         ));
         denyIcon.click();
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-            By.xpath("//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='Akalpaca']")
+            By.xpath("//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='DaniDu']")
         ));
 
-        By friendSelector = By.xpath("//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='Akalpaca']");
+        By friendSelector = By.xpath("//div[@id='moreMyFriends']//p[contains(@class, 'card-status') and text()='DaniDu']");
         By moreBtnSelector = By.xpath("//div[@id='moreMyFriends']/following-sibling::div//a[contains(text(), 'More')]");
 
         boolean found = false;
@@ -228,7 +243,7 @@ public class ProfileSeleniumTest {
             attempts++;
         }
 
-        assertFalse(found, "Akalpaca debería haber sido eliminada, pero sigue apareciendo en la lista.");
+        assertFalse(found, "DaniDu debería haber sido eliminada, pero sigue apareciendo en la lista.");
     }
 
 
@@ -238,7 +253,7 @@ public class ProfileSeleniumTest {
     void testDeleteFriend() {
 
         //loggin
-        driver.get("http://localhost:4200/login");
+        driver.get(baseUrl + "/login");
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");  // Cambia por usuario válido
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");            // Cambia por contraseña válida
         driver.findElement(By.cssSelector("input[type=submit]")).click();
@@ -246,7 +261,7 @@ public class ProfileSeleniumTest {
         wait.until(ExpectedConditions.urlContains("/teams"));
 
         //check editprofile delete
-        driver.get("http://localhost:4200/editProfile"); 
+        driver.get(baseUrl + "/editProfile");
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 

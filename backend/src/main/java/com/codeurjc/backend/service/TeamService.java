@@ -12,7 +12,8 @@ import com.codeurjc.backend.model.DTO.TeamDTO;
 import com.codeurjc.backend.model.DTO.TicketTeamDTO;
 import com.codeurjc.backend.repository.TeamRepository;
 
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,7 +33,12 @@ public class TeamService {
         return teamRepository.findById(id);
     }
 
-    public void setTeam(Team team){
+    public void setTeam(Team team) throws IOException{
+        if(team.getProfilePicture()==null){
+            byte[] photo = this.loadResource("/static/images/others/flork_noprofile.jpg");
+            team.setProfilePicture(photo);
+        }
+
         teamRepository.save(team);
     }
 
@@ -170,6 +176,16 @@ public class TeamService {
 
     private String convertToString(Account account) {
         return account.getNickName();
+    }
+
+    private byte[] loadResource(String resourcePath) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream != null) {
+                return inputStream.readAllBytes();
+            } else {
+                return new byte[0];
+            }
+        }
     }
     
 }

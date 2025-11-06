@@ -16,8 +16,8 @@ public class Quintuple extends TicketType {
     private Integer num2;
     private Integer num3;
     private Integer num4;
-    private Integer num5;
-    private Integer num6;
+    private Integer num5; //winner 5
+    private Integer num6; //second 5
 
     private EnumTickectType tickectType;
 

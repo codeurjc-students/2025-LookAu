@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -65,7 +66,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    void testSetAccount() {
+    void testSetAccount() throws IOException {
         Account acc = new Account();
         acc.setNickName("test");
 

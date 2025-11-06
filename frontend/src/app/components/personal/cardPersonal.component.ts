@@ -38,15 +38,16 @@ export class CardPersonalComponent {
   ngOnInit() {
 
     this.isLoding = true;
+    this.getTickets();
 
-    this.loteriaService.checkAndUpdateTicketsPersonal().subscribe(
+    /*this.loteriaService.checkAndUpdateTicketsPersonal().subscribe(
       (response) => {
         this.getTickets();
       },
       (error) => {
         this.router.navigate(['/error']);
       }
-    );
+    );*/
   }
   
 

@@ -1,6 +1,7 @@
 package com.codeurjc.backend;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -169,11 +170,11 @@ public class DataInitializer {
         /**** ACCOUNTS ****/
         /******************/
 
-        byte[] photo = this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_noprofile.jpg");
+        byte[] photo = loadResource("/static/images/others/flork_noprofile.jpg");
 
-        Account account1 = new Account("LaTinyLoco", "Amanda", "Castro López", "amanda.cl@gmail.com", "password1", this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork3_profile.png"));
-        Account account2 = new Account("Pepiflor23", "Alberto", "Limón Carmona", "alberto.lc@gmail.com", "password2", this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork2_profile.png"));
-        Account account3 = new Account("Akalpaca", "Diego", "Fernandez del Álamo", "diego.fa@gmail.com", "password3", this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork1_profile.jpeg"));
+        Account account1 = new Account("LaTinyLoco", "Amanda", "Castro López", "amanda.cl@gmail.com", "password1", loadResource("/static/images/others/flork3_profile.png"));
+        Account account2 = new Account("Pepiflor23", "Alberto", "Limón Carmona", "alberto.lc@gmail.com", "password2", loadResource("/static/images/others/flork2_profile.png"));
+        Account account3 = new Account("Akalpaca", "Diego", "Fernandez del Álamo", "diego.fa@gmail.com", "password3", loadResource("/static/images/others/flork1_profile.jpeg"));
         Account account4 = new Account("Alvarochi", "Álvaro", "Fernandez del Álamo", "alvaro.fa@gmail.com", "password4", photo);
         Account account5 = new Account("DaniDu", "Daniel", "Esteban de la Cruz", "daniel.ec@gmail.com", "password5", photo);
         Account account6 = new Account("Miguelog", "Miguel Ángel", "Osuna Galindo", "miguel.og@gmail.com", "password6", photo);
@@ -185,8 +186,8 @@ public class DataInitializer {
         /**** TEAMS ****/
         /***************/
 
-        Team team1 = new Team("Decramados Team", this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_team.jpg"));
-        team1.setProfilePicture(this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_team.jpg"));
+        Team team1 = new Team("Decramados Team", loadResource("/static/images/others/flork_team.jpg"));
+        team1.setProfilePicture(loadResource("/static/images/others/flork_team.jpg"));
         Team team2 = new Team("Rarw", photo);
         team2.setProfilePicture(photo);
         Team team3 = new Team("All for one", photo);
@@ -429,16 +430,14 @@ public class DataInitializer {
     }
 
 
-
-    private byte[] getFile(String url) throws IOException {
-
-        Path path = Paths.get(url);
-
-        try {
-            return Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0];
+    private byte[] loadResource(String resourcePath) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream != null) {
+                return inputStream.readAllBytes();
+            } else {
+                return new byte[0];
+            }
         }
     }
+
 }

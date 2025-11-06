@@ -13,6 +13,8 @@ import com.codeurjc.backend.model.DTO.TeamDTO;
 import com.codeurjc.backend.model.DTO.TicketTeamDTO;
 import com.codeurjc.backend.repository.AccountRepository;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +36,12 @@ public class AccountService {
         return accountRepository.findByNickName(email).get(0);
     }
 
-    public void setAccount(Account acc){
+    public void setAccount(Account acc) throws IOException{
+        if(acc.getProfilePicture()==null){
+            byte[] photo = this.loadResource("/static/images/others/flork_noprofile.jpg");
+            acc.setProfilePicture(photo);
+        }
+        
         accountRepository.save(acc);
     }
 
@@ -320,5 +327,15 @@ public class AccountService {
 
     public TicketTeamDTO convertToTicketTeamDTO(Ticket ticket) {
         return new TicketTeamDTO(ticket);
+    }
+
+    private byte[] loadResource(String resourcePath) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream != null) {
+                return inputStream.readAllBytes();
+            } else {
+                return new byte[0];
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -69,7 +70,7 @@ public class TeamServiceTest {
 
 
     @Test
-    void testSetAndDeleteTeam() {
+    void testSetAndDeleteTeam() throws IOException {
         teamServiceSpy.setTeam(team);
         verify(teamRepository).save(team);
 

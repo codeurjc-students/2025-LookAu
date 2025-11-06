@@ -101,13 +101,13 @@ export class AccountService {
       params = params.append('type', type);
     }
 
-    return this.http.get(BASE_URL+'/tickets', {
-      params: params,
+    return this.http.get(BASE_URL+'tickets', {
+      params: params,  withCredentials: true
     }) as Observable<any>;
   }
 
   getAllAccountTickets(): Observable<any> {
-    return this.http.get(BASE_URL+'/ticketss') as Observable<any>;
+    return this.http.get(BASE_URL+'ticketss', { withCredentials: true }) as Observable<any>;
   }
 
 }

@@ -1,0 +1,1 @@
+docker build -t nombrePerfilDocker/lookau -f Dockerfile ../

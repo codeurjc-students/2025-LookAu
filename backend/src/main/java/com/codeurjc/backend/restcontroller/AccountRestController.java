@@ -52,26 +52,6 @@ public class AccountRestController {
 	private AccountService accountService;
 
 
-	/**********************************/
-	/******** PROFILES DETAILS ********/
-	/**********************************/
-
-	// @GetMapping("/currentAccount")
-	// public ResponseEntity<Optional<Account>> currentAccount(HttpServletRequest request) {
-	// 	Principal principal = request.getUserPrincipal();
-		
-	// 	if (principal == null) {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-
-	// 	try {
-	// 		Optional<Account> currentAccount = accountService.getByEmail(request.getUserPrincipal().getName());
-	// 		return ResponseEntity.ok(currentAccount);
-	// 	} catch (NoSuchElementException e) {
-	// 		return ResponseEntity.notFound().build();
-	// 	}
-	// }
-
 
 	@Operation(summary = "Get account information")
 	@ApiResponses(value = {

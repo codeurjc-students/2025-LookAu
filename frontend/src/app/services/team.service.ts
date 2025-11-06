@@ -66,11 +66,11 @@ export class TeamService {
   }
 
   getAllTickets(teamId: number){
-    return this.http.get(BASE_URL+teamId+'/ticketss') as Observable<any>;
+    return this.http.get(BASE_URL+teamId+'/ticketss', { withCredentials: true }) as Observable<any>;
   }
 
   updateTeam(name:string, teamId: number){
-    return this.http.put<string>(BASE_URL+teamId, {name,});
+    return this.http.put<string>(BASE_URL+teamId, {name, withCredentials: true,});
   }
 
 }
