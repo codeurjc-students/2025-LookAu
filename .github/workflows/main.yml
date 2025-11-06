@@ -24,7 +24,6 @@ jobs:
         image: selenium/standalone-chrome:4.23.0
         ports:
           - 4444:4444
-        shm_size: "2gb"
 
     steps:
       - name: Checkout repository
@@ -36,6 +35,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Install Maven dependencies and run tests
+      - name: Install ChromeDriver (for compatibility)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-chromedriver
+          echo "ChromeDriver installed"
+
+      - name: Run Maven tests
         working-directory: backend
         run: mvn clean verify -Dspring.profiles.active=docker
