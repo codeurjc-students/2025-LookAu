@@ -37,4 +37,5 @@ jobs:
 
       - name: Install Maven dependencies and run tests
         working-directory: backend
-        run: mvn -Dtest=LoginSeleniumTest test
+        run: mvn -B test -Dgroups='!selenium'
+
