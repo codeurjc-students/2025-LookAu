@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.codeurjc.backend.LookAu;
 import com.codeurjc.backend.service.AccountService;
@@ -20,6 +21,7 @@ import com.codeurjc.backend.service.AccountService;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RESTTeamTest {
 
@@ -32,7 +34,7 @@ public class RESTTeamTest {
     @BeforeEach
     public void setup() {
         RestAssured.port = port;
-        RestAssured.baseURI = "https://localhost";
+        RestAssured.baseURI = "http://localhost";
         RestAssured.basePath = "/api";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.useRelaxedHTTPSValidation();
