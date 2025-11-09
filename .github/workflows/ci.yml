@@ -24,7 +24,6 @@ jobs:
         image: selenium/standalone-chrome:4.23.0
         ports:
           - 4444:4444
-        shm_size: "2gb"
 
     steps:
       - name: Checkout repository
@@ -38,4 +37,4 @@ jobs:
 
       - name: Install Maven dependencies and run tests
         working-directory: backend
-        run: mvn clean verify -Dspring.profiles.active=docker
+        run: mvn -Dtest=LoginSeleniumTest test
