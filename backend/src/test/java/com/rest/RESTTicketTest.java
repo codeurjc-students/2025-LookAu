@@ -53,7 +53,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -78,7 +78,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -125,7 +125,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -164,7 +164,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -212,7 +212,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -264,7 +264,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()

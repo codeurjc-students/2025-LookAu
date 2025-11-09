@@ -71,7 +71,7 @@ public class LoginSeleniumTest {
         driver.manage().deleteAllCookies();
         
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        baseUrl = "http://lookau-app:8443";
+        baseUrl = "http://localhost:4200";
     }
 
     @AfterEach

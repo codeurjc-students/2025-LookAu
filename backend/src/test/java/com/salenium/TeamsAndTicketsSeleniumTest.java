@@ -70,8 +70,10 @@ public class TeamsAndTicketsSeleniumTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
+        driver.manage().deleteAllCookies();
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        baseUrl = "https://localhost:8443";
+        baseUrl = "http://localhost:4200";
     }
 
     @AfterEach
@@ -189,7 +191,7 @@ public class TeamsAndTicketsSeleniumTest {
 
         //open edit ticket
         WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//button[contains(., 'Edit') and contains(@class, 'btn-dark')]")
+            By.xpath("//button[contains(., ' Edit ') and contains(@class, 'btn-dark')]")
         ));
         editButton.click();
 

@@ -47,15 +47,16 @@ public class RESTTicketTypeTest {
     void testGetTicketType() {
 
         //with logging in
-        String token = given()
-            .contentType("application/json")
-            .body("{\"username\":\"alberto.lc@gmail.com\", \"password\":\"password2\"}")
-        .when()
-            .post("/auth/login")
-        .then()
-            .cookie("AuthToken")
-            .extract()
-            .cookie("AuthToken");
+        String token = 
+            given()
+                .contentType("application/json")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
+            .when()
+                .post("/auth/login") 
+            .then()
+                .cookie("AuthToken")
+                .extract()
+                .cookie("AuthToken");
 
         Long ticketTypeId = ticketTypeService.getOne().getId();
 
@@ -83,15 +84,16 @@ public class RESTTicketTypeTest {
     void testSaveTicketBonoloto() {
         
         //with logging in
-        String token = given()
-            .contentType("application/json")
-            .body("{\"username\":\"alberto.lc@gmail.com\", \"password\":\"password2\"}")
-        .when()
-            .post("/auth/login")
-        .then()
-            .cookie("AuthToken")
-            .extract()
-            .cookie("AuthToken");
+        String token = 
+            given()
+                .contentType("application/json")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
+            .when()
+                .post("/auth/login") 
+            .then()
+                .cookie("AuthToken")
+                .extract()
+                .cookie("AuthToken");
 
         Bonoloto bonoloto = new Bonoloto();
 

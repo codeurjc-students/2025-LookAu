@@ -9,14 +9,19 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.codeurjc.backend.DataInitializer;
 import com.codeurjc.backend.LookAu;
+import com.codeurjc.backend.repository.AccountRepository;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+@Transactional
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RESTAccountTest {
 
@@ -24,7 +29,10 @@ public class RESTAccountTest {
     private int port;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
+
+        
+
         RestAssured.port = port;
         RestAssured.baseURI = "https://localhost";
         RestAssured.basePath = "/api";
@@ -157,7 +165,7 @@ public class RESTAccountTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -344,7 +352,7 @@ public class RESTAccountTest {
         given()
             .cookie("AuthToken", token)
         .when()
-            .put("/accounts/pendingFriends/Pepiflor23")
+            .put("/accounts/pendingFriends/DaniDu")
         .then()
             .statusCode(200)
             .body(emptyOrNullString());

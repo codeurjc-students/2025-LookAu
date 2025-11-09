@@ -45,7 +45,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -53,7 +53,7 @@ public class RESTTeamTest {
                 .extract()
                 .cookie("AuthToken");
 
-        Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
+        Long teamId = accountService.getAllTeamsPage("LaTinyLoco", PageRequest.of(0, 5)).getContent().get(0).getId();
 
         //successful get team
         given()
@@ -81,7 +81,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -89,7 +89,7 @@ public class RESTTeamTest {
                 .extract()
                 .cookie("AuthToken");
 
-        Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
+        Long teamId = accountService.getAllTeamsPage("LaTinyLoco", PageRequest.of(0, 5)).getContent().get(0).getId();
         String newNameJson = "{\"name\": \"test\"}";
 
         //update team
@@ -120,7 +120,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -128,8 +128,8 @@ public class RESTTeamTest {
                 .extract()
                 .cookie("AuthToken");
 
-        Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
-        String nickName = "Pepiflor23";
+        Long teamId = accountService.getAllTeamsPage("LaTinyLoco", PageRequest.of(0, 5)).getContent().get(0).getId();
+        String nickName = "LaTinyLoco";
 
         //delete pepi from team
         given()
@@ -158,13 +158,13 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
                 .cookie("AuthToken")
                 .extract()
-                .cookie("AuthToken");
+                .cookie("AuthToken");;
 
         String searchTerm = "test";
 
@@ -188,7 +188,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -196,7 +196,7 @@ public class RESTTeamTest {
                 .extract()
                 .cookie("AuthToken");
 
-        Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
+        Long teamId = accountService.getAllTeamsPage("LaTinyLoco", PageRequest.of(0, 5)).getContent().get(0).getId();
 
 
         //get image form exitent team
@@ -225,7 +225,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -264,7 +264,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -300,7 +300,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -308,7 +308,7 @@ public class RESTTeamTest {
                 .extract()
                 .cookie("AuthToken");
 
-        Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
+        Long teamId = accountService.getAllTeamsPage("LaTinyLoco", PageRequest.of(0, 5)).getContent().get(0).getId();
 
 
         //get accounts
@@ -329,7 +329,7 @@ public class RESTTeamTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -337,7 +337,7 @@ public class RESTTeamTest {
                 .extract()
                 .cookie("AuthToken");
 
-        Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
+        Long teamId = accountService.getAllTeamsPage("LaTinyLoco", PageRequest.of(0, 5)).getContent().get(1).getId();
 
 
         //get all tickets
@@ -356,10 +356,11 @@ public class RESTTeamTest {
     void testGetMoreTicketsOfTeam() {
 
         //with logging in
+         //with logging in
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"amanda.cl@gmail.com\", \"password\": \"password1\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -367,7 +368,7 @@ public class RESTTeamTest {
                 .extract()
                 .cookie("AuthToken");
 
-        Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
+        Long teamId = accountService.getAllTeamsPage("LaTinyLoco", PageRequest.of(0, 5)).getContent().get(1).getId();
 
 
         //get tickets without filters

@@ -69,8 +69,10 @@ public class ProfileSeleniumTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
+        driver.manage().deleteAllCookies();
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        baseUrl = "https://localhost:8443";
+        baseUrl = "http://localhost:4200";
     }
 
     @AfterEach
