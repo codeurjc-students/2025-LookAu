@@ -2,13 +2,10 @@ package com.scheduler;
 
 import com.codeurjc.backend.model.Ticket;
 import com.codeurjc.backend.model.TicketType;
-import com.codeurjc.backend.model.API.BonolotoAPI;
 import com.codeurjc.backend.scheduler.LotteryScheduler;
 import com.codeurjc.backend.service.LotteryService;
 import com.codeurjc.backend.service.ScraperService;
 import com.codeurjc.backend.service.TicketService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,12 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class LotterySchedulerTest {
