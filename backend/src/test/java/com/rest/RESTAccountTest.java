@@ -3,21 +3,16 @@ package com.rest;
 import io.restassured.RestAssured;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.codeurjc.backend.DataInitializer;
 import com.codeurjc.backend.LookAu;
-import com.codeurjc.backend.repository.AccountRepository;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
@@ -177,7 +172,7 @@ public class RESTAccountTest {
 
 
         //get photo
-        byte[] photo = this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_noprofile.jpg");
+        byte[] photo = this.loadResource("/images/flork_noprofile.jpg");
 
         //successfull set photo
         given()
@@ -653,22 +648,13 @@ public class RESTAccountTest {
             .statusCode(500);
     }
 
-
-
-
-
-
-
-
-    private byte[] getFile(String url) throws IOException {
-
-        Path path = Paths.get(url);
-
-        try {
-            return Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0];
+    private byte[] loadResource(String resourcePath) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream != null) {
+                return inputStream.readAllBytes();
+            } else {
+                return new byte[0];
+            }
         }
     }
 

@@ -3,9 +3,7 @@ package com.rest;
 import io.restassured.RestAssured;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -236,7 +234,7 @@ public class RESTTeamTest {
                 .cookie("AuthToken");
 
         Long teamId = accountService.getAllTeamsPage("Pepiflor23", PageRequest.of(0, 5)).getContent().get(0).getId();
-        byte[] photo = this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_noprofile.jpg");
+        byte[] photo = this.loadResource("/images/flork_noprofile.jpg");
 
         //set the photo
         given()
@@ -402,15 +400,13 @@ public class RESTTeamTest {
 
 
 
-    private byte[] getFile(String url) throws IOException {
-
-        Path path = Paths.get(url);
-
-        try {
-            return Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0];
+    private byte[] loadResource(String resourcePath) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream != null) {
+                return inputStream.readAllBytes();
+            } else {
+                return new byte[0];
+            }
         }
     }
 
