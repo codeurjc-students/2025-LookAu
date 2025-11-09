@@ -23,7 +23,9 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class TeamServiceTest {
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.codeurjc.backend.LookAu;
 import com.codeurjc.backend.model.DTO.typeDTO.BonolotoDTO;
@@ -18,6 +19,7 @@ import com.codeurjc.backend.service.TicketTypeService;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RESTTicketTypeTest {
 
@@ -36,7 +38,7 @@ public class RESTTicketTypeTest {
     @BeforeEach
     public void setup() {
         RestAssured.port = port;
-        RestAssured.baseURI = "https://localhost";
+        RestAssured.baseURI = "http://localhost";
         RestAssured.basePath = "/api";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.useRelaxedHTTPSValidation();
@@ -47,15 +49,16 @@ public class RESTTicketTypeTest {
     void testGetTicketType() {
 
         //with logging in
-        String token = given()
-            .contentType("application/json")
-            .body("{\"username\":\"alberto.lc@gmail.com\", \"password\":\"password2\"}")
-        .when()
-            .post("/auth/login")
-        .then()
-            .cookie("AuthToken")
-            .extract()
-            .cookie("AuthToken");
+        String token = 
+            given()
+                .contentType("application/json")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
+            .when()
+                .post("/auth/login") 
+            .then()
+                .cookie("AuthToken")
+                .extract()
+                .cookie("AuthToken");
 
         Long ticketTypeId = ticketTypeService.getOne().getId();
 
@@ -83,15 +86,16 @@ public class RESTTicketTypeTest {
     void testSaveTicketBonoloto() {
         
         //with logging in
-        String token = given()
-            .contentType("application/json")
-            .body("{\"username\":\"alberto.lc@gmail.com\", \"password\":\"password2\"}")
-        .when()
-            .post("/auth/login")
-        .then()
-            .cookie("AuthToken")
-            .extract()
-            .cookie("AuthToken");
+        String token = 
+            given()
+                .contentType("application/json")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
+            .when()
+                .post("/auth/login") 
+            .then()
+                .cookie("AuthToken")
+                .extract()
+                .cookie("AuthToken");
 
         Bonoloto bonoloto = new Bonoloto();
 

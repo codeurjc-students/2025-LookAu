@@ -3,20 +3,22 @@ package com.rest;
 import io.restassured.RestAssured;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.codeurjc.backend.LookAu;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+@Transactional
+@ActiveProfiles("test")
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RESTAccountTest {
 
@@ -24,9 +26,12 @@ public class RESTAccountTest {
     private int port;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
+
+        
+
         RestAssured.port = port;
-        RestAssured.baseURI = "https://localhost";
+        RestAssured.baseURI = "http://localhost";
         RestAssured.basePath = "/api";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.useRelaxedHTTPSValidation();
@@ -157,7 +162,7 @@ public class RESTAccountTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -167,7 +172,7 @@ public class RESTAccountTest {
 
 
         //get photo
-        byte[] photo = this.getFile("C:\\Users\\amand\\Desktop\\2025-LookAu\\backend\\src\\main\\resources\\static\\images\\others\\flork_noprofile.jpg");
+        byte[] photo = this.loadResource("/images/flork_noprofile.jpg");
 
         //successfull set photo
         given()
@@ -344,7 +349,7 @@ public class RESTAccountTest {
         given()
             .cookie("AuthToken", token)
         .when()
-            .put("/accounts/pendingFriends/Pepiflor23")
+            .put("/accounts/pendingFriends/DaniDu")
         .then()
             .statusCode(200)
             .body(emptyOrNullString());
@@ -643,22 +648,13 @@ public class RESTAccountTest {
             .statusCode(500);
     }
 
-
-
-
-
-
-
-
-    private byte[] getFile(String url) throws IOException {
-
-        Path path = Paths.get(url);
-
-        try {
-            return Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0];
+    private byte[] loadResource(String resourcePath) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
+            if (inputStream != null) {
+                return inputStream.readAllBytes();
+            } else {
+                return new byte[0];
+            }
         }
     }
 

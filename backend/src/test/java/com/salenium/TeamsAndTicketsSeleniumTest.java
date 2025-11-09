@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import org.openqa.selenium.By;
@@ -32,6 +33,7 @@ import com.codeurjc.backend.repository.AccountRepository;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+@Tag("selenium")
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class TeamsAndTicketsSeleniumTest {
@@ -68,8 +70,10 @@ public class TeamsAndTicketsSeleniumTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
+        driver.manage().deleteAllCookies();
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        baseUrl = "https://localhost:8443";
+        baseUrl = "http://localhost:4200";
     }
 
     @AfterEach
@@ -187,7 +191,7 @@ public class TeamsAndTicketsSeleniumTest {
 
         //open edit ticket
         WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//button[contains(., 'Edit') and contains(@class, 'btn-dark')]")
+            By.xpath("//button[contains(., ' Edit ') and contains(@class, 'btn-dark')]")
         ));
         editButton.click();
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.codeurjc.backend.LookAu;
 import com.codeurjc.backend.model.Ticket;
@@ -21,6 +22,7 @@ import com.codeurjc.backend.service.TicketTypeService;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RESTTicketTest {
 
@@ -39,7 +41,7 @@ public class RESTTicketTest {
     @BeforeEach
     public void setup() {
         RestAssured.port = port;
-        RestAssured.baseURI = "https://localhost";
+        RestAssured.baseURI = "http://localhost";
         RestAssured.basePath = "/api";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.useRelaxedHTTPSValidation();
@@ -53,7 +55,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -78,7 +80,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -125,7 +127,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -164,7 +166,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -212,7 +214,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()
@@ -264,7 +266,7 @@ public class RESTTicketTest {
         String token = 
             given()
                 .contentType("application/json")
-                .body("{\"username\": \"alberto.lc@gmail.com\", \"password\": \"password2\"}")
+                .body("{\"username\": \"eduardo.db@gmail.com\", \"password\": \"password7\"}")
             .when()
                 .post("/auth/login") 
             .then()

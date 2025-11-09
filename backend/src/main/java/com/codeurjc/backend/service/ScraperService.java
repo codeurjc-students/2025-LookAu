@@ -1,8 +1,6 @@
 package com.codeurjc.backend.service;
 
-import java.net.MalformedURLException;
 import java.util.List;
-import java.net.URL;
 import java.time.Duration;
 
 import org.jsoup.Jsoup;
@@ -10,11 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.codeurjc.backend.model.API.*;
