@@ -1,41 +1,20 @@
-name: CI - Build & Test
+name: CI - Build, Test & Sonar
 
 on:
   push:
-    branches:
-      - dev      
-      - master   
+    branches: [ "dev", "master" ]
   pull_request:
-    branches:
-      - dev      
-
+    branches: [ "dev", "master" ]
 
 jobs:
-  build-test:
+  build-test-sonar:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.3.0
-        env:
-          MYSQL_DATABASE: lookaudb
-          MYSQL_ROOT_PASSWORD: password
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h localhost"
-          --health-interval=5s
-          --health-timeout=10s
-          --health-retries=5
-
-      selenium:
-        image: selenium/standalone-chrome:4.23.0
-        ports:
-          - 4444:4444
-
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -43,7 +22,22 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Install Maven dependencies and run tests
-        working-directory: backend
-        run: mvn test -Dgroups=!selenium
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
 
+      - name: Run tests
+        working-directory: backend
+        run: mvn -B test -Dgroups=!selenium
+
+      - name: SonarCloud Scan
+        working-directory: backend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify sonar:sonar \
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+          -Dsonar.organization=${{ secrets.SONAR_ORG }} \
+          -Dsonar.host.url=https://sonarcloud.io
