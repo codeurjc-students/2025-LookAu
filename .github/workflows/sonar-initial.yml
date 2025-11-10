@@ -30,7 +30,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         working-directory: backend
         run: >
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          mvn -B verify -Dgroups=!selenium org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=codeurjc-students_2025-LookAu
           -Dsonar.organization=codeurjc-students
           -Dsonar.host.url=https://sonarcloud.io
