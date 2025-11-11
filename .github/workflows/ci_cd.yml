@@ -66,8 +66,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }} -f backend/Dockerfile backend
+        working-directory: ./docker
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }} -f Dockerfile ..
 
+
+      - name: Tag as PR build
+        run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/lookau:pr-${{ github.event.pull_request.number }}
 
       - name: Tag as PR build
         run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/lookau:pr-${{ github.event.pull_request.number }}
@@ -75,6 +79,6 @@ jobs:
       - name: Push Docker image to DockerHub
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/lookau:pr-${{ github.event.pull_request.number }} 
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/lookau:pr-${{ github.event.pull_request.number }}
 
 
