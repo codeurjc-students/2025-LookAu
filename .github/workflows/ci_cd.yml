@@ -1,4 +1,4 @@
-name: CI - Build, Test & Sonar
+name: CI/CD - Build, Test, Sonar & Docker
 
 on:
   push:
@@ -66,7 +66,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }} .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }} -f backend/Dockerfile backend
+
 
       - name: Tag as PR build
         run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/lookau:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/lookau:pr-${{ github.event.pull_request.number }}
