@@ -7,9 +7,11 @@ import java.time.Duration;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -31,6 +33,7 @@ import com.codeurjc.backend.repository.AccountRepository;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Tag("selenium")
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -88,7 +91,9 @@ public class ProfileSeleniumTest {
     }
 
     @Test
+    @Order(8)
     void testAddFriend() {
+        System.out.println("ORDERTEST: testAddFriend");
 
         //loggin
         driver.get(baseUrl + "/login");
@@ -129,7 +134,9 @@ public class ProfileSeleniumTest {
     }
 
     @Test
+    @Order(5)
     void testAceptPendingFriendAndAjaxMyFriends() {
+        System.out.println("ORDERTEST: testAceptPendingFriendAndAjaxMyFriends");
 
         // login
         driver.get(baseUrl + "/login");
@@ -193,7 +200,9 @@ public class ProfileSeleniumTest {
 
 
     @Test
+    @Order(7)
     void testDenyPendingFriendAndAjaxMyFriends() {
+        System.out.println("ORDERTEST: testDenyPendingFriendAndAjaxMyFriends");
 
         //login
         driver.get(baseUrl + "/login");
@@ -254,7 +263,9 @@ public class ProfileSeleniumTest {
 
 
     @Test
+    @Order(6)
     void testDeleteFriend() {
+        System.out.println("ORDERTEST: testDeleteFriend");
 
         //loggin
         driver.get(baseUrl + "/login");
