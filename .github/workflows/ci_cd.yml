@@ -40,42 +40,23 @@ jobs:
     runs-on: ubuntu-22.04
     needs: backend-tests
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Set up JDK 18
-        uses: actions/setup-java@v2
+      - name: Set up Java 18
+        uses: actions/setup-java@v4
         with:
-          distribution: adopt
+          distribution: temurin
           java-version: 18
 
       - name: Install Chromium
         run: |
           sudo apt-get update
           sudo apt-get install -y chromium-browser
-          sudo apt-mark hold chromium-browser
-          sudo apt-mark hold google-chrome-stable
-
-      - name: Set up Docker (MySQL)
-        run: sudo docker run -d --name bookmarks-forums-DB-GitHub-actions-selenium -p 3306:3306 -e MYSQL_DATABASE=BFDB -e MYSQL_ROOT_PASSWORD=password mysql:8.3.0
-
-      - name: Install Dockerize
-        run: curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
-
-      - name: Wait for MySQL to start
-        run: dockerize -wait tcp://localhost:3306 -timeout 1m
-
-      - name: Set environment variables
-        run: |
-          echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" >> $GITHUB_ENV
-          echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> $GITHUB_ENV
 
       - name: Create env.properties file
         run: |
           echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" > backend/src/main/resources/env.properties
           echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> backend/src/main/resources/env.properties
-
-      - name: Convert line endings to Unix format
-        run: sed -i 's/\r$//' backend/mvnw
 
       - name: Make mvnw executable
         run: chmod +x backend/mvnw
@@ -83,22 +64,18 @@ jobs:
       - name: Build backend
         run: backend/mvnw -B package --file backend/pom.xml -DskipTests
 
-      - name: Run backend application
+      - name: Run backend (H2 test profile)
         run: |
-          nohup backend/mvnw spring-boot:run --file backend/pom.xml &
-          sleep 10
+          nohup backend/mvnw spring-boot:run -Dspring-boot.run.profiles=test --file backend/pom.xml > backend.log 2>&1 &
+          sleep 25
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: 18
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
-        working-directory: frontend
-
-      - name: Disable Angular CLI telemetry
-        run: ng analytics off
         working-directory: frontend
 
       - name: Install frontend dependencies
@@ -107,12 +84,13 @@ jobs:
 
       - name: Run Angular app
         run: |
-          nohup ng serve &
-          sleep 30
+          nohup ng serve --host 0.0.0.0 --port 4200 > frontend.log 2>&1 &
+          sleep 35
         working-directory: frontend
 
-      - name: Run Selenium tests
+      - name: Run Selenium tests (with H2)
         run: backend/mvnw test -P selenium-tests --file backend/pom.xml
+
 
   #SONAR
   sonar-analysis:

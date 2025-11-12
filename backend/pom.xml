@@ -8,6 +8,16 @@
 	<artifactId>lookau</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
+	<profiles>
+		<profile>
+			<id>selenium-tests</id>
+			<properties>
+			<spring.profiles.active>test</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
