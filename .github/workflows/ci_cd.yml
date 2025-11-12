@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
+
 jobs:
 
   #TEST - BACKEND
@@ -34,9 +35,10 @@ jobs:
         working-directory: backend
         run: mvn -B verify -Dgroups=!selenium
 
-  #TEST - FRONTEND
+
+#TEST - FRONTEND
   frontend-tests:
-    name: Frontend/Selenium Tests
+    name: Frontend Tests
     runs-on: ubuntu-22.04
     needs: backend-tests
     steps:
@@ -49,11 +51,9 @@ jobs:
           java-version: 18
 
       - name: Install Chromium
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
+        run: sudo apt-get update && sudo apt-get install -y chromium-browser
 
-      - name: Create env.properties file
+      - name: Create env.properties
         run: |
           echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" > backend/src/main/resources/env.properties
           echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> backend/src/main/resources/env.properties
@@ -64,11 +64,14 @@ jobs:
       - name: Build backend
         run: backend/mvnw -B package --file backend/pom.xml -DskipTests
 
-      - name: Run backend
+      - name: Start backend
         run: |
           nohup backend/mvnw spring-boot:run -Dspring-boot.run.profiles=test --file backend/pom.xml > backend.log 2>&1 &
-          sleep 25
-
+          echo "Waiting for backend to start..."
+          for i in {1..30}; do
+            nc -z localhost 8080 && echo "Backend ready" && break
+            sleep 1
+          done
       - name: Show backend logs
         run: cat backend/backend.log || true
 
@@ -85,16 +88,18 @@ jobs:
         run: npm install
         working-directory: frontend
 
-      - name: Run Angular app
+      - name: Start Angular app
         run: |
-          nohup ng serve --proxy-config proxy.ci.conf.json > frontend.log 2>&1 &
-          sleep 35
+          nohup ng serve --host 0.0.0.0 --port 4200 --proxy-config proxy.ci.conf.json > frontend.log 2>&1 &
+          echo "Waiting for frontend to start..."
+          for i in {1..30}; do
+            nc -z localhost 4200 && echo "Frontend ready" && break
+            sleep 1
+          done
         working-directory: frontend
 
       - name: Show frontend logs
         run: cat frontend/frontend.log || true
-
-
 
       - name: Run Selenium tests
         run: backend/mvnw test -P selenium-tests --file backend/pom.xml
@@ -134,6 +139,7 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.branch.name=${GITHUB_REF_NAME##*/}
+
 
   #DOCKER DEPLOY
   publish-docker:
