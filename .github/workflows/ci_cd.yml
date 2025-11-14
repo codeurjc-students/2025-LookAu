@@ -36,83 +36,117 @@ jobs:
         run: mvn -B verify -Dgroups=!selenium
 
 
-#TEST - FRONTEND
+  #TEST - FRONTEND
   frontend-tests:
     name: Frontend Tests
     runs-on: ubuntu-22.04
     needs: backend-tests
+    
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Set up Java 18
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 18
+    # --- Java ---
+    - name: Set up Java 18
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 18
 
-      - name: Install Chromium
-        run: sudo apt-get update && sudo apt-get install -y chromium-browser
+    # --- Chromium ---
+    - name: Install Chromium (prevent auto-updates)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser
+        sudo apt-mark hold chromium-browser
+        sudo apt-mark hold google-chrome-stable
 
-      - name: Create env.properties
-        run: |
-          echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" > backend/src/main/resources/env.properties
-          echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> backend/src/main/resources/env.properties
+    # --- Docker: MySQL ---
+    - name: Set up Docker MySQL container
+      run: |
+        sudo docker run -d \
+          --name lookau-mysql-ci \
+          -p 3306:3306 \
+          -e MYSQL_DATABASE=lookau_test \
+          -e MYSQL_ROOT_PASSWORD=password \
+          mysql:8.3.0
 
-      - name: Make mvnw executable
-        run: chmod +x backend/mvnw
+    # --- Dockerize para esperar DB ---
+    - name: Install Dockerize
+      run: curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
 
-      - name: Build backend
-        run: backend/mvnw -B package --file backend/pom.xml -DskipTests
+    - name: Wait for MySQL to start
+      run: dockerize -wait tcp://localhost:3306 -timeout 1m
 
-      - name: Start backend
-        run: |
-          nohup backend/mvnw spring-boot:run -Dspring-boot.run.profiles=test --file backend/pom.xml > backend.log 2>&1 &
-          echo "Waiting for backend to start..."
-          for i in {1..120}; do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/actuator/health || echo "000")
-            if [ "$STATUS" -eq 200 ]; then
-              echo "Backend ready"
-              break
-            fi
-            sleep 1
-          done
-          if [ "$STATUS" -ne 200 ]; then
-            echo "Backend failed to start. Logs:"
-            cat backend.log
-            exit 1
-          fi
+    # --- Environment variables ---
+    - name: Set environment variables
+      run: |
+        echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" >> $GITHUB_ENV
+        echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Show backend logs
-        run: cat backend/backend.log || true
+    # --- env.properties ---
+    - name: Create env.properties file
+      run: |
+        echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" > backend/src/main/resources/env.properties
+        echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> backend/src/main/resources/env.properties
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+    # --- Line endings fix ---
+    - name: Convert line endings to Unix format
+      run: sed -i 's/\r$//' backend/mvnw
 
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
-        working-directory: frontend
+    # --- Make mvnw executable ---
+    - name: Make mvnw executable
+      run: chmod +x backend/mvnw
 
-      - name: Install frontend dependencies
-        run: npm install
-        working-directory: frontend
+    # --- Build backend ---
+    - name: Build with Maven
+      run: backend/mvnw -B package --file backend/pom.xml -DskipTests
 
-      - name: Start Angular app
-        run: |
-          nohup ng serve --host 0.0.0.0 --port 4200 --proxy-config proxy.ci.conf.json > frontend.log 2>&1 &
-          echo "Waiting for frontend to start..."
-          for i in {1..30}; do
-            nc -z localhost 4200 && echo "Frontend ready" && break
-            sleep 1
-          done
-        working-directory: frontend
+    # --- Run backend ---
+    - name: Run backend
+      run: |
+        nohup backend/mvnw spring-boot:run -Dspring-boot.run.profiles=test --file backend/pom.xml > backend.log 2>&1 &
+        echo "Waiting for backend to start..."
+        for i in {1..30}; do
+          nc -z localhost 8080 && echo "Backend ready" && break
+          sleep 1
+        done
+    - name: Show backend logs
+      run: cat backend/backend.log || true
 
-      - name: Show frontend logs
-        run: cat frontend/frontend.log || true
+    # --- Node.js ---
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
 
-      - name: Run Selenium tests
-        run: backend/mvnw test -P selenium-tests --file backend/pom.xml
+    # --- Angular CLI ---
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+      working-directory: frontend
+
+    - name: Do not share Angular CLI telemetry
+      run: ng analytics off
+      working-directory: frontend
+
+    - name: Install frontend dependencies
+      run: npm install
+      working-directory: frontend
+
+    # --- Run Angular app ---
+    - name: Run Angular application
+      run: |
+        nohup ng serve --host 0.0.0.0 --port 4200 --proxy-config proxy.ci.conf.json > frontend.log 2>&1 &
+        echo "Waiting for frontend to start..."
+        for i in {1..30}; do
+          nc -z localhost 4200 && echo "Frontend ready" && break
+          sleep 1
+        done
+    - name: Show frontend logs
+      run: cat frontend/frontend.log || true
+
+    # --- Selenium tests ---
+    - name: Run Selenium tests
+      run: backend/mvnw test -P selenium-tests --file backend/pom.xml
 
 
   #SONAR
