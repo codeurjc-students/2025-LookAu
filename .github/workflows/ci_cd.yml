@@ -138,14 +138,20 @@ jobs:
         nohup ng serve --host 0.0.0.0 --port 4200 --proxy-config proxy.ci.conf.json > frontend.log 2>&1 &
         echo "Waiting for frontend to start..."
         # Esperar hasta que Angular exponga /signup
-        for i in {1..60}; do
-          status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4200/signup || echo "000")
+        for i in {1..120}; do
+          status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4200 || echo "000")
           if [ "$status" == "200" ]; then
             echo "Frontend listo"
             break
           fi
           sleep 2
         done
+        if [ "$status" != "200" ]; then
+          echo "Error: Frontend no arrancó en el tiempo esperado"
+          cat frontend.log
+          exit 1
+        fi
+
 
     - name: Show frontend logs
       run: cat frontend/frontend.log || true
