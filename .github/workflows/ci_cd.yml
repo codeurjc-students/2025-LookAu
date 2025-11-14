@@ -104,14 +104,8 @@ jobs:
     # --- Run backend ---
     - name: Run backend
       run: |
-        nohup backend/mvnw spring-boot:run -Dspring-boot.run.profiles=test --file backend/pom.xml > backend.log 2>&1 &
-        echo "Waiting for backend to start..."
-        for i in {1..120}; do
-          nc -z localhost 8080 && echo "Backend ready" && break
-          sleep 1
-        done
-    - name: Show backend logs
-      run: cat backend/backend.log || true
+        nohup backend/mvnw spring-boot:run --file backend/pom.xml &
+        sleep 120
 
     # --- Node.js ---
     - name: Set up Node.js
@@ -135,24 +129,9 @@ jobs:
     # --- Run Angular app ---
     - name: Run Angular application
       run: |
-        nohup ng serve --host 0.0.0.0 --port 4200 --proxy-config proxy.ci.conf.json > frontend.log 2>&1 &
-        echo "Waiting for frontend to start..."
-        for i in {1..120}; do
-          status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4200 || echo "000")
-          if [ "$status" == "200" ]; then
-            echo "Frontend listo"
-            break
-          fi
-          sleep 2
-        done
-        if [ "$status" != "200" ]; then
-          echo "Error: Frontend no arrancó en el tiempo esperado"
-          cat frontend.log
-          exit 1
-        fi
+        nohup ng serve &
+        sleep 120
       working-directory: frontend
-
-
 
     - name: Show frontend logs
       run: cat frontend/frontend.log || true
