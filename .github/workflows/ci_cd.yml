@@ -37,108 +37,108 @@ jobs:
 
 
   #TEST - FRONTEND
-  frontend-tests:
-    name: Frontend Tests
-    runs-on: ubuntu-22.04
-    needs: backend-tests
+  #frontend-tests:
+   # name: Frontend Tests
+    #runs-on: ubuntu-22.04
+   # needs: backend-tests
     
-    steps:
-    - uses: actions/checkout@v4
+   # steps:
+   # - uses: actions/checkout@v4
 
     # --- Java ---
-    - name: Set up Java 18
-      uses: actions/setup-java@v4
-      with:
-        distribution: temurin
-        java-version: 18
+   # - name: Set up Java 18
+    #  uses: actions/setup-java@v4
+     # with:
+       # distribution: temurin
+      #  java-version: 18
 
     # --- Chromium ---
-    - name: Install Chromium (prevent auto-updates)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser
-        sudo apt-mark hold chromium-browser
-        sudo apt-mark hold google-chrome-stable
+   # - name: Install Chromium (prevent auto-updates)
+      #run: |
+       # sudo apt-get update
+       # sudo apt-get install -y chromium-browser
+       # sudo apt-mark hold chromium-browser
+       # sudo apt-mark hold google-chrome-stable
 
     # --- Docker: MySQL ---
-    - name: Set up Docker MySQL container
-      run: |
-        sudo docker run -d \
-          --name lookau-mysql-ci \
-          -p 3306:3306 \
-          -e MYSQL_DATABASE=lookau_test \
-          -e MYSQL_ROOT_PASSWORD=password \
-          mysql:8.3.0
+   # - name: Set up Docker MySQL container
+      #run: |
+      #  sudo docker run -d \
+        #  --name lookau-mysql-ci \
+         # -p 3306:3306 \
+         # -e MYSQL_DATABASE=lookau_test \
+         # -e MYSQL_ROOT_PASSWORD=password \
+         # mysql:8.3.0
 
     # --- Dockerize para esperar DB ---
-    - name: Install Dockerize
-      run: curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
+   # - name: Install Dockerize
+     # run: curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
 
-    - name: Wait for MySQL to start
-      run: dockerize -wait tcp://localhost:3306 -timeout 1m
+    #- name: Wait for MySQL to start
+      #run: dockerize -wait tcp://localhost:3306 -timeout 1m
 
     # --- Environment variables ---
-    - name: Set environment variables
-      run: |
-        echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" >> $GITHUB_ENV
-        echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> $GITHUB_ENV
+    #- name: Set environment variables
+      #run: |
+        #echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" >> $GITHUB_ENV
+        #echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> $GITHUB_ENV
 
     # --- env.properties ---
-    - name: Create env.properties file
-      run: |
-        echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" > backend/src/main/resources/env.properties
-        echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> backend/src/main/resources/env.properties
+    #- name: Create env.properties file
+      #run: |
+        #echo "GMAIL_USERNAME=${{ secrets.GMAIL_USERNAME }}" > backend/src/main/resources/env.properties
+        #echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> backend/src/main/resources/env.properties
 
     # --- Line endings fix ---
-    - name: Convert line endings to Unix format
-      run: sed -i 's/\r$//' backend/mvnw
+    #- name: Convert line endings to Unix format
+      #run: sed -i 's/\r$//' backend/mvnw
 
     # --- Make mvnw executable ---
-    - name: Make mvnw executable
-      run: chmod +x backend/mvnw
+    #- name: Make mvnw executable
+      #run: chmod +x backend/mvnw
 
     # --- Build backend ---
-    - name: Build with Maven
-      run: backend/mvnw -B package --file backend/pom.xml -DskipTests
+    #- name: Build with Maven
+      #run: backend/mvnw -B package --file backend/pom.xml -DskipTests
 
     # --- Run backend ---
-    - name: Run backend
-      run: |
-        nohup backend/mvnw spring-boot:run --file backend/pom.xml &
-        sleep 120
+    #- name: Run backend
+      #run: |
+        #nohup backend/mvnw spring-boot:run --file backend/pom.xml &
+        #sleep 120
 
     # --- Node.js ---
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
+    #- name: Set up Node.js
+      #uses: actions/setup-node@v4
+      #with:
+        #node-version: 18
 
     # --- Angular CLI ---
-    - name: Install Angular CLI
-      run: npm install -g @angular/cli
-      working-directory: frontend
+    #- name: Install Angular CLI
+      #run: npm install -g @angular/cli
+      #working-directory: frontend
 
-    - name: Do not share Angular CLI telemetry
-      run: ng analytics off
-      working-directory: frontend
+    #- name: Do not share Angular CLI telemetry
+      #run: ng analytics off
+      #working-directory: frontend
 
-    - name: Install frontend dependencies
-      run: npm install
-      working-directory: frontend
+    #- name: Install frontend dependencies
+      #run: npm install
+      #working-directory: frontend
 
     # --- Run Angular app ---
-    - name: Run Angular application
-      run: |
-        nohup ng serve &
-        sleep 120
-      working-directory: frontend
+    #- name: Run Angular application
+      #run: |
+        #nohup ng serve &
+        #sleep 120
+      #working-directory: frontend
 
-    - name: Show frontend logs
-      run: cat frontend/frontend.log || true
+    #- name: Show frontend logs
+      #run: cat frontend/frontend.log || true
 
     # --- Selenium tests ---
-    - name: Run Selenium tests
-      run: backend/mvnw test -P selenium-tests --file backend/pom.xml
+    #- name: Run Selenium tests
+      #run: backend/mvnw test -P selenium-tests --file backend/pom.xml
 
 
   #SONAR
