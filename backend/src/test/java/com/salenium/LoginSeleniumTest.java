@@ -1,5 +1,6 @@
 package com.salenium;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
@@ -29,6 +30,9 @@ import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.repository.AccountRepository;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+import static io.restassured.RestAssured.given;
+
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Tag("selenium")
@@ -94,6 +98,17 @@ public class LoginSeleniumTest {
     void testLoginValid() {
 
         System.out.println("ORDERTEST: testLoginInvalid1" + driver.getCurrentUrl());
+
+        String body = given()
+            .formParam("username", "amanda.cl@gmail.com")
+            .formParam("password", "password1")
+        .when()
+            .post(baseUrl + "/api/login")
+        .then()
+            .extract().body().asString();
+
+        System.out.println("ORDERTEST: testLoginInvalid BODY" + body);
+
         
         driver.get(baseUrl+"/login");
 
