@@ -92,19 +92,30 @@ public class LoginSeleniumTest {
     @Test
     @Order(4)
     void testLoginValid() {
+
+        System.out.println("ORDERTEST: testLoginInvalid1");
+        
         driver.get(baseUrl+"/login");
 
-        System.out.println("ORDERTEST: testLoginValid");
+        System.out.println("ORDERTEST: testLoginValid2");
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".input-login-1")));
+
+        System.out.println("ORDERTEST: testLoginInvalid3");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
         driver.findElement(By.cssSelector("input[type=submit]")).click();
 
+        System.out.println("ORDERTEST: testLoginInvalid4");
+
         wait.until(ExpectedConditions.urlContains("/teams"));
 
+        System.out.println("ORDERTEST: testLoginInvalid5");
+
         assertTrue(driver.getCurrentUrl().endsWith("/teams"));
+
+        System.out.println("ORDERTEST: testLoginInvalid5");
     }
 
 
