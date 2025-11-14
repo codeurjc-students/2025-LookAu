@@ -115,12 +115,19 @@ public class LoginSeleniumTest {
 
         driver.get(baseUrl+"/login");
 
+        System.out.println("ORDERTEST: testLoginInvalid1" + driver.getCurrentUrl());
+
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("wrong@nope.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("badpass");
         driver.findElement(By.cssSelector("input[type=submit]")).click();
 
+        System.out.println("ORDERTEST: testLoginInvalid2" + driver.getCurrentUrl());
+
         wait.until(ExpectedConditions.urlContains("/login"));
+
+        System.out.println("ORDERTEST: testLoginInvalid3" + driver.getCurrentUrl());
         assertTrue(driver.getCurrentUrl().contains("/login"));
+        System.out.println("ORDERTEST: testLoginInvalid4" + driver.getCurrentUrl());
     }
 
     @Test

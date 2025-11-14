@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 @Component
+@Profile("!test")
 public class LotteryScheduler  {
 
 	@Autowired
