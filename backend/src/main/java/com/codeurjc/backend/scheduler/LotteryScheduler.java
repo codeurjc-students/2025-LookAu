@@ -173,8 +173,6 @@ public class LotteryScheduler  {
 		}
 	
 		ticketService.setTickets(lTicketsToUpdateAll);
-
-		ticketService.setTickets(lTicketsToUpdateAll);
 	}
 
 
