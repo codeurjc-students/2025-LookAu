@@ -9,8 +9,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.codeurjc.backend.model.Ticket;
 import com.codeurjc.backend.model.API.BonolotoAPI;
@@ -31,6 +33,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 @Component
+@Profile("!test")
 public class LotteryScheduler  {
 
 	@Autowired
@@ -49,11 +52,11 @@ public class LotteryScheduler  {
 	/*************************/
 	/*************************/
 
+	@Transactional
 	@Scheduled(fixedDelay = 60000)
 	public synchronized void run() throws JsonMappingException, JsonProcessingException, InterruptedException{
 
 		if (running) {
-			System.out.println("Scheduler ya en ejecución. Saltando...");
 			return;
 		}
 		running = true;
@@ -116,7 +119,7 @@ public class LotteryScheduler  {
 			
 			//get the result tickets by the type
 			List<?> lTicketAPI =  scraperService.getResults(key, mTypeToDate.get(key).get(0), mTypeToDate.get(key).get(mTypeToDate.get(key).size() - 1));
-			
+
 			//check the status ticket by type
 			if(!lTicketAPI.isEmpty()){
 				switch (key){
@@ -163,9 +166,12 @@ public class LotteryScheduler  {
 				}
 
 				lTicketsToUpdateAll.addAll(lTicketsToUpdateByType);
+
+			}else if(lTicketAPI.isEmpty() || !mTypeToDateToTicketPending.get(key).isEmpty()){
+				lTicketsToUpdateByType = setStatusWrongDate(mTypeToDateToTicketPending.get(key));
 			}
 		}
-
+	
 		ticketService.setTickets(lTicketsToUpdateAll);
 	}
 
@@ -235,5 +241,23 @@ public class LotteryScheduler  {
 		}
 
 		return mTypeToTicketPending;
+	}
+
+	/********************/
+	/******* HELP *******/
+	/********************/
+
+	private List<Ticket> setStatusWrongDate(Map<String, Ticket> mTypeToDateToTicketPending){
+
+		List<Ticket> lTicketsToUpdateByType = new ArrayList<Ticket>();
+
+		for(Ticket ticket: mTypeToDateToTicketPending.values()){
+			ticket.setStatusName("Wrong Date");
+
+			lTicketsToUpdateByType.add(ticket);
+		}
+
+		return lTicketsToUpdateByType;
+
 	}
 }

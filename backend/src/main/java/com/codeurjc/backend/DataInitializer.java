@@ -426,7 +426,6 @@ public class DataInitializer {
 
     }
 
-
     private byte[] loadResource(String resourcePath) throws IOException {
         try (InputStream inputStream = getClass().getResourceAsStream(resourcePath)) {
             if (inputStream != null) {

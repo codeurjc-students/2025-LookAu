@@ -29,6 +29,7 @@ public class ScraperService {
         WebDriver driver = webDriverProvider.createDriver();
 
         try{
+
             //create url for scraping
             String url = "https://www.loteriasyapuestas.es/servicios/buscadorSorteos?game_id="+ type + "&celebrados=false&fechaInicioInclusiva="+ lastDate + "&fechaFinInclusiva=" + firstDate;
 
@@ -54,18 +55,18 @@ public class ScraperService {
             }
 
             String cleanJson = json.trim();
-            // Caso 1: respuesta es solo un mensaje entre comillas
+
+            //if the response not found tickets
             if (cleanJson.startsWith("\"") || cleanJson.contains("No se ha encontrado")) {
                 return List.of();
             }
 
-            // Caso 2: si no empieza por "[" es que no es un array JSON válido
+            //if the response is not a JSON valid
             if (!cleanJson.startsWith("[")) {
                 return List.of();
-            } 
-            
+            }             
 
-
+            //if the response is ok
             ObjectMapper objectMapper = new ObjectMapper();
 
             switch (type) {

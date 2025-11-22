@@ -52,7 +52,6 @@ export class IndividualComponent {
     }else{
       this.getPersonalTickets();
     }
-    console.log(this.lTickets)
   }
 
   getPersonalTickets(){
@@ -98,7 +97,6 @@ export class IndividualComponent {
   getTeam(){
     this.teamService.getTeam(this.teamId).subscribe(
       (response) => {
-        console.log(response);
         this.team = response;
       },
       (error) => {

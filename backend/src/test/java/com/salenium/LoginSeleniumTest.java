@@ -6,9 +6,11 @@ import java.time.Duration;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +30,7 @@ import com.codeurjc.backend.repository.AccountRepository;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Tag("selenium")
 @SpringBootTest(classes = LookAu.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -87,10 +90,10 @@ public class LoginSeleniumTest {
     }
 
     @Test
+    @Order(4)
     void testLoginValid() {
-        driver.get(baseUrl+"/login");
 
-        System.out.println("Current URL: " + driver.getCurrentUrl());
+        driver.get(baseUrl+"/login");
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".input-login-1")));
 
@@ -105,7 +108,9 @@ public class LoginSeleniumTest {
 
 
     @Test
+    @Order(1)
     void testLoginInvalid() {
+
         driver.get(baseUrl+"/login");
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("wrong@nope.com");
@@ -113,10 +118,12 @@ public class LoginSeleniumTest {
         driver.findElement(By.cssSelector("input[type=submit]")).click();
 
         wait.until(ExpectedConditions.urlContains("/login"));
+
         assertTrue(driver.getCurrentUrl().contains("/login"));
     }
 
     @Test
+    @Order(3)
     void testSignupValid() {
         driver.get(baseUrl+"/signup");
 
@@ -139,8 +146,9 @@ public class LoginSeleniumTest {
     }
 
     @Test
+    @Order(2)
     void testSignupRepear() {
-
+        
         //nick name repeat
         driver.get(baseUrl+"/signup");
 

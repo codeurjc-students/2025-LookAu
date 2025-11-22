@@ -8,16 +8,40 @@
 	<artifactId>lookau</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
+	<profiles>
+		<profile>
+			<id>selenium-tests</id>
+			<properties>
+				<spring.profiles.active>test</spring.profiles.active>
+				<groups>selenium</groups>	<!-- @Tag("selenium") -->
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>3.1.2</version>
+						<configuration>
+							<groups>${groups}</groups>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.0</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath /> 
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
+		<sonar.organization>codeurjc-students</sonar.organization>
 	</properties>
 
 	<dependencies>
@@ -213,6 +237,12 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.5.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>4.0.0.4121</version>
 			</plugin>
 		</plugins>
 	</build>
