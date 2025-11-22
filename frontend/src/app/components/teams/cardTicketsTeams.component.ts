@@ -241,7 +241,6 @@ export class CardTicketsTeamsComponent {
 
   getDataTicketType(data: string) {
     this.ticketType = data;
-    console.log('Recibido del hijo:', data);
   }
 
 
@@ -307,10 +306,7 @@ export class CardTicketsTeamsComponent {
         });
       }
       
-    });
-
-    console.log(this.transactions);
-    
+    });    
   }
 
   genereteWinningTransactions(participants: string[], buyer: string, ticketPrice: number, prizeAmount: number, claimer: string) {

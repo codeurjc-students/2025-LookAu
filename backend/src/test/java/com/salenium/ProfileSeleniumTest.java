@@ -93,7 +93,6 @@ public class ProfileSeleniumTest {
     @Test
     @Order(8)
     void testAddFriend() {
-        System.out.println("ORDERTEST: testAddFriend");
 
         //loggin
         driver.get(baseUrl + "/login");
@@ -136,7 +135,6 @@ public class ProfileSeleniumTest {
     @Test
     @Order(5)
     void testAceptPendingFriendAndAjaxMyFriends() {
-        System.out.println("ORDERTEST: testAceptPendingFriendAndAjaxMyFriends");
 
         // login
         driver.get(baseUrl + "/login");
@@ -202,7 +200,6 @@ public class ProfileSeleniumTest {
     @Test
     @Order(7)
     void testDenyPendingFriendAndAjaxMyFriends() {
-        System.out.println("ORDERTEST: testDenyPendingFriendAndAjaxMyFriends");
 
         //login
         driver.get(baseUrl + "/login");
@@ -265,7 +262,6 @@ public class ProfileSeleniumTest {
     @Test
     @Order(6)
     void testDeleteFriend() {
-        System.out.println("ORDERTEST: testDeleteFriend");
 
         //loggin
         driver.get(baseUrl + "/login");

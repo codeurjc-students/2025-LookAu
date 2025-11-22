@@ -257,7 +257,6 @@ export class NewCardTicketsTeamsComponent {
 
   getDataTicketType(data: string) {
     this.ticketType = data;
-    console.log('Recibido del hijo:', data);
   }
 
 

@@ -1,6 +1,5 @@
 package com.salenium;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
@@ -30,9 +29,6 @@ import com.codeurjc.backend.model.Account;
 import com.codeurjc.backend.repository.AccountRepository;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-
-import static io.restassured.RestAssured.given;
-
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Tag("selenium")
@@ -97,69 +93,38 @@ public class LoginSeleniumTest {
     @Order(4)
     void testLoginValid() {
 
-        System.out.println("ORDERTEST: testLoginInvalid1" + driver.getCurrentUrl());
-
-        String body = given()
-            .formParam("username", "amanda.cl@gmail.com")
-            .formParam("password", "password1")
-        .when()
-            .post(baseUrl + "/api/login")
-        .then()
-            .extract().body().asString();
-
-        System.out.println("ORDERTEST: testLoginInvalid BODY" + body);
-
-        
         driver.get(baseUrl+"/login");
 
-        System.out.println("ORDERTEST: testLoginValid2" + driver.getCurrentUrl());
-
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".input-login-1")));
-
-        System.out.println("ORDERTEST: testLoginInvalid3" + driver.getCurrentUrl());
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("amanda.cl@gmail.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("password1");
         driver.findElement(By.cssSelector("input[type=submit]")).click();
 
-        System.out.println("ORDERTEST: testLoginInvalid4" + driver.getCurrentUrl());
-
         wait.until(ExpectedConditions.urlContains("/teams"));
 
-        System.out.println("ORDERTEST: testLoginInvalid5" + driver.getCurrentUrl());
-
         assertTrue(driver.getCurrentUrl().endsWith("/teams"));
-
-        System.out.println("ORDERTEST: testLoginInvalid5" + driver.getCurrentUrl());
     }
 
 
     @Test
     @Order(1)
     void testLoginInvalid() {
-        System.out.println("ORDERTEST: testLoginInvalid");
 
         driver.get(baseUrl+"/login");
-
-        System.out.println("ORDERTEST: testLoginInvalid1" + driver.getCurrentUrl());
 
         driver.findElement(By.cssSelector(".input-login-1")).sendKeys("wrong@nope.com");
         driver.findElement(By.cssSelector(".input-login-2")).sendKeys("badpass");
         driver.findElement(By.cssSelector("input[type=submit]")).click();
 
-        System.out.println("ORDERTEST: testLoginInvalid2" + driver.getCurrentUrl());
-
         wait.until(ExpectedConditions.urlContains("/login"));
 
-        System.out.println("ORDERTEST: testLoginInvalid3" + driver.getCurrentUrl());
         assertTrue(driver.getCurrentUrl().contains("/login"));
-        System.out.println("ORDERTEST: testLoginInvalid4" + driver.getCurrentUrl());
     }
 
     @Test
     @Order(3)
     void testSignupValid() {
-        System.out.println("ORDERTEST: testSignupValid");
         driver.get(baseUrl+"/signup");
 
         driver.findElement(By.name("firstName")).sendKeys("Test");
@@ -183,8 +148,7 @@ public class LoginSeleniumTest {
     @Test
     @Order(2)
     void testSignupRepear() {
-        System.out.println("ORDERTEST: testSignupRepear");
-
+        
         //nick name repeat
         driver.get(baseUrl+"/signup");
 

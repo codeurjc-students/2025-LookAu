@@ -25,6 +25,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long>{
     List<Ticket> findAllByTeamId(Long id);
     List<Ticket> findAllByTeam(Team team);
 
+    @Query("SELECT t FROM Ticket t WHERE t.statusName = :statusName AND t.date <= CURRENT_DATE")
     List<Ticket> findAllByStatusName(String statusName);
 
     List<Ticket> findAllByDate(LocalDate date);

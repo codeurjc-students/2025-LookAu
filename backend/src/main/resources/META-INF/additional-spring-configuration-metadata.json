@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "SELENIUM_URL",
+    "type": "java.lang.String",
+    "description": "A description for 'SELENIUM_URL'"
+  },
+  {
+    "name": "jwt.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.secret'"
+  },
+  {
+    "name": "server.ssl.verify-client",
+    "type": "java.lang.String",
+    "description": "A description for 'server.ssl.verify-client'"
+  },
+  {
+    "name": "SELENIUM_URL",
+    "type": "java.lang.String",
+    "description": "A description for 'SELENIUM_URL'"
+  },
+  {
+    "name": "SELENIUM_URL",
+    "type": "java.lang.String",
+    "description": "A description for 'SELENIUM_URL'"
+  }
+]}
