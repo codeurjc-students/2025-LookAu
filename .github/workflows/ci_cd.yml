@@ -157,6 +157,13 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
         with:
@@ -164,17 +171,16 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: SonarCloud Scan
+      - name: Run backend tests and generate coverage report
         working-directory: backend
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          mvn -B verify -Dgroups=!selenium sonar:sonar \
+        run: mvn clean verify sonar:sonar -B -Dgroups=!selenium \
             -Dsonar.projectKey=codeurjc-students_2025-LookAu \
             -Dsonar.organization=codeurjc-students \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.branch.name=${GITHUB_REF_NAME##*/}
+            -Dsonar.branch.name=${GITHUB_REF_NAME##*/} \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
 
 
   #DOCKER DEPLOY

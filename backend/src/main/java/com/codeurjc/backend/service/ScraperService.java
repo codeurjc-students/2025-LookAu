@@ -31,7 +31,7 @@ public class ScraperService {
         try{
 
             //create url for scraping
-            String url = "https://www.loteriasyapuestas.es/servicios/buscadorSorteos?game_id="+ type + "&celebrados=false&fechaInicioInclusiva="+ lastDate + "&fechaFinInclusiva=" + firstDate;
+            String url = "https://www.loteriasyapuestas.es/servicios/buscadorSorteos?game_id="+ type + "&celebrados=true&fechaInicioInclusiva="+ lastDate + "&fechaFinInclusiva=" + firstDate;
 
             //create webdriver
             driver.get(url);
@@ -105,7 +105,7 @@ public class ScraperService {
             }
 
         } finally {
-            driver.quit(); // ✅ SIEMPRE se cierra
+            driver.quit();
         }
     }
 }

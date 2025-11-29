@@ -108,7 +108,6 @@ public class TeamService {
                         dtoList.add(ticketTeamDTO);  
                     } catch (Exception e) {
                         System.err.println("Error al convertir el ticket: " + ticket);
-                        e.printStackTrace();
                     }
                 }
     

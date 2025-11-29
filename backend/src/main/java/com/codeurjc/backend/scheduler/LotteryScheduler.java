@@ -89,7 +89,6 @@ public class LotteryScheduler  {
 
 		}catch(Exception e){
 			System.err.println("Error in scheduled job: " + e.getMessage());
-        	e.printStackTrace();
 		} finally {
 			running = false;
 		}

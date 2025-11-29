@@ -1,7 +1,3 @@
-# In project root:
-# docker pull etheko/bookmarks-forums
-# cd docker
-# docker-compose -p bookmarks-forums up --build
 services:
 
   lookau-app:
