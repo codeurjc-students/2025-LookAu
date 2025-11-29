@@ -171,7 +171,11 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-          
+      - name: Run backend tests
+        working-directory: backend
+        run: mvn clean verify -Dgroups=!selenium
+
+
       - name: Run Sonar on PR
         if: github.event_name == 'pull_request'
         working-directory: backend
