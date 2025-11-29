@@ -174,14 +174,25 @@ jobs:
       - name: Run backend tests and generate coverage report
         working-directory: backend
         run: |
-          mvn clean verify sonar:sonar -B -Dgroups=!selenium \
-          -Dsonar.projectKey=codeurjc-students_2025-LookAu \
-          -Dsonar.organization=codeurjc-students \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-          -Dsonar.branch.name=${GITHUB_REF_NAME##*/} \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-          ${{ github.event_name == 'pull_request' && format('-Dsonar.pullrequest.key={0} -Dsonar.pullrequest.branch={1} -Dsonar.pullrequest.base={2}', github.event.pull_request.number, github.head_ref, github.base_ref) || '' }}
+          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
+            mvn clean verify sonar:sonar -B -Dgroups=!selenium \
+              -Dsonar.projectKey=codeurjc-students_2025-LookAu \
+              -Dsonar.organization=codeurjc-students \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+              -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+              -Dsonar.pullrequest.branch=${{ github.head_ref }} \
+              -Dsonar.pullrequest.base=${{ github.base_ref }}
+          else
+            mvn clean verify sonar:sonar -B -Dgroups=!selenium \
+              -Dsonar.projectKey=codeurjc-students_2025-LookAu \
+              -Dsonar.organization=codeurjc-students \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+              -Dsonar.branch.name=${GITHUB_REF_NAME##*/} \
+              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+          fi
 
 
 
