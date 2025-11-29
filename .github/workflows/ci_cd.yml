@@ -171,28 +171,32 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Run backend tests and generate coverage report
+          
+      - name: Run Sonar on PR
+        if: github.event_name == 'pull_request'
         working-directory: backend
         run: |
-          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
-            mvn clean verify sonar:sonar -B -Dgroups=!selenium \
-              -Dsonar.projectKey=codeurjc-students_2025-LookAu \
-              -Dsonar.organization=codeurjc-students \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-              -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
-              -Dsonar.pullrequest.branch=${{ github.head_ref }} \
-              -Dsonar.pullrequest.base=${{ github.base_ref }}
-          else
-            mvn clean verify sonar:sonar -B -Dgroups=!selenium \
-              -Dsonar.projectKey=codeurjc-students_2025-LookAu \
-              -Dsonar.organization=codeurjc-students \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-              -Dsonar.branch.name=${GITHUB_REF_NAME##*/} \
-              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-          fi
+          mvn sonar:sonar \
+            -Dsonar.projectKey=codeurjc-students_2025-LookAu \
+            -Dsonar.organization=codeurjc-students \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+            -Dsonar.pullrequest.branch=${{ github.head_ref }} \
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
+
+      - name: Run Sonar on branch
+        if: github.event_name != 'pull_request'
+        working-directory: backend
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=codeurjc-students_2025-LookAu \
+            -Dsonar.organization=codeurjc-students \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.branch.name=${GITHUB_REF_NAME##*/} \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
 
 
