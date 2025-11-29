@@ -78,8 +78,6 @@ export class EditTeamComponent {
     this.teamService.getAccountsTeam(String(this.teamId)).subscribe(
       (response) => {
         this.accounts = response;
-        console.log(this.accounts);
-        console.log(response);
       },
       (error) => {
         this.router.navigate(['/error']);
@@ -122,10 +120,8 @@ export class EditTeamComponent {
   hasTicketDependence(): boolean{
     
     let nickName = this.authService.getUserNickName();
-    console.log(nickName);
 
     for (let ticket of this.tickets) {
-      console.log(ticket);
       
       if (ticket.paidByName === nickName || ticket.claimedBy === nickName) {
         return true;
